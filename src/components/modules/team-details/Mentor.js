@@ -1,20 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react'
 import Link from 'next/link'
-const Mentor = () => {
+const Mentor = ({title}) => {
   return (
     <div className="team team--details padding-top padding-bottom bg-color-3">
     <div className="container">
       <div className="team__wrapper">
         <div className="row g-5 align-items-center">
           <div className="col-md-5">
-            <div className="team__thumb">
-              <img src="/images/team-details/1.png" alt="Team Image"/>
+            <div style={{borderColor:'red', borderWidth:2, }} className="team__thumb">
+              <img src="/images/partner/light/13.png" alt="Team Image"/>
             </div>
           </div>
           <div className="col-md-7">
             <div className="team__content">
-              <h3>Shamika Thompson</h3>
+              <h3>{title}</h3>
               <p className="designation">Trade Consultant</p>
               <p className="info">Hey there! So glad you stopped by to Meet Our Company. Don't miss out on this opportunity
                 to learn about what we do and the amazing team that makes it all happen! </p>
