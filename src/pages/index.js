@@ -7,7 +7,7 @@ import Featured from "@/components/modules/index/Featured";
 import Roadmap from "@/components/modules/index/Roadmap";
 import Pricing from "@/components/modules/index/Pricing";
 import Team from "@/components/modules/index/Team";
-import Faq from "@/components/modules/index/Faq";
+import Faq from "@/components/modules/index/FAQ";
 import Newsletter from "@/components/modules/index/Newsletter";
 import Blog from "@/components/modules/index/Blogs";
 import Testimonial from "@/components/modules/index/Testimonials";
