@@ -137,7 +137,7 @@ const Mentor = ({ title }) => {
                         className="bg-image rounded hover-zoom hover-overlay"
                       >
                         <MDBCardImage
-                          src={'https://scontent.famm6-1.fna.fbcdn.net/v/t39.30808-6/278126386_136287828958583_3406790277216542956_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Kg62QMCD3mgQ7kNvgHyn53j&_nc_ht=scontent.famm6-1.fna&oh=00_AYCCUmqh3WrOjxlAk0Zepg6NRy8yaxt1OrTqKYcaZru48w&oe=664D4CC4'}
+                          src={'images/global/fxc.jpg'}
                           fluid
                           className="w-100"
                           style={{ maxWidth: 150 }}
@@ -273,11 +273,11 @@ const Mentor = ({ title }) => {
 
 
             <div className="col-sm-8 col-md-8 col-lg-6" style={{ paddingInline: 20 }}>
-              <Accordion className="accordion--style1">
+              <Accordion defaultActiveKey="0" flush className="accordion--style1">
                 <div className="row">
 
-                  <div key={1} className="col-12">
-                    <Accordion.Item className="accordion__item" eventKey={1}>
+                  <div key={"0"} className="col-12">
+                    <Accordion.Item className="accordion__item" eventKey={"0"}>
                       <div className="accordion__header">
                         <Accordion.Button className="accordion__button">
                           <span className="accordion__button-content">

@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>
           {
-            "Bitrader - Professional Multipurpose React js, Next.js Template for Your Crypto, Forex, and Stocks Trading Business "
+            "Pais4x"
           }
         </title>
 

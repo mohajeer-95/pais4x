@@ -184,7 +184,7 @@ function Header({ headerClass = null }) {
             <div className="header-wrapper">
               <div className="logo">
                 <Link href="/">
-                  <img style={{ borderRadius: 3, maxHeight: 40, }} className="dark" src="/images/global/logo.png" alt="logo" />
+                  <img style={{ maxHeight: 70, }} className="dark" src="/images/global/logo.png" alt="logo" />
                 </Link>
               </div>
               <div className="menu-area">

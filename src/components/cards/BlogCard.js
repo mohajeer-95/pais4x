@@ -26,6 +26,7 @@ const BlogCard = ({ data }) => {
                 className="bg-image rounded hover-zoom hover-overlay"
               >
                 <MDBCardImage
+                style={{maxHeight: 180}}
                   src={data.img}
                   fluid
                   className="w-100"
@@ -59,15 +60,15 @@ const BlogCard = ({ data }) => {
               className="border-sm-start-none border-start"
             >
               <div className="d-flex flex-row align-items-center mb-1">
-                <h4 className="mb-1 me-1">{data.price}</h4>
+                <h4 className="mb-1 me-1">{data.price} $</h4>
                 <span className="text-danger">
                   {/* <s>$25.99 OLD PRICE</s> */}
                 </span>
               </div>
-              <h6 className="text-success">Free shipping</h6>
-              <div className="d-flex flex-column mt-4">
-                <MDBBtn style={{}} color="primary" size="sm">
-                  Details
+              <h6 className="text-success"></h6>
+              <div className="d-flex flex-column mt-4" style={{paddingTop: 50,}}>
+                <MDBBtn style={{maxHeight: 35}} color="primary" size="sm" >
+                  Detailss
                 </MDBBtn>
                 {/* <MDBBtn outline color="primary" size="sm" className="mt-2">
                   Add to wish list

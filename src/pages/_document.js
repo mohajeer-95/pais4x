@@ -17,30 +17,30 @@ export default function Document() {
 
         <meta
           name="application-name"
-          content="Bitrader - Professional Multipurpose React js, Next.js Template for Your Crypto, Forex, and Stocks Trading Business"
-        />
+          content="Pais4x"
+          />
         <meta name="author" content="thetork" />
         <meta
           name="keywords"
-          content="Bitrader, Crypto, Forex, and Stocks Trading Business, TheTork, Tork"
+          content="Pais4x"
         />
         <meta
           name="description"
-          content="Experience the power of Bitrader, the ultimate React js, Next.js template designed to transform your trading business. With its sleek design and advanced features, Bitrader empowers you to showcase your expertise, engage clients, and dominate the markets. Elevate your online presence and unlock new trading possibilities with Bitrader. Designed and Developed By TheTork"
+          content="Pais4x"
         />
 
         <meta
           property="og:title"
-          content="Bitrader React Next.js: Empower Your Trading Journey | Crypto, Stock, Forex Templates by TheTork"
+          content="Pais4x"
         />
-        <meta property="og:site_name" content="Bitrader" />
-        <meta
+        <meta property="og:site_name" content="Pais4x" />
+        {/* <meta
           property="og:url"
           content="https://bitrader-next.thetork.com"
-        />
+        /> */}
         <meta
           property="og:description"
-          content="Explore the future of online trading with Bitrader React Next.js Template by TheTork. Empower your crypto, stock, forex, and day trading ventures with a seamless user experience. Unleash the power of modern web technologies for a cutting-edge and efficient trading platform."
+          content="Pais4x"
         />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/images/og.jpg" />

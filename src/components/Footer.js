@@ -68,8 +68,8 @@ function Footer() {
                 </div>
                 <div className="col-md-2 col-sm-4 col-6">
                   <div className="footer__links">
-                    <div className="footer__links-tittle">
-                      <h6 style={{color: 'black'}}>Quick links</h6>
+                    <div className="footer__links-tittle" style={{paddingTop: 45}}>
+
                     </div>
                     <div className="footer__links-content">
                       <ul className="footer__linklist">
