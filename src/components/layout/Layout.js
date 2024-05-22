@@ -3,7 +3,6 @@ import React from "react";
 import Footer from "@/components/Footer";
 import Header from "../Header";
 import Image from "next/image";
-import { useState, useEffect, useContext } from "react";
 
 // =================== Change image path end ================== //
 

@@ -39,7 +39,7 @@ function Services() {
                       </Link>{" "}
                     </h5>
                     <p className="mb-0">
-                      A social assistant that's flexible can accommodate your
+                      A social assistant thats flexible can accommodate your
                       schedule and needs, making life easier.
                     </p>
                   </div>

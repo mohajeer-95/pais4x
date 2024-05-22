@@ -29,18 +29,13 @@ const Hero = () => {
                   data-aos-duration="1000"
                 >
                   <div className="banner__content-coin">
-                    <img src="images/banner/home1/3.png" alt="coin icon" />
                   </div>
-                  <h1 className="banner__content-heading">
-                    Welcome,
-                  </h1>
 
                   <h1 className="banner__content-heading">
-                    Invest your money with <span>higher return</span>
+                    Make your <span>trades </span>count
                   </h1>
                   <p className="banner__content-moto">
-                    Anyone can invest money to different currency to increase
-                    their earnings by the help of Bitrader through online.
+                    Get cash back with every deal
                   </p>
                   <div className="banner__btn-group btn-group">
                     <Link
@@ -52,6 +47,12 @@ const Hero = () => {
                         <i className="fa-solid fa-arrow-right"></i>
                       </span>{" "}
                     </Link>
+{/* 
+                    <div style={{ maxWidth: '40%', borderRadius: 9, padding: 9 }} className="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
+                      <img className="dark" src="/images/partner/light/14.jpg" alt="service-icon" />
+
+
+                    </div> */}
 
 
                   </div>
@@ -105,18 +106,17 @@ const Hero = () => {
               </div>
 
               <div className="col-sm-8 col-md-8 col-lg-6">
-                <img src="images/banner/home1/3.png" alt="coin icon" />
 
                 <div className="service__item service__item--style1" data-aos="fade-up" data-aos-duration="800">
                   <div className="service__item-inner text-center">
-                    <div className="service__item-thumb mb-30">
-                      <img className="dark" src="/images/service/1.jpg" alt="service-icon" />
+                    <div style={{  justifyContent: 'center', paddingBottom: 20 }} >
+                      <img style={{borderRadius: 30, maxHeight:200}} className="dark" src="/images/global/train box.jpg" alt="service-icon" />
                     </div>
                     <div className="service-content">
                       {/* <h5 className="banner__content-heading"> <span>You can follow our Education </span>courses</h5> */}
-                      <h5 className="mb-15"> <Link className="stretched-link" href="service-details">You can follow our Education courses</Link> </h5>
+                      <h3 className="mb-15"> <Link className="stretched-link" href="blog-sidebar">Train to win</Link> </h3>
                       <p className="mb-0">
-                        Step into the world of Forex mastery with an exclusive invitation to delve into the illuminating courses curated by the esteemed <span>Dr.Monther</span>, where every session unfolds the secrets of financial markets with unparalleled expertise and insight
+                        Get the edge with our coaching
                       </p>
                     </div>
                   </div>

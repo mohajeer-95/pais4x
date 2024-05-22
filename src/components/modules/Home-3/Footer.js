@@ -105,10 +105,10 @@ const Footer = () => {
             </div>
             <div className="footer__bottom">
               <div className="footer__end">
-                <div className="footer__end-copyright">
+                {/* <div className="footer__end-copyright">
                   <p className=" mb-0">© 2024 All Rights Reserved By <Link href="https://themeforest.net/user/thetork/portfolio"
                     target="_blank">Thetork</Link> </p>
-                </div>
+                </div> */}
                 <div>
                   <ul className="social">
                     <li className="social__item">

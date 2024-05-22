@@ -10,7 +10,7 @@ const Price = () => {
   return (
     <>
       <Header />
-      <PageHeader />
+      <PageHeader title={'VIP Training'} page={'VIP Training'}/>
       <Pricing />
       <Testimonial />
       <Newsletter />

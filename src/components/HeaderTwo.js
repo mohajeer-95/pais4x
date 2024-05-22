@@ -194,7 +194,7 @@ useEffect(() => {
                 {isDarkLogoSame ? (
                   <img src="/images/logo/logo-dark.png" alt="logo" />
                   ):(
-                  <img className="dark" src="/images/logo/logo.png" alt="logo" />
+                  <img className="dark" src="/images/logo/logo2.png" alt="logo" />
                   )
                 }
                 </Link>

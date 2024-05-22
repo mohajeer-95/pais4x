@@ -4,7 +4,7 @@ const RecentPost = () => {
   return (
     <div className="sidebar__recentpost" >
       <div className="sidebar__head">
-        <h6>Recent Post</h6>
+        <h6>VIP training sessions</h6>
       </div>
       <div className="sidebar__recentpost-body">
         <ul>

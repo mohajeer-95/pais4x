@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 function ContactCard() {
   // const { register, handleSubmit, watch, formState: { errors } } = useForm();
   // const onSubmit = data => {
   // }
+  const [getcountry, setCountry] = useState(null)
+  const [data, setData] = useState([])
 
+  const paymentMethodOptions = [
+    'For questions about your profile at Paid4X.com',
+    'For questions about the cashback ',
+    'For questions about the cashback balance',
+    'For questions about the account opening',
+    'For questions about the withdrawals',
+    'For questions about the training courses (not a student yet)',
+    'For questions about Udemy',
+    'For questions about VIP training & mentoring',
+    'For questions regarding the training material (for existing students only Udemy/VIP)',
+    'For questions regarding arranging a seminar/webinar',
+    'For advertisements/sponsorships of our social media or website',
+    'For questions about the brokers please refer to the dedicated page of the broker on our site.',
+  ]
+
+
+  let handlePaymentMethod = (e) => {
+    let states = data.filter((states) => {
+      return states.country === e.target.value
+    })
+
+    states = [...new Set(states.map((item) => {
+      return item.subcountry
+    }))]
+    states.sort()
+  }
 
   return (
     <div className="contact padding-top padding-bottom">
@@ -42,11 +70,11 @@ function ContactCard() {
                       </div>
                       <div className="contact__item-content">
                         <p>
-                          <Link href="tel:+447441448582">+44 744 144 8582</Link>
+                          <Link href="tel:+447441448582">+962 789 746 000</Link>
 
                         </p>
                         <p>
-                          <Link href="tel:+8801313941166">+880 131 394 1166</Link>
+                          <Link href="tel:+8801313941166">+962 777 514 312</Link>
                         </p>
                       </div>
                     </div>
@@ -58,10 +86,10 @@ function ContactCard() {
                       </div>
                       <div className="contact__item-content">
                         <p>
-                          <Link target="_blank" href="mailto:mail@thetork.com">mail@thetork.com</Link>
+                          <Link target="_blank" href="mailto:mail@thetork.com">paid4x@gmail.com</Link>
                         </p>
                         <p>
-                          <Link target="_blank" href="mailto:support@thetork.com">support@thetork.com</Link>
+                          <Link target="_blank" href="mailto:support@thetork.com">paid4x.com</Link>
                         </p>
                       </div>
                     </div>
@@ -73,10 +101,10 @@ function ContactCard() {
                       </div>
                       <div className="contact__item-content">
                         <p>
-                          88 Sheridan Street
+                          Amman-Jordan
                         </p>
                         <p>
-                          534 Victoria Trail
+                          16 Shafeeq Bent Malik St,
                         </p>
                       </div>
                     </div>
@@ -98,6 +126,20 @@ function ContactCard() {
                       <div>
                         <label htmlFor="email" className="form-label">Email</label>
                         <input className="form-control" type="email" id="email" placeholder="Email here" />
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div>
+                        <label htmlFor="account-pass" className="form-label">
+                          Contact us form?
+                        </label>
+
+                        <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
+                          <option>Select -	Contact us form ...</option>
+                          {paymentMethodOptions.map((item, index) => {
+                            return < option style={{ height: 22 }} value={getcountry} key={item}><h4>{item}</h4></option>
+                          })}
+                        </select>
                       </div>
                     </div>
                     <div className="col-12">

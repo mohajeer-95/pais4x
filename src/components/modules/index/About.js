@@ -29,7 +29,7 @@ function About() {
                             data-purecounter-start="0"
                             data-purecounter-end="10"
                           >
-                           <CountUp end ={10} duration={10} />
+                            <CountUp end={10} duration={10} />
                           </span>
                           Years
                         </h3>
@@ -45,8 +45,8 @@ function About() {
                             data-purecounter-start="0"
                             data-purecounter-end="30"
                           >
-                            <CountUp end ={25} duration={5} />
-                          
+                            <CountUp end={25} duration={5} />
+
                           </span>
                           K+
                         </h3>
@@ -69,19 +69,12 @@ function About() {
                   </h2>
 
                   <p className="mb-0">
-                    Hey there! So glad you stopped by to Meet Our Company. Don't
-                    miss out on this opportunity to learn about what we do and
-                    the amazing team that makes it all happen! Our company is
-                    all about creating innovative solutions and providing
-                    top-notch services to our clients. From start to finish,
-                    we're dedicated to delivering results that exceed
-                    expectations.{" "}
+                    
+                    
+
+
+                  Paid4X is a brand created by veteran analyst, coach & trader Munther Marji in 2023, after spending almost 23 years in the business. Mr. Marji started working in the FX/CFD business as a junior broker in Dec 2000, and filled every position possible up to a general manager of a brokerage company. He worked with brokers & financial market educational establishments in Switzerland, Cyprus, Turkey, South Kora, Saudi Arabia, Bahrain, Egypt, Syria & his homeland Jordan. 
                   </p>
-                  <Link href="about"
-                    className="trk-btn trk-btn--border trk-btn--primary"
-                  >
-                    Explore More{" "}
-                  </Link>
                 </div>
               </div>
             </div>

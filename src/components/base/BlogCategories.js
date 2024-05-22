@@ -3,11 +3,15 @@ import Link from 'next/link'
 const BlogCategories = () => {
   return (
     <div className="sidebar__categorie" >
-    <div className="sidebar__head">
+    {/* <div className="sidebar__head">
       <h6>Categories</h6>
-    </div>
-    <div className="sidebar__categorie-body">
-      <div className="sidebar__categorie-content">
+    </div> */}
+    {/* <div className="sidebar__categorie-body"> */}
+
+
+    <img src={'/images/blog/cvpc.png'} alt="blog Images" />
+
+      {/* <div className="sidebar__categorie-content">
         <ul>
           <li className="active">
             <Link scroll={false} href="">
@@ -35,8 +39,8 @@ const BlogCategories = () => {
             <span>1</span>
           </li>
         </ul>
-      </div>
-    </div>
+      </div> */}
+    {/* </div> */}
   </div>
   )
 }

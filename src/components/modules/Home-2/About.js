@@ -49,7 +49,7 @@ const About = () => {
                 </div>
                 <div className="about__content-details">
                   <h5>Online wallet</h5>
-                  <p className="mb-0">When travelling abroad, don't forget to exchange money at the airport or a local bank.
+                  <p className="mb-0">When travelling abroad, dont forget to exchange money at the airport or a local bank.
                   </p>
                 </div>
               </div>

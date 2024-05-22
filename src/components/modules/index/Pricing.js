@@ -1,142 +1,76 @@
 import React from "react";
 import Link from "next/link";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 
-const Pricing = ()=>{
-    return(
-        <section className="pricing padding-top padding-bottom">
-        <div className="section-header section-header--max50">
-          <h2 className="mb-15 mt-minus-5">Our <span>pricings </span>plan</h2>
-          <p>We offer the best pricings around - from installations to repairs, maintenance, and more!</p>
-        </div>
-        <div className="container">
-          <div className="pricing__wrapper">
-            <div className="row g-4 align-items-center">
-              <div className="col-md-6 col-lg-4">
-                <div className="pricing__item" data-aos="fade-right" data-aos-duration="1000">
-                  <div className="pricing__item-inner">
-                    <div className="pricing__item-content">
-    
-                      {/* <!-- pricing top part --> */}
-                      <div className="pricing__item-top">
-                        <h6 className="mb-15">Basic</h6>
-                        <h3 className="mb-25">$99/<span>Monthly</span> </h3>
-                      </div>
-    
-                      {/* <!-- pricing middle part --> */}
-                      <div className="pricing__item-middle">
-                        <ul className="pricing__list">
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Weekly online meeting</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Unlimited learning access</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            24/7 technical support</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Personal training</li>
-                        </ul>
-    
-                      </div>
-    
-                      {/* <!-- pricing bottom part --> */}
-                      <div className="pricing__item-bottom">
-                        <Link href="signup" className="trk-btn trk-btn--outline">Choose Plan</Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6 col-lg-4">
-                <div className="pricing__item " data-aos="fade-up" data-aos-duration="1000">
-                  <div className="pricing__item-inner active">
-                    <div className="pricing__item-content">
-    
-                      {/* <!-- pricing top part --> */}
-                      <div className="pricing__item-top">
-                        <h6 className="mb-15">standard</h6>
-                        <h3 className="mb-25">$149/<span>Monthly</span> </h3>
-                      </div>
-    
-                      {/* <!-- pricing middle part --> */}
-                      <div className="pricing__item-middle">
-                        <ul className="pricing__list">
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Weekly online meeting</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Unlimited learning access</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            24/7 technical support</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Personal training</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Business analysis</li>
-                        </ul>
-    
-                      </div>
-    
-                      {/* <!-- pricing bottom part --> */}
-                      <div className="pricing__item-bottom">
-                        <Link href="signup" className="trk-btn trk-btn--outline active">Choose Plan</Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6 col-lg-4">
-                <div className="pricing__item" data-aos="fade-left" data-aos-duration="1000">
-                  <div className="pricing__item-inner">
-                    <div className="pricing__item-content">
-    
-                      {/* <!-- pricing top part --> */}
-                      <div className="pricing__item-top">
-                        <h6 className="mb-15">premium</h6>
-                        <h3 className="mb-25">$199/<span>Monthly</span> </h3>
-                      </div>
-    
-                      {/* <!-- pricing middle part --> */}
-                      <div className="pricing__item-middle">
-                        <ul className="pricing__list">
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            With all standard features</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Unlimited learning access</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            24/7 technical support</li>
-                          <li className="pricing__list-item"><span><img src="/images/icon/check.svg" alt="check"
-                                className="dark"/></span>
-                            Personal training</li>
-                        </ul>
-    
-                      </div>
-    
-                      {/* <!-- pricing bottom part --> */}
-                      <div className="pricing__item-bottom">
-                        <Link href="signup" className="trk-btn trk-btn--outline">Choose Plan</Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="pricing__shape">
-          <span className="pricing__shape-item pricing__shape-item--1"> <span></span> </span>
-          <span className="pricing__shape-item pricing__shape-item--2"> <img src="/images/icon/1.png" alt="shape-icon"/>
-          </span>
-        </div>
-      </section>
-    )
+
+const Pricing = () => {
+  return (
+    <section className="pricing padding-top " style={{ paddingBottom: 40 }}>
+      <div className="section-header section-header--max50">
+        <h2 className="mb-15 mt-minus-5">VIP<span> Training</span></h2>
+      </div>
+
+      <Container>
+        <Row>
+          <Col xs={12} lg={6} md={6} style={{ paddingInline: 50 }}>
+            <p>
+
+              If you are the kind who prefers the live interaction with your coach, and could be asking several questions during the teaching process, then the VIP training is the one for you.
+              However, there is a caveat: the cost of the VIP training is extremely different from what you will pay for the recorded courses. Currently, the rate is $50 per hour of personal one-on-one coaching & training. Moreover, the VIP course takes more time than the recorded one, because of the questions & other forms of interaction.
+
+            </p>
+            {/*             
+
+
+            <Row>
+              <Col>
+                <p>
+                  - Skrill
+                </p>
+                <p>
+                  - Paypal
+                </p>
+                <p>
+                  - MoneyGram
+                </p>
+              </Col>
+              <Col>
+                <p>
+                  - Bank Transfers
+                </p>
+                <p>
+                  - Western Union
+                </p>
+              </Col>
+            </Row>
+ */}
+
+
+          </Col>
+          <Col xs={12} lg={6} md={6} style={{ paddingInline: 50 }}>
+            <h4>
+              That is why we always advise our student to go for the recorded courses:
+            </h4>
+
+            <p>
+              -	They are much cheaper
+            </p>
+            <p>
+              -	They are available according to your schedule
+
+            </p>
+            <p>
+              -	They include the same training material.
+            </p>
+
+          </Col>
+        </Row>
+
+      </Container>
+
+    </section>
+  )
 }
 export default Pricing;

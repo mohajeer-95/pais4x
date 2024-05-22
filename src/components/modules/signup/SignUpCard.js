@@ -28,11 +28,10 @@ function SignUpCard() {
               <input type="password" placeholder="Password" name="password" />
             </div>
             <div className="form-group">
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                name="password"
-              />
+              <input type="password" placeholder="Confirm Password" name="password" />
+            </div>
+            <div className="form-group">
+              <input type="password" placeholder="Confirm Password" name="password" />
             </div>
             <div className="form-group">
               <button className="d-block default-btn">

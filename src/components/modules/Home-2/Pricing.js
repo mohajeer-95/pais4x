@@ -7,7 +7,7 @@ const Pricing = () => {
     <section className="pricing padding-top padding-bottom bg-color-3">
     <div className="section-header section-header--max50">
       <h2 className="mb-15 mt-minus-5">Our <span className="style2">pricing </span>plan</h2>
-      <p>Here's our pricing plan: affordable, straightforward, and no hidden fees. That's it. Let's get started!</p>
+      <p>Here's our pricing plan: affordable, straightforward, and no hidden fees. thats it. Let's get started!</p>
     </div>
     <div className="container">
       <div className="pricing__wrapper">

@@ -112,7 +112,7 @@
         }
 
         @include breakpoint(xl) {
-            margin-block-end: 88px;
+            margin-block-end: 22px;
         }
     }
 
@@ -446,7 +446,7 @@
 
         @include breakpoint(xxl) {
             padding-block-start: 148px;
-            padding-block-end: 148px;
+            padding-block-end: 30px;
         }
 
         @include breakpoint(xxxl) {

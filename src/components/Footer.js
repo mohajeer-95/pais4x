@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from 'next/image';
 import ScrollToTop from "react-scroll-to-top";
 
-
+// #18e8ef color logo hajeer see
 function Footer() {
   return (
     <>
@@ -14,11 +14,10 @@ function Footer() {
               <div className="row gy-5 gx-4">
                 <div className="col-md-6">
                   <div className="footer__about">
-                    <Link href="/" className="footer__about-logo"><img src="images/logo/logo-dark.png"
+                    <Link href="/" className="footer__about-logo"><img style={{maxHeight: 44}} src="images/global/logo.png"
                       alt="Logo" /></Link>
-                    <p className="footer__about-moto ">Welcome to our trading site! We offer the best, most
-                      affordable products and services around. Shop now and start finding great deals!</p>
-                    <div className="footer__app">
+                    <p className="footer__about-moto ">Paid4x is an intermediate between the Forex investor and the broker, when you open an account on the Forex platform through Paid4X or Link your account after that, the Forex platform will pay Paid4X an amount of money on every trade the investor did</p>
+                    {/* <div className="footer__app">
                       <div className="footer__app-item footer__app-item--apple">
                         <div className="footer__app-inner">
                           <div className="footer__app-thumb">
@@ -45,7 +44,7 @@ function Footer() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="col-md-2 col-sm-4 col-6">
@@ -57,10 +56,10 @@ function Footer() {
                       <ul className="footer__linklist">
                         <li className="footer__linklist-item"> <Link href="about">About Us</Link>
                         </li>
-                        <li className="footer__linklist-item"> <Link href="team">Teams</Link>
+                        <li className="footer__linklist-item"> <Link href="team">Brokers</Link>
                         </li>
-                        <li className="footer__linklist-item"> <Link href="services">Services</Link> </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">Features</Link>
+                        <li className="footer__linklist-item"> <Link href="services">Instructor</Link> </li>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="">My Account</Link>
                         </li>
                       </ul>
                     </div>
@@ -70,22 +69,22 @@ function Footer() {
                 <div className="col-md-2 col-sm-4 col-6">
                   <div className="footer__links">
                     <div className="footer__links-tittle">
-                      <h6>Support</h6>
+                      <h6 style={{color: 'black'}}>Quick links</h6>
                     </div>
                     <div className="footer__links-content">
                       <ul className="footer__linklist">
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">Terms & Conditions</Link>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="">Courses</Link>
                         </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">Privacy Policy</Link>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="">VIP traning</Link>
                         </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">FAQs</Link></li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">Support Center</Link> </li>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="">Cash Back</Link></li>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="">Contact Us</Link> </li>
                       </ul>
                     </div>
                   </div>
 
                 </div>
-                <div className="col-md-2 col-sm-4">
+                {/* <div className="col-md-2 col-sm-4">
                   <div className="footer__links">
                     <div className="footer__links-tittle">
                       <h6>Company</h6>
@@ -103,14 +102,14 @@ function Footer() {
                     </div>
                   </div>
 
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="footer__bottom">
               <div className="footer__end">
                 <div className="footer__end-copyright">
-                  <p className=" mb-0">© 2024 All Rights Reserved By <Link href="https://themeforest.net/user/thetork/portfolio"
-                    target="_blank">Thetork</Link> </p>
+                  {/* <p className=" mb-0">© 2024 All Rights Reserved By <Link href="https://themeforest.net/user/thetork/portfolio"
+                    target="_blank">Thetork</Link> </p> */}
                 </div>
                 <div>
                   <ul className="social">

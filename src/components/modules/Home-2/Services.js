@@ -21,7 +21,7 @@ const Services = () => {
                   </div>
                   <div className="service__content">
                     <h5 className="mb-15"> <Link className="stretched-link" href="service-details">Strategy Consulting</Link> </h5>
-                    <p className="mb-0">A social assistant that's flexible can accommodate your schedule and needs, making
+                    <p className="mb-0">A social assistant thats flexible can accommodate your schedule and needs, making
                       life easier.</p>
                   </div>
                 </div>

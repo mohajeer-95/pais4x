@@ -11,12 +11,17 @@ const Newsletter = () => {
               data-aos-duration="1000"
             >
               <div className="cta__thumb">
-                <img src="/images/cta/3.png" alt="cta-thumb" />
+                <img src="/images/cta/33.png" alt="cta-thumb" />
               </div>
               <div className="cta__subscribe">
-                <h2>
+                {/* <h2>
                   <span>Subscribe</span> our news
+                </h2> */}
+
+                <h2>
+                  Subscribe our news
                 </h2>
+
                 <p>
                   Hey! Are you tired of missing out on our updates? Subscribe to
                   our news now and stay in the loop!
@@ -31,7 +36,7 @@ const Newsletter = () => {
                       className="form-control form-control--style2 mb-3 mb-sm-0"
                       placeholder="Email Address"
                     />
-                    <button
+                    <button style={{backgroundColor: 'black'}}
                       className="trk-btn trk-btn--large trk-btn--secondary2"
                       type="submit"
                     >

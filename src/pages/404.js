@@ -3,6 +3,8 @@ import PageHeader from "@/components/base/PageHeader";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useState } from "react";
+
 const ErrorPage = () => {
   return (
     <>
@@ -25,7 +27,7 @@ const ErrorPage = () => {
                 </h2>
                 <p>
                   Oops! It looks like you're lost. The page you were looking for
-                  couldn't be found. Don't worry, it happens to the best of us.
+                  couldn't be found. dont worry, it happens to the best of us.
                 </p>
                 <Link
                   href="/"

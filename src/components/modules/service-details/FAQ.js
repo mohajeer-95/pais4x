@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { Accordion } from "react-bootstrap";
 const serviceFaqData = [
-  {
+  { 
     id: 1,
     question: "Trading FAQs: How to Start Investing",
     answer:

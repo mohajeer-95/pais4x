@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
-import { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 
 const faqdata = [

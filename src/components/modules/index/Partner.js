@@ -8,51 +8,39 @@ import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 const partnerData = [
   {
-    img: "/images/partner/light/1.png",
+    img: "/images/global/cfi.jpeg",
     alt: "partner logo",
   },
   {
-    img: "/images/partner/light/2.png",
+    img: "/images/global/broker.jpeg",
     alt: "partner logo",
   },
   {
-    img: "/images/partner/light/4.png",
+    img: "/images/global/etoro.png",
     alt: "partner logo",
   },
   {
-    img: "/images/partner/light/5.png",
+    img: "/images/global/cfi.jpeg",
     alt: "partner logo",
   },
   {
-    img: "/images/partner/light/1.png",
+    img: "/images/global/broker.jpeg",
     alt: "partner logo",
   },
   {
-    img: "/images/partner/light/2.png",
+    img: "/images/global/etoro.png",
     alt: "partner logo",
   },
   {
-    img: "/images/partner/light/4.png",
+    img: "/images/global/cfi.jpeg",
     alt: "partner logo",
   },
   {
-    img: "/images/partner/light/5.png",
+    img: "/images/global/broker.jpeg",
     alt: "partner logo",
   },
   {
-    img: "/images/partner/light/1.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/2.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/4.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/5.png",
+    img: "/images/global/etoro.png",
     alt: "partner logo",
   },
 
@@ -71,7 +59,7 @@ const Partner = () => {
       spaceBetween: 15,
     },
     1200: {
-      slidesPerView: 6,
+      slidesPerView: 5,
       spaceBetween: 25,
     },
   }
@@ -81,10 +69,10 @@ const Partner = () => {
         <div className="partner__wrapper">
           <Swiper
             className="partner__slider"
-            spaceBetween={24}
+            spaceBetween={40}
             slidesPerView={2}
             breakpoints={breakpoints}
-            speed={2000}
+            speed={3000}
             loop={true}
             autoplay={{
               delay: 1,
@@ -94,18 +82,61 @@ const Partner = () => {
 
           >
             {(partnerData.map((item, index) => (
-              <div className="">
+              <div key={index} className="" >
                 <SwiperSlide key={index} >
 
-                    <div className="" style={{alignItems: 'center', alignContent: 'center', width: '222',height: 100, marginInline: '11%',}}>
-                      <div className="contact__item-thumb" style={{ justifyContent: 'center'}}>
+                  <div className="" style={{ marginRight: 30, flexDirection: 'column', display: 'flex' }}>
+                    <img
+                      style={{ maxHeight: 50 }}
+                      src={item.img}
+                      alt="partner logo"
+                      className="dark"
+                    />
+                    <div style={{ marginTop: 10, marginInline: 25, display: 'flex', justifyContent: 'space-between', justifySelf: 'center' }}>
+
+                      <div>
+                        <Image width={0} height={0} sizes="100vw" style={{ width: 20, height: 'auto' }}
+                          src="images/icon/star.png"
+                          alt="light-dark-switchbtn"
+                          className="swtich-icon"
+                        />
+                        <span> </span>
+                        <span>2</span>
+                        <span>/</span>
+                        <span>5</span>
+
+                      </div>
+
+
+
+
+
+                      <span>|</span>
+
+
+
+
+
+                      <div>
+                        <Image width={0} height={0} sizes="100vw" style={{ width: 20, height: 'auto' }}
+                          src="images/icon/dollar.png"
+                          alt="light-dark-switchbtn"
+                          className="swtich-icon"
+                        />
+                        <span> </span>
+                        <span>28</span>
+                        <span>$</span>
+                      </div>
+
+                    </div>
+                    {/* <div className="contact__item-thumb" style={{ justifyContent: 'center'}}>
                         <img
                         style={{ justifyContent: 'center', justifySelf: 'center', }}
                           src={item.img}
                           alt="partner logo"
                           className="dark"
                         />                      </div>
-                      <div className="contact__item-content" style={{paddingInline: '13%'}}>
+                      <div className="contact__item-content" style={{}}>
                         <p>
                           <span
                             className="switch-btn"
@@ -132,8 +163,9 @@ const Partner = () => {
                           </span>
                           <CountUp end ={25} duration={5} />
                         </p>
-                      </div>
-                    </div>
+                      </div> */}
+
+                  </div>
                 </SwiperSlide>
 
 

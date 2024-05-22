@@ -10,6 +10,7 @@ import "@/styles/css/bootstrap.min.css";
 import "aos/dist/aos.css";
 import "@/styles/css/swiper-bundle.min.css";
 import "@/styles/sass/style.scss";
+import "react-datepicker/dist/react-datepicker.css";
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
 
@@ -58,7 +59,7 @@ export default function App({ Component, pageProps }) {
         {loading && (
           /* <!-- ===============>> Preloader start here <<================= --> */
           <div className="preloader">
-            <img src="images/logo/preloader.png" alt="preloader icon" />
+            <img src="images/global/logo.png" alt="preloader icon" />
           </div>
           /* <!-- ===============>> Preloader end here <<================= --> */
         )}

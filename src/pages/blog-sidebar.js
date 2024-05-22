@@ -7,7 +7,7 @@ const BlogSideBar = () => {
   return (
     <>
     <Header />
-    <PageHeader title = "Blog-Side Bar" text = "Blog-Side Bar" />
+    <PageHeader title = "Courses" text = "Courses" />
     <BlogWithSideBar />
     <Footer />
     </>

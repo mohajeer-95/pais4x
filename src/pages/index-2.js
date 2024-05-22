@@ -1,33 +1,28 @@
 import React, { useEffect } from 'react'
-import HeaderTwo from '@/components/HeaderTwo'
-import Hero from '@/components/modules/Home-2/Hero'
-import About from '@/components/modules/Home-2/About'
-import Services from '@/components/modules/Home-2/Services'
-import Pricing from '@/components/modules/Home-2/Pricing'
-import Roadmap from '@/components/modules/Home-2/Roadmap'
-import Team from '@/components/modules/Home-2/Team'
-import Testimonials from '@/components/modules/Home-2/Testimonials'
-import Faq from '@/components/modules/Home-2/Faq'
-import Blogs from '@/components/modules/Home-2/Blogs'
-import Newsletter from '@/components/modules/Home-2/Newsletter'
-import Footer from '@/components/modules/Home-2/Footer'
-const Home2 = () => {
+import Header from '@/components/Header'
+import PageHeader from '@/components/modules/about-us/PageHeader'
+import Roadmap from '@/components/modules/about-us/Roadmap'
+import About from '@/components/modules/about-us/about5'
+import Team from '@/components/modules/about-us/Team'
+import Newsletter from "@/components/modules/index/Newsletter";
+
+import Footer from '@/components/Footer'
+import Story from '@/components/modules/about-us/Story'
+import Partner from "@/components/modules/index/Partner";
+
+const AboutUs = () => {
+
   return (
     <>
-    <HeaderTwo isDarkLogoSame={true} />
-    <Hero />
+    <Header/>
+    <PageHeader title='Refund' page= 'Refund'/>
+    <Partner/>
+    {/* <Story/> */}
     <About />
-    <Services />
-    <Pricing />
-    <Roadmap/>
-    <Team />
-    <Testimonials />
-    <Faq />
-    <Blogs />
-    <Newsletter />
+    <Newsletter/>
     <Footer />
     </>
   )
 }
 
-export default Home2
+export default AboutUs

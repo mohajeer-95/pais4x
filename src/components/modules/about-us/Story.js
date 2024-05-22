@@ -21,7 +21,7 @@ const Story = () => {
                 data-aos="fade-up"
                 data-aos-duration="800"
               >
-                <img src="/images/about/4.png" alt="story-image" />
+                <img src="https://bitrader-next.thetork.com/images/about/4.png" alt="story-image" />
                 <div className="story__thumb-playbtn">
                   <Link  href="" onClick={() => setToggler(!toggler)}>
                     <i className="fa-solid fa-circle-play"></i>

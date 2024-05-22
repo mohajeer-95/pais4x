@@ -247,10 +247,10 @@
         @extend %p-30,
         %mt-40;
         background-color: $tertiary-color3;
-        border-radius: 16px;
+        border-radius: 5px;
 
         @include breakpoint(lg) {
-            padding: 40px;
+            // padding: 40px;
         }
 
         &-body {

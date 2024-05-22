@@ -22,27 +22,15 @@ const SignIn = () => {
                   <div className="account__header">
                     <h2>Welcome back!</h2>
                     <p>
-                      Hey there! Ready to log in? Just enter your username and
+                      Hey there! Ready to log in? Just enter your Email and
                       password below and you'll be back in action in no time.
                       Let's go!
                     </p>
                   </div>
 
-                  <div className="account__social">
-                    <Link scroll={false} href="" className="account__social-btn">
-                      <span>
-                        <img
-                          src="/images/others/google.svg"
-                          alt="google icon"
-                        />
-                      </span>
-                      Continue with google
-                    </Link>
-                  </div>
-
-                  <div className="account__divider account__divider--style1">
+                  {/* <div className="account__divider account__divider--style1">
                     <span>or</span>
-                  </div>
+                  </div> */}
 
                   <form
                     action=""
@@ -115,7 +103,7 @@ const SignIn = () => {
 
                   <div className="account__switch">
                     <p>
-                      Don't have an account? <Link href="signup">Sign up</Link>
+                      dont have an account? <Link href="signup">Sign up</Link>
                     </p>
                   </div>
                 </div>

@@ -7,41 +7,19 @@ import SidebarSearch from '@/components/base/SidebarSearch'
 import BlogCategories from '@/components/base/BlogCategories'
 import RecentPost from '@/components/base/RecentPost'
 import PopularTag from '@/components/base/PopularTag'
+import Partner from "@/components/modules/index/Partner";
+import Newsletter from "@/components/modules/index/Newsletter";
+
 const blogDetails = () => {
   return (
     <>
-    <Header />
-    <PageHeader title = "Blog Details" text = "Blog Details" />
-    <div className="blog-details padding-top padding-bottom section-bg-color">
-    <div className="container">
-      <div className="blog-details__wrapper">
-        <div className="row g-5">
-          <div className="col-lg-8">
-            <BlogDetails />
-          </div>
-          <div className="col-lg-4 col-md-8  col-12">
-            <div className="sidebar">
-              <div className="row g-4">
-                <div className="col-12">
-                  <SidebarSearch />
-                </div>
-                <div className="col-12">
-                 <BlogCategories />
-                </div>
-                <div className="col-12">
-                  <RecentPost />
-                </div>
-                <div className="col-12">
-                    <PopularTag />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    <Footer />
+      <Header />
+      <PageHeader title="My Account" text="My Account" />
+      <Partner />
+      <PopularTag/>
+      <Newsletter/>
+
+      <Footer />
     </>
   )
 }

@@ -56,7 +56,7 @@ const BlogDetails = () => {
                     <p className="mb-0">If you're looking to make some serious cash, a long-term investment is
                       definitely the way
                       to go. Sure, it may take a little patience, but the returns will be worth it in the end!
-                      Don't settle for mediocre gains when you could be making bank with a smart.</p>
+                      dont settle for mediocre gains when you could be making bank with a smart.</p>
                   </div>
                 </div>
                 <div className="col-xl-6">

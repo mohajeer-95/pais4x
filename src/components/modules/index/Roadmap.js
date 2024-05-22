@@ -18,7 +18,7 @@ function Roadmap() {
                 <div className="roadmap__item-content">
                   <div className="roadmap__item-header">
                     <h3>project research</h3>
-                    <span>P1</span>
+                    <span>P1sss</span>
                   </div>
                   <p>Project research is the backbone of any successful project. It involves gathering information,
                     setting objectives, and analyzing data to ensure the project is achievable. Without proper research,

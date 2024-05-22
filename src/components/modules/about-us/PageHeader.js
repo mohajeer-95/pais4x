@@ -1,17 +1,17 @@
 import React from 'react'
 import Link from 'next/link'
-const PageHeader = () => {
+const PageHeader = ({title, page}) => {
   return (
     <section className="page-header bg--cover" style={{backgroundImage: `url(/images/header/1.png)`}}>
     <div className="container">
       <div className="page-header__content" data-aos="fade-right" data-aos-duration="1000">
-        <h2>About Us</h2>
+        <h2>{title}</h2>
         <nav style={{
           '--bs-breadcrumb-divider': "'/'", 
         }} aria-label="breadcrumb">
           <ol className="breadcrumb mb-0">
             <li className="breadcrumb-item "><Link href="/">Home</Link></li>
-            <li className="breadcrumb-item active" aria-current="page">About</li>
+            <li className="breadcrumb-item active" aria-current="page">{page}</li>
           </ol>
         </nav>
       </div>

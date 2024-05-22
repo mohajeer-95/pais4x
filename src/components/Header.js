@@ -2,98 +2,98 @@ import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from 'next/router'
 import Image from 'next/image';
-function Header({headerClass=null}) {
+function Header({ headerClass = null }) {
   const [menu, setMenu] = useState(false);
   const [show, setShow] = useState(false);
   const router = useRouter()
   const [scrollTop, setScrollTop] = useState(0);
-  
-  const changeImage = useCallback((themeMode = 'light')=> {
+
+  const changeImage = useCallback((themeMode = 'light') => {
 
     const icon = document.querySelector('#btnSwitch img');
-  
-  
+
+
     if (themeMode === "dark") {
-  
-        icon.src = 'images/icon/sun.svg';
-        var images = document.querySelectorAll('img.dark');
-  
-        for (var i = 0; i < images.length; i++) {
-            var oldSrc = images[i].src;
-            oldSrc = oldSrc.replace("-dark.", ".");
-            var oldIndex = oldSrc.lastIndexOf(".");
-            var baseName = oldSrc.slice(0, oldIndex);
-            var extension = oldSrc.slice(oldIndex);
-            var newSrc = baseName + "-dark" + extension;
-            images[i].src = newSrc;
-        }
+
+      icon.src = 'images/icon/sun.svg';
+      var images = document.querySelectorAll('img.dark');
+
+      for (var i = 0; i < images.length; i++) {
+        var oldSrc = images[i].src;
+        oldSrc = oldSrc.replace("-dark.", ".");
+        var oldIndex = oldSrc.lastIndexOf(".");
+        var baseName = oldSrc.slice(0, oldIndex);
+        var extension = oldSrc.slice(oldIndex);
+        var newSrc = baseName + "-dark" + extension;
+        images[i].src = newSrc;
+      }
     } else {
-        icon.src = 'images/icon/moon.svg';
-        var images = document.querySelectorAll('img.dark');
-  
-        for (var i = 0; i < images.length; i++) {
-            var oldSrc = images[i].src;
-            var newSrc = oldSrc.replace("-dark.", ".");
-            images[i].src = newSrc;
-        }
+      icon.src = 'images/icon/moon.svg';
+      var images = document.querySelectorAll('img.dark');
+
+      for (var i = 0; i < images.length; i++) {
+        var oldSrc = images[i].src;
+        var newSrc = oldSrc.replace("-dark.", ".");
+        images[i].src = newSrc;
+      }
     }
-  
-  },[])
 
-const updateThemeColor = useCallback((themeMode = 'light') => {
+  }, [])
 
-  const colorSwitcher = document.getElementById('btnSwitch');
+  const updateThemeColor = useCallback((themeMode = 'light') => {
 
-  document.documentElement.setAttribute('data-bs-theme', themeMode);
-  localStorage.setItem('theme', themeMode)
+    const colorSwitcher = document.getElementById('btnSwitch');
 
-  if (themeMode === 'dark') {
-    colorSwitcher.classList.add('dark-switcher');
+    document.documentElement.setAttribute('data-bs-theme', themeMode);
+    localStorage.setItem('theme', themeMode)
 
-  } else {
-    colorSwitcher.classList.remove('dark-switcher');
-  }
+    if (themeMode === 'dark') {
+      colorSwitcher.classList.add('dark-switcher');
 
-  changeImage(themeMode);
+    } else {
+      colorSwitcher.classList.remove('dark-switcher');
+    }
 
-}, [changeImage]);
+    changeImage(themeMode);
 
-const toggleTheme = () => {
+  }, [changeImage]);
+
+  const toggleTheme = () => {
 
 
     const theme = localStorage.getItem('theme');
 
     if (theme && theme === 'dark') {
 
-        updateThemeColor('light');
+      updateThemeColor('light');
 
     } else {
-        updateThemeColor('dark');
+      updateThemeColor('dark');
 
     }
- 
+
   };
-// =================== light and dark start ================== //
+  // =================== light and dark start ================== //
 
-function switchThemeByUrl() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const theme = urlParams.get('theme');
+  function switchThemeByUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const theme = urlParams.get('theme');
 
-  if (theme) {
-    localStorage.setItem("theme", theme);
+    if (theme) {
+      localStorage.setItem("theme", theme);
+    }
+
   }
 
-}
+  // =================== light and dark end ================== //
 
-// =================== light and dark end ================== //
+  useEffect(() => {
+    switchThemeByUrl();
+    const theme = localStorage.getItem('theme');
+    updateThemeColor(localStorage.getItem('theme'))
 
-useEffect(() => {
-  switchThemeByUrl();
-  const theme = localStorage.getItem('theme');
-  updateThemeColor(localStorage.getItem('theme'))
 
-  
-}, [router.query.theme, updateThemeColor]);
+  }, [router.query.theme, updateThemeColor]);
 
   // ........header Sticky..................
   useEffect(() => {
@@ -105,7 +105,7 @@ useEffect(() => {
       router.events.off('routeChangeStart', removeActive);
     };
   });
-  useEffect(()=>{
+  useEffect(() => {
     setScrollTop(window.scrollY)
   }, [scrollTop])
 
@@ -161,38 +161,48 @@ useEffect(() => {
 
   return (
     <>
-    {/* <!-- ===============>> light&dark switch start here <<================= --> */}
-          
-    <div className="lightdark-switch" onClick={toggleTheme}>
-      <span
-        className="switch-btn"
-        id="btnSwitch"
-      >
-        <Image width={0} height={0} sizes="100vw" style={{ width: '100%', height: 'auto' }}
-          src="images/icon/moon.svg"
-          alt="light-dark-switchbtn"
-          className="swtich-icon"
-          
-        />
-      </span>
-    </div>
-          
-          {/* <!-- ===============>> light&dark switch start here <<================= --> */}
-      <header className={ `header-section ${headerClass ? headerClass:'bg-color-3'}`} onScroll={isSticky}>
-      <div className="header-bottom">
+      {/* <!-- ===============>> light&dark switch start here <<================= --> */}
+
+      <div className="lightdark-switch" onClick={toggleTheme}>
+        <span
+          className="switch-btn"
+          id="btnSwitch"
+        >
+          <Image width={0} height={0} sizes="100vw" style={{ width: '100%', height: 'auto' }}
+            src="images/icon/moon.svg"
+            alt="light-dark-switchbtn"
+            className="swtich-icon"
+
+          />
+        </span>
+      </div>
+
+      {/* <!-- ===============>> light&dark switch start here <<================= --> */}
+      <header className={`header-section ${headerClass ? headerClass : 'bg-color-3'}`} onScroll={isSticky}>
+        <div className="header-bottom">
           <div className="container">
             <div className="header-wrapper">
               <div className="logo">
                 <Link href="/">
-                  <img className="dark" src="/images/logo/logo.png" alt="logo" />
+                  <img style={{ borderRadius: 3, maxHeight: 40, }} className="dark" src="/images/global/logo.png" alt="logo" />
                 </Link>
               </div>
               <div className="menu-area">
-                  <ul id="menu" className={ `menu menu--style1 ${menu ? 'active' : ''}`}>
-                    <li className="megamenu menu-item-has-children">
-                      <Link scroll={false} href="/#0" onClick={toggleActive}>Demos </Link>
 
-                      
+                <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
+                  <li>
+                    <Link href="team-2">CashBack</Link>
+                  </li>
+{/* 
+                  <li>
+                    <Link href="blog-details">My Dashboard</Link>
+                  </li> */}
+                  
+
+                  {/* <li className="megamenu menu-item-has-children">
+                    <Link scroll={false} href="/#0" onClick={toggleActive}>My Dashboard </Link> */}
+
+                  {/*                       
                   <ul className="submenu">
                     <li>
                       <div className="home-showcase">
@@ -313,8 +323,8 @@ useEffect(() => {
                         }}>Forex Trading Dark</Link>
                               </h3>
                             </div>
-                          </div>
-                          {/* <div className="col">
+                          </div> */}
+                  {/* <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
                                 <img src="images/demo/4.png" alt="home-showcase" />
@@ -402,7 +412,7 @@ useEffect(() => {
                               </h3>
                             </div>
                           </div> */}
-                          <div className="col order-last">
+                  {/* <div className="col order-last">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
                                 <img src="images/demo/new.png" alt="home-showcase" />
@@ -414,63 +424,95 @@ useEffect(() => {
                         </div>
                       </div>
                     </li>
-                  </ul>
-                </li>
-                    <li className="menu-item-has-children">
-                      <Link href="/services" onClick={toggleActive}>Services</Link>
-                      <ul className="submenu">
-                        <li><Link href="/services">Services</Link></li>
-                        <li><Link href="/service-details">Services Details</Link></li>
-                      </ul>
-                    </li>
-                    <li className="menu-item-has-children">
-                      <Link scroll={false} href="/#0" onClick={toggleActive}>About</Link>
-                      <ul className="submenu">
-                        <li><Link href="/about">About Us</Link></li>
-                        <li><Link href="/price">Price</Link></li>
-                        <li><Link href="/team">Team</Link></li>
-                        <li><Link href="/team-2">Team 2</Link></li>
-                        <li><Link href="/team-details">Team Details</Link></li>
-                      </ul>
-                    </li>
+                  </ul> */}
 
-                    <li className="menu-item-has-children">
-                      <Link scroll={false} href="/#0" onClick={toggleActive}>Pages</Link>
-                      <ul className="submenu">
-                        <li><Link href="blogs">Blogs</Link></li>
-                        <li><Link href="blog-sidebar">Blog - Side Bar</Link></li>
-                        <li><Link href="blog-details">Blog Details</Link></li>
-                        <li><Link href="signup">Sign Up</Link></li>
-                        <li><Link href="signup-2">Sign Up 2</Link></li>
-                        <li><Link href="signin">Sign In</Link></li>
-                        <li><Link href="signin-2">Sign In 2</Link></li>
-                        <li><Link href="forgot-pass">Reset Password</Link></li>
-                        <li><Link href="forgot-pass-2">Reset Password 2</Link></li>
-                        <li><Link href="404">404 Error</Link></li>
-                      </ul>
+                  {/* </li> */}
 
+
+                  {/* <li className="menu-item-has-children">
+                    <Link href="/services" onClick={toggleActive}>Brokers</Link>
+                    <ul className="submenu">
+                      <li><Link href="/services">Services</Link></li>
+                      <li><Link href="/service-details">Services Details</Link></li>
+                    </ul>
+                  </li> */}
+
+                  <li>
+                    <Link href="team">Brokers</Link>
+                  </li>
+
+
+
+                  {/* <li className="menu-item-has-children">
+                    <Link scroll={false} href="/#0" onClick={toggleActive}>About</Link>
+                    <ul className="submenu">
+                      <li><Link href="/about">About Us</Link></li>
+                      <li><Link href="/price">Price</Link></li>
+                      <li><Link href="/team">Team</Link></li>
+                      <li><Link href="/team-2">Team 2</Link></li>
+                      <li><Link href="/team-details">Team Details</Link></li>
+                    </ul>
+                  </li> */}
+
+                  <li>
+                    <Link href="about">About</Link>
+                  </li>
+
+                  
+                  <li className="menu-item-has-children">
+                      <Link scroll={false} href="/#0" onClick={toggleActive}>Courses</Link>
+                      <ul className="submenu">
+                      <li><Link href="/blog-sidebar">Courses</Link></li>
+                      <li><Link href="/signup-2">Instructor</Link></li>
+                        <li><Link href="/price">VIP Training</Link></li>
+                        <li><Link href="/forgot-pass-2">Webinars</Link></li>
+                        <li><Link href="/signin-2">Seminars</Link></li>
+                        <li><Link href="/index-2">Refund</Link></li>
+                        <li><Link href="/index-3">Payments</Link></li>
+                      </ul>
                     </li>
-                    <li>
-                      <Link href="contact">Contact Us</Link>
-                    </li>
-                  </ul>
-                  </div>
-                  <div className="header-action">
+                  {/* <li className="menu-item-has-children">
+                    <Link scroll={false} href="/#0" onClick={toggleActive}>Pages</Link>
+                    <ul className="submenu">
+                      <li><Link href="blogs">Blogs</Link></li>
+                      <li><Link href="blog-sidebar">Blog - Side Bar</Link></li>
+                      <li><Link href="blog-details">Blog Details</Link></li>
+                      <li><Link href="signup">Sign Up</Link></li>
+                      <li><Link href="signup-2">Sign Up 2</Link></li>
+                      <li><Link href="signin">Sign In</Link></li>
+                      <li><Link href="signin-2">Sign In 2</Link></li>
+                      <li><Link href="forgot-pass">Reset Password</Link></li>
+                      <li><Link href="forgot-pass-2">Reset Password 2</Link></li>
+                      <li><Link href="404">404 Error</Link></li>
+                    </ul>
+
+                  </li> */}
+                  <li>
+                    <Link href="contact">Contact Us</Link>
+                  </li>
+                </ul>
+              </div>
+              <div className="header-action">
                 <div className="menu-area">
                   <div className="header-btn">
-                    <Link href="signup" className="trk-btn trk-btn--border trk-btn--primary">
-                      <span>Join Now</span>
+                    <Link href="blog-details" className="trk-btn trk-btn--border trk-btn--primary">
+                      <span>My Account</span>
                     </Link>
+
+                    {/* <li>
+                    <Link href="blog-details">My Dashboard</Link>
+                  </li> */}
+
                   </div>
 
                   {/* <!-- toggle icons --> */}
-                  <div className={menu?"header-bar d-lg-none header-bar--style1 active": "header-bar d-lg-none header-bar--style1" } onClick={()=>toggleMenu()}>
+                  <div className={menu ? "header-bar d-lg-none header-bar--style1 active" : "header-bar d-lg-none header-bar--style1"} onClick={() => toggleMenu()}>
                     <span></span>
                     <span></span>
                     <span></span>
                   </div>
                 </div>
-                  </div>
+              </div>
 
             </div>
           </div>

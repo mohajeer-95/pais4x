@@ -150,7 +150,7 @@ const Footer = () => {
             </div>
             <div className="footer__bottom">
               <div className="footer__end justify-content-center">
-                <div className="footer__end-copyright">
+                {/* <div className="footer__end-copyright">
                   <p className=" mb-0">
                     © 2024 All Rights Reserved By{" "}
                     <Link
@@ -160,7 +160,7 @@ const Footer = () => {
                       Thetork
                     </Link>{" "}
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -1,20 +1,28 @@
-import React from "react";
-import PageHeader from "@/components/base/PageHeader";
+import React, { useEffect } from 'react'
 import Header from '@/components/Header'
+import PageHeader from '@/components/modules/about-us/PageHeader'
+import Roadmap from '@/components/modules/about-us/Roadmap'
+import About from '@/components/modules/about-us/about2'
+import Team from '@/components/modules/about-us/Team'
 import Newsletter from "@/components/modules/index/Newsletter";
-import Link from "next/link";
-import Footer from "@/components/Footer";
-import Advisor from "@/components/modules/team-2.js/Advisor";
-const Team2 = () => {
+
+import Footer from '@/components/Footer'
+import Story from '@/components/modules/about-us/Story'
+import Partner from "@/components/modules/index/Partner";
+
+const AboutUs = () => {
+
   return (
     <>
-      <Header />
-      <PageHeader title="Team" text="Team" />
-      <Advisor />
-      <Newsletter />
-      <Footer />
+    <Header/>
+    <PageHeader title='Cash Back' page= 'Cash back'/>
+    <Partner title='About Us' page= 'About'/>
+    {/* <Story/> */}
+    <About />
+    <Newsletter/>
+    <Footer />
     </>
-  );
-};
+  )
+}
 
-export default Team2;
+export default AboutUs
