@@ -1,6 +1,6 @@
+import React, { useState, useEffect } from 'react'
 import Link from "next/link";
 import FsLightbox from "fslightbox-react";
-import { useState, } from "react";
 import Image from "next/image";
 import Table from 'react-bootstrap/Table';
 import ToggleButton from 'react-bootstrap/ToggleButton';
@@ -24,18 +24,131 @@ import {
   MDBModalBody,
   MDBModalFooter,
 } from "mdb-react-ui-kit";
-
+import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import { callApiWithToken } from '../../../public/api/api'
+
 
 const PopularTag = () => {
   const [toggler, setToggler] = useState(false);
   const [value, setValue] = useState(1);
   const [scrollableModal, setScrollableModal] = useState(false);
+  const [receiptModal, setReceiptModal] = useState(false);
+  const [receipt, setReceipt] = useState('');
+  const [userData, setUserData] = useState('');
+  const [totalPaymentsCashback, setTotalPaymentsCashback] = useState('');
+  const [cashBackLog, setCashBackLog] = useState('');
+  const [paymentLog, setPaymentLog] = useState('');
+  const [brokerList, setListBroker] = useState([]);
+
+  const [varyingState, setVaryingState] = useState(1);
+  const [openLinkModal, setOpenLinkModal] = useState(false);
+  const [varyingRecipient, setVaryingRecipient] = useState('');
+  const [varyingMessage, setVaryingMessage] = useState('');
+  const [autToken, setAutToken] = useState('');
+
+
+  useEffect(() => {
+    const getToken = (getCookie('token'))
+    console.log('retToken',getToken);
+    // setCashback(getToken)
+    setAutToken(getToken)
+    getBrokerList(getToken)
+    getTotalPaymentsCashback(getToken)
+    getUserData(getToken)
+    getCashBackLog(getToken)
+    getPaymentsLog(getToken)
+  }, []);
+
+
+
+
+  const getBrokerList = async (token) => {
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/brokers-link-request', {}, 'GET', token);
+    console.log('response getBrokerList', response);
+    setListBroker(response)
+  }
+
+  const getPaymentsLog = async (token) => {
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/payments', {}, 'GET', token);
+    // console.log('response paymentsLog', response);
+    setPaymentLog(response)
+  }
+
+  const getCashBackLog = async (token) => {
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/cashback', {}, 'GET', token);
+    // console.log('response CashBackLog', response);
+    setCashBackLog(response)
+  }
+
+
+  const getTotalPaymentsCashback = async (token) => {
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/total-payments-cashback', {}, 'GET', token);
+    // console.log('response TotalPaymentsCashback', response);
+    setTotalPaymentsCashback(response)
+  }
+
+
+  const setCashback = async (token) => {
+    const tok = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMjA0ZTg3YzI0OGY1Nzg3ODI3MmQ4Mzk4ODU0Njk2ZDAzYmRmZDAyNTE3NDI0NWYyYTk3NmU4ZmI3NjYwMDQ1ZWNkNTY2NGIzMGIxMTFjNTciLCJpYXQiOjE3MTc0ODU2ODMsIm5iZiI6MTcxNzQ4NTY4MywiZXhwIjoxNzQ5MDIxNjgzLCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.VpPcmjGgN2B9A1RaNxPOZqf6hEcC7UPueJeumPCXmOxe09ItIN6ygUKt7HsLVF1qzQPss6inPpvEJSEo5c4q7fjbtLH0ZuAkSHaEOwq5Nr2lV8sjbrBIm9qagru_xc4swywR1JdR4e71OWQFnQKCQ3RiH4Oz8OCT6dzzLqCGyExrK_QdVKTtp8IjhdfkUFnrAz4RABDETnUEmnQjqB9mAxaIqO8MHRxJyWFiLyFk4QoRp-_Mu3SIN0Da-flUqTYwR9mENngxCcrMiOj1zKz8Jh-ERabKZnd8birCGHH8Jq72TIrlRTrF4HBhbqkuEj_-PgfvAB30JvWU6E8XFz3oqMLLTq3glg4NCFHrZsbpZRxXPQP3M1f3f0qAtqfz4vJoqFa50AgXvpeqZE7Cj3SuwqkfB1eLkM2hUkFWXlDNaBM3xk8_6xc60QqIG12QVCutBMxVt71tWCpcY1Okv9Dl7m3LtxjL3QCERgK_Q-IN1XSWbVV3-UMpCfAJ9bpGTC0AjQPvX1b-tQUWQFjm54nxQfNsa8G_ivouG-KMLKMf0YfqPDjUZLFM7GT0frOd5TLcrvP3xN-0OcDe35NZooGdLVpwgxMJRB5N2otgjvKukX4Y2Ahpmlw6Jis-Zl02GgUSsiV-O5n2Jh-5W3Qvv5V25AJBI6rwSHi8Idahq3IPB48'
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/cashback', { broker_id: '15', user_id: '8', amount: '222', payment_type: 'click' }, 'POST', tok);
+    // console.log('response setCashback', response);
+  }
+
+
+  const getUserData = async (token) => {
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/user-info', {}, 'GET', token);
+    // console.log('response User Data', response);
+    setUserData(response.info)
+  }
+
+  const handleClick = () => {
+    if (statebuttonText) {
+      setStateButtonText(false);
+    } else {
+      setStateButtonText(true);
+    }
+  };
+
+  useEffect(() => {
+    if (!getCookie('token')) {
+      window.location.href = '/';
+      return
+    }
+  }, [])
+
+  const logOut = () => {
+    deleteCookie('token')
+    window.location.href = '/';
+
+  };
+
+  const onChangeRecipient = (event) => {
+    setVaryingRecipient(event.target.value);
+  };
+
+  const onChangeMessage = (event) => {
+    setVaryingMessage(event.target.value);
+  };
+
+  const handleLinkWith = (event) => {
+    setVaryingState(1)
+    setOpenLinkModal(!openLinkModal);
+    setVaryingRecipient('');
+  };
+
+  const sendMail = (event) => {
+    setVaryingState(2)
+  };
 
   const handleChange = (val) => setValue(val);
 
+  function showRecept(img) {
+    setReceipt('https://lab.app2serve.com/storage/app/public/'+img)
+    setReceiptModal(true)
+  }
   return (
     <>
       <FsLightbox toggler={toggler} sources={["https://youtu.be/MHhIzIgFgJo"]} />
@@ -71,6 +184,92 @@ const PopularTag = () => {
         </MDBModalDialog>
       </MDBModal>
 
+
+
+      <MDBModal open={receiptModal} onClose={() => setReceiptModal(false)} tabIndex='-1'>
+        <MDBModalDialog>
+          <MDBModalContent>
+            <MDBModalHeader>
+              <MDBModalTitle>Receipt</MDBModalTitle>
+              <MDBBtn
+                className='btn-close'
+                color='none'
+                onClick={() => setReceiptModal(false)}
+              ></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <img src={receipt} alt="shape icon" />
+
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn className="ms-1" color='secondary' onClick={() => setReceiptModal(!setReceiptModal)}>
+                Close
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+
+
+
+      <>
+
+        <MDBModal open={openLinkModal} onClose={() => setOpenLinkModal(false)} tabIndex='-1'>
+          <MDBModalDialog>
+            <MDBModalContent>
+
+              <MDBModalHeader>
+                <MDBModalTitle>New Link with FXCentrum</MDBModalTitle>
+                <MDBBtn className='btn-close' color='none
+        ' onClick={() => setOpenLinkModal(false)}></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <form>
+                  <p>
+                    Please enter your email and then the verification code to complete the subscription ...
+                  </p>
+                  <h6>Email:  <span class="badge badge-primary">New</span></h6>
+
+                  <div className='mb-3'>
+                    {openLinkModal && (
+                      <MDBInput
+                        type='email'
+                        disabled={varyingState == 2}
+                        value={varyingRecipient}
+                        onChange={onChangeRecipient}
+                        labelClass='col-form-label'
+                      />
+                    )}
+                  </div>
+                  {varyingState == 2 ? <p>We have sent a verification code to your email...</p> : null}
+
+                  {varyingState == 2 ? <h6>Enter OTP:  <span class="badge badge-primary">New</span></h6> : null}
+
+                  <div className='mb-3'>
+                    {varyingState == 2 ?
+                      <MDBInput
+                        type='number'
+                        disabled={false}
+                        value={varyingMessage}
+                        onChange={onChangeMessage}
+                        labelClass='col-form-label'
+                      />
+                      : null}
+                  </div>
+                </form>
+              </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn className='ms-1' color='secondary' onClick={() => setOpenLinkModal(!openLinkModal)}>
+                  Close
+                </MDBBtn>
+                {varyingState == 1 ? <MDBBtn className="ms-1" onClick={() => sendMail()}>sent</MDBBtn> : null}
+                {varyingState == 2 ? <MDBBtn className="ms-1" onClick={() => setOpenLinkModal(!openLinkModal)}>sent</MDBBtn> : null}
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+      </>
+
       <section className="banner banner--style1" style={{ paddingBlockStart: 50 }}>
         <div className="banner__bg">
           <div className="banner__bg-element">
@@ -91,7 +290,7 @@ const PopularTag = () => {
 
 
                 <div className="col-lg-4 col-md-5"
-                                style={{ justifyContent: 'center', alignItems: 'center' }}>
+                  style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <div
                     className="banner__content"
                     data-aos="fade-right"
@@ -118,7 +317,7 @@ const PopularTag = () => {
                               <div style={{ backgroundColor: '#E0E3B9', borderRadius: 9, minHeight: 140 }} className="card__footer">
                                 <div className="card__Footer__first">
                                   <div>
-                                    <p style={{ color: '#0C263A' }}>{'250 $'}</p>
+                                    <p style={{ color: '#0C263A' }}>{totalPaymentsCashback.total_cashback}</p>
                                   </div>
                                   <label style={{ fontFamily: 'monospace', color: '#0C263A' }}>total cash back</label>
                                 </div>
@@ -128,7 +327,7 @@ const PopularTag = () => {
                               <div style={{ backgroundColor: '#E0E3B9', borderRadius: 9, minHeight: 140 }} className="card__footer">
                                 <div className="card__Footer__first">
                                   <div>
-                                    <p style={{ color: '#0C263A' }}>{'590 $'}</p>
+                                    <p style={{ color: '#0C263A' }}>{totalPaymentsCashback.total_payment}</p>
                                   </div>
                                   <label style={{ fontFamily: 'monospace', color: '#0C263A' }}>Total Payment</label>
                                 </div>
@@ -174,23 +373,23 @@ const PopularTag = () => {
                       </thead>
                       <tbody>
                         <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                          <td style={{ textAlign: 'center' }} colSpan={2}><h6 style={{ fontweight: 'bold'}}>My Information </h6></td>
+                          <td style={{ textAlign: 'center' }} colSpan={2}><h6 style={{ fontweight: 'bold' }}>My Information </h6></td>
                         </tr>
                         <tr>
                           <td style={{ fontFamily: 'cursive' }}>Name: </td>
-                          <td>Mohammed</td>
+                          <td>{userData?.name + ' ' + userData?.last_name}</td>
                         </tr>
                         <tr>
                           <td style={{ fontFamily: 'cursive' }}>Email: </td>
-                          <td>mhajeer@yahoo.com</td>
+                          <td>{userData?.email}</td>
                         </tr>
                         <tr>
                           <td style={{ fontFamily: 'cursive' }}>Phone: </td>
-                          <td>962777514312</td>
+                          <td>{userData?.phone}</td>
                         </tr>
                         <tr>
                           <td style={{ fontFamily: 'cursive' }}>ExPhone: </td>
-                          <td>962777514312</td>
+                          <td>{userData?.phone}</td>
                         </tr>
                       </tbody>
                     </Table> : null}
@@ -207,21 +406,13 @@ const PopularTag = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>59$</td>
-                            <td>Otto</td>
-                            <td>19-6-2024</td>
-                          </tr>
-                          <tr>
-                            <td>200$</td>
-                            <td>Thornton</td>
-                            <td>23-9-2024</td>
-                          </tr>
-                          <tr>
-                            <td>30$</td>
-                            <td>Bird</td>
-                            <td>24-10-2024</td>
-                          </tr>
+                          {cashBackLog?.cashback_list?.map((item) => (
+                            <tr>
+                              <td>{item.amount} $</td>
+                              <td>{item.name}</td>
+                              <td>{item.created_at}s</td>
+                            </tr>
+                          ))}
                         </tbody>
                       </Table> : null}
 
@@ -238,45 +429,55 @@ const PopularTag = () => {
                             <th>Cash back</th>
                             <th>Date</th>
                             <th>Payment way</th>
-                            <th style={{textAlign: 'center'}}>Receipt</th>
+                            <th style={{ textAlign: 'center' }}>Receipt</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>59$</td>
-                            <td>
-                              19-6-2024</td>
-                            <td>Paypal</td>
-                            <td style={{ display: 'ruby-text' }}>
-                              <Link
-                                scroll={false} href=""
-                                className="social__link social__link--style1">
-                                <i className="fab fa-creative-commons-share"></i>
-                              </Link>
-                            </td>                        </tr>
-                          <tr>
+
+                          {paymentLog?.payment_list?.map((item) => (
+                            <tr>
+                              <td>{item.amount} $</td>
+                              <td>{item.created_at}</td>
+                              <td>{item.payment_type}</td>
+                              <td style={{ display: 'ruby-text' }}>
+                                <button
+                                  onClick={() => showRecept(item.payment_image)}
+                                  scroll={false}
+                                  className="social__link social__link--style1">
+                                  <i className="fab fa-creative-commons-share"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                          }
+
+                          {/* <tr>
                             <td>200$</td>
                             <td>23-9-2024</td>
                             <td>Bank</td>
                             <td style={{ display: 'ruby-text' }}>
-                              <Link
-                                scroll={false} href=""
+                              <button
+                                onClick={() => showRecept('https://upload.wikimedia.org/wikipedia/commons/0/0b/ReceiptSwiss.jpg')}
+                                scroll={false}
                                 className="social__link social__link--style1">
                                 <i className="fab fa-creative-commons-share"></i>
-                              </Link>
-                            </td>                        </tr>
+                              </button>
+                            </td>
+                          </tr>
+
                           <tr>
                             <td>30$</td>
                             <td>24-10-2024</td>
                             <td>Westerm union</td>
                             <td style={{ display: 'ruby-text' }}>
-                              <Link
-                                scroll={false} href=""
+                              <button
+                                onClick={() => showRecept('https://upload.wikimedia.org/wikipedia/commons/0/0b/ReceiptSwiss.jpg')}
+                                scroll={false}
                                 className="social__link social__link--style1">
                                 <i className="fab fa-creative-commons-share"></i>
-                              </Link>
+                              </button>
                             </td>
-                          </tr>
+                          </tr> */}
                         </tbody>
                       </Table> : null}
                   </div>
@@ -304,62 +505,25 @@ const PopularTag = () => {
                           </tr>
                         </MDBTableHead>
                         <MDBTableBody>
-                          <tr style={{ textAlign: 'center' }} >
-                            <th style={{ textAlign: 'center' }} scope="row">Skype</th>
-                            <td>---</td>
-                            <td style={{ textAlign: 'center' }}>
+                          {brokerList?.brokers_link?.map((item) => (<tr style={{ textAlign: 'center' }} >
+                            <th style={{ textAlign: 'center' }} scope="row">{item.name}</th>
 
+                            {item.date_added == '' ? <th scope="row">{item.date_added}</th> : <th scope="row">{item.date_added}</th>}
 
-                              <MDBBtn href="team-details" style={{ minWidth: 75, maxWidth: 76 }} type="submit" color="success" className="ms-1">
-                                Link
-                              </MDBBtn>
-                            </td>
-                          </tr>
-                          <tr style={{ textAlign: 'center' }} >
-                            <th style={{ textAlign: 'center' }} scope="row">facebook</th>
-                            <td>-dd--</td>
-                            <td style={{ textAlign: 'center' }}>
+                            {item.status > 0 ?
+                              <td style={{ textAlign: 'center' }}>
+                                <MDBBtn style={{ minWidth: 75, maxWidth: 76, fontSize: 15, fontWeight: 'bold' }} type="submit" color="success" className="ms-1">
+                                  Linked
+                                </MDBBtn>
+                              </td> :
+                              <td style={{ textAlign: 'center' }}>
+                                <MDBBtn style={{ minWidth: 75, maxWidth: 100, fontSize: 13, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
+                                  In Progress
+                                </MDBBtn>
+                              </td>
+                            }
+                          </tr>))}
 
-
-                              <MDBBtn style={{ minWidth: 75, maxWidth: 76 }} type="submit" color="success" className="ms-1">
-                                Link
-                              </MDBBtn>
-                            </td>
-                          </tr>
-                          <tr style={{ textAlign: 'center' }} >
-                            <th scope="row">Webflow</th>
-                            <td>10-9-2024</td>
-                            <td style={{ textAlign: 'center' }}>
-                              <MDBBtn href="team-details" style={{ minWidth: 75, maxWidth: 76 }} type="submit" color="danger" className="ms-1">
-                                Delete
-                              </MDBBtn>
-
-
-                            </td>
-                          </tr>
-
-                          <tr style={{ textAlign: 'center' }} >
-                            <th scope="row">Spotify</th>
-                            <td>---</td>
-                            <td style={{ textAlign: 'center' }}>
-
-
-                              <MDBBtn href="team-details" style={{ minWidth: 75, maxWidth: 76 }} type="submit" color="success" className="ms-1">
-                                Link
-                              </MDBBtn>
-                            </td>
-                          </tr>
-
-                          <tr style={{ textAlign: 'center' }} >
-                            <th scope="row">Dropbox</th>
-                            <td>10-9-2024</td>
-                            <td style={{ textAlign: 'center' }}>
-                              <MDBBtn href="team-details" style={{ minWidth: 75, maxWidth: 76 }} type="submit" color="danger" className="ms-1">
-                                Delete
-                              </MDBBtn>
-
-                            </td>
-                          </tr>
                         </MDBTableBody>
                       </MDBTable>
                     </MDBCard>

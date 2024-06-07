@@ -23,7 +23,7 @@ function About() {
                                     <div className="about__thumb-image floating-content">
                                         <img
                                             className="dark"
-                                            src="/images/global/Instructor.jpg"
+                                            src="/images/global/Instructor.jpg" 
                                             alt="about-image"
                                         />
 

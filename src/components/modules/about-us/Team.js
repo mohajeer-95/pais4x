@@ -20,7 +20,7 @@ function Team({ team }) {
                 <div className="team__item-content team__item-content--style1">
                   <div className="team__item-author team__item-author--style1">
                     <div className="team__item-authorinfo">
-                      <h6 className="mb-1"><Link href="team-details" className="stretched-link">Dianne Russell</Link> </h6>
+                      <h6 className="mb-1"><Link href="broker" className="stretched-link">Dianne Russell</Link> </h6>
                       <p className="mb-0">Trade Captain</p>
                     </div>
                   </div>
@@ -38,7 +38,7 @@ function Team({ team }) {
                 <div className="team__item-content team__item-content--style1">
                   <div className="team__item-author team__item-author--style1">
                     <div className="team__item-authorinfo">
-                      <h6 className="mb-1"><Link href="team-details" className="stretched-link">Theresa Webb</Link> </h6>
+                      <h6 className="mb-1"><Link href="broker" className="stretched-link">Theresa Webb</Link> </h6>
                       <p className="mb-0">Strategic Advisor</p>
                     </div>
                   </div>
@@ -56,7 +56,7 @@ function Team({ team }) {
                 <div className="team__item-content team__item-content--style1">
                   <div className="team__item-author team__item-author--style1">
                     <div className="team__item-authorinfo">
-                      <h6 className="mb-1"><Link href="team-details" className="stretched-link">Courtney Henry</Link> </h6>
+                      <h6 className="mb-1"><Link href="broker" className="stretched-link">Courtney Henry</Link> </h6>
                       <p className="mb-0">Management Consultant</p>
                     </div>
                   </div>
@@ -74,7 +74,7 @@ function Team({ team }) {
                 <div className="team__item-content team__item-content--style1">
                   <div className="team__item-author team__item-author--style1">
                     <div className="team__item-authorinfo">
-                      <h6 className="mb-1"><Link href="team-details" className="stretched-link">Albert Flores</Link> </h6>
+                      <h6 className="mb-1"><Link href="broker" className="stretched-link">Albert Flores</Link> </h6>
                       <p className="mb-0">Development Specialist</p>
                     </div>
                   </div>
@@ -92,7 +92,7 @@ function Team({ team }) {
                 <div className="team__item-content team__item-content--style1">
                   <div className="team__item-author team__item-author--style1">
                     <div className="team__item-authorinfo">
-                      <h6 className="mb-1"><Link href="team-details" className="stretched-link">Darrell Steward</Link> </h6>
+                      <h6 className="mb-1"><Link href="broker" className="stretched-link">Darrell Steward</Link> </h6>
                       <p className="mb-0">Growth Strategist</p>
                     </div>
                   </div>
@@ -110,7 +110,7 @@ function Team({ team }) {
                 <div className="team__item-content team__item-content--style1">
                   <div className="team__item-author team__item-author--style1">
                     <div className="team__item-authorinfo">
-                      <h6 className="mb-1"><Link href="team-details" className="stretched-link">Wade Warren</Link> </h6>
+                      <h6 className="mb-1"><Link href="broker" className="stretched-link">Wade Warren</Link> </h6>
                       <p className="mb-0">Trade Consultant</p>
                     </div>
                   </div>
@@ -128,7 +128,7 @@ function Team({ team }) {
                 <div className="team__item-content team__item-content--style1">
                   <div className="team__item-author team__item-author--style1">
                     <div className="team__item-authorinfo">
-                      <h6 className="mb-1"><Link href="team-details" className="stretched-link">Cody Fisher</Link> </h6>
+                      <h6 className="mb-1"><Link href="broker" className="stretched-link">Cody Fisher</Link> </h6>
                       <p className="mb-0">HR Consultant</p>
                     </div>
                   </div>
@@ -146,7 +146,7 @@ function Team({ team }) {
                 <div className="team__item-content team__item-content--style1">
                   <div className="team__item-author team__item-author--style1">
                     <div className="team__item-authorinfo">
-                      <h6 className="mb-1"><Link href="team-details" className="stretched-link">Bessie Cooper</Link> </h6>
+                      <h6 className="mb-1"><Link href="broker" className="stretched-link">Bessie Cooper</Link> </h6>
                       <p className="mb-0">Financial Advisor</p>
                     </div>
                   </div>

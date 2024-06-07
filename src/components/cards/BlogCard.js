@@ -27,7 +27,7 @@ const BlogCard = ({ data }) => {
               >
                 <MDBCardImage
                 style={{maxHeight: 180}}
-                  src={data.img}
+                  src={'https://lab.app2serve.com/storage/app/public/'+data.image}
                   fluid
                   className="w-100"
                 />
@@ -40,8 +40,8 @@ const BlogCard = ({ data }) => {
               </MDBRipple>
             </MDBCol>
             <MDBCol md="6">
-              <h5>{data.title}</h5>
-              <div className="d-flex flex-row">
+              <h5>{data.course_name}</h5>
+              {/* <div className="d-flex flex-row">
                 <div className="text-danger mb-1 me-2">
                   <MDBIcon fas style={{color: '#18e8ef'}} icon="star" />
                   <MDBIcon fas style={{color: '#18e8ef'}} icon="star" />
@@ -49,7 +49,7 @@ const BlogCard = ({ data }) => {
                   <MDBIcon fas style={{color: '#18e8ef'}} icon="star" />
                 </div>
                 <span>145</span>
-              </div>
+              </div> */}
               <p className="">
                 {data.description}
               </p>
@@ -60,7 +60,7 @@ const BlogCard = ({ data }) => {
               className="border-sm-start-none border-start"
             >
               <div className="d-flex flex-row align-items-center mb-1">
-                <h4 className="mb-1 me-1">{data.price} $</h4>
+                {/* <h4 className="mb-1 me-1">{data.price} $</h4> */}
                 <span className="text-danger">
                   {/* <s>$25.99 OLD PRICE</s> */}
                 </span>

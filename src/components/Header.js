@@ -2,9 +2,12 @@ import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from 'next/router'
 import Image from 'next/image';
+import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
+
 function Header({ headerClass = null }) {
   const [menu, setMenu] = useState(false);
   const [show, setShow] = useState(false);
+  const [token, setToken] = useState(false);
   const router = useRouter()
   const [scrollTop, setScrollTop] = useState(0);
 
@@ -28,7 +31,7 @@ function Header({ headerClass = null }) {
         images[i].src = newSrc;
       }
     } else {
-      icon.src = 'images/icon/moon.svg';
+      // icon.src = 'images/icon/moon.svg';
       var images = document.querySelectorAll('img.dark');
 
       for (var i = 0; i < images.length; i++) {
@@ -51,7 +54,7 @@ function Header({ headerClass = null }) {
       colorSwitcher.classList.add('dark-switcher');
 
     } else {
-      colorSwitcher.classList.remove('dark-switcher');
+      // colorSwitcher.classList.remove('dark-switcher');
     }
 
     changeImage(themeMode);
@@ -88,12 +91,13 @@ function Header({ headerClass = null }) {
   // =================== light and dark end ================== //
 
   useEffect(() => {
+    setToken(getCookie('token'))
     switchThemeByUrl();
     const theme = localStorage.getItem('theme');
     updateThemeColor(localStorage.getItem('theme'))
 
 
-  }, [router.query.theme, updateThemeColor]);
+  }, []);
 
   // ........header Sticky..................
   useEffect(() => {
@@ -159,11 +163,17 @@ function Header({ headerClass = null }) {
     return str.length > n ? str.substr(0, n - 1) : str;
   }
 
+  const logOut = () => {
+    deleteCookie('token')
+    window.location.href = '/';
+
+  };
+  
   return (
     <>
       {/* <!-- ===============>> light&dark switch start here <<================= --> */}
 
-      <div className="lightdark-switch" onClick={toggleTheme}>
+      {/* <div className="lightdark-switch" onClick={toggleTheme}>
         <span
           className="switch-btn"
           id="btnSwitch"
@@ -175,7 +185,7 @@ function Header({ headerClass = null }) {
 
           />
         </span>
-      </div>
+      </div> */}
 
       {/* <!-- ===============>> light&dark switch start here <<================= --> */}
       <header className={`header-section ${headerClass ? headerClass : 'bg-color-3'}`} onScroll={isSticky}>
@@ -191,13 +201,13 @@ function Header({ headerClass = null }) {
 
                 <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
                   <li>
-                    <Link href="team-2">CashBack</Link>
+                    <Link href="cashback">CashBack</Link>
                   </li>
-{/* 
+                  {/* 
                   <li>
                     <Link href="blog-details">My Dashboard</Link>
                   </li> */}
-                  
+
 
                   {/* <li className="megamenu menu-item-has-children">
                     <Link scroll={false} href="/#0" onClick={toggleActive}>My Dashboard </Link> */}
@@ -438,7 +448,7 @@ function Header({ headerClass = null }) {
                   </li> */}
 
                   <li>
-                    <Link href="team">Brokers</Link>
+                    <Link href="brokers">Brokers</Link>
                   </li>
 
 
@@ -458,19 +468,19 @@ function Header({ headerClass = null }) {
                     <Link href="about">About</Link>
                   </li>
 
-                  
+
                   <li className="menu-item-has-children">
-                      <Link scroll={false} href="/#0" onClick={toggleActive}>Courses</Link>
-                      <ul className="submenu">
-                      <li><Link href="/blog-sidebar">Courses</Link></li>
-                      <li><Link href="/signup-2">Instructor</Link></li>
-                        <li><Link href="/price">VIP Training</Link></li>
-                        <li><Link href="/forgot-pass-2">Webinars</Link></li>
-                        <li><Link href="/signin-2">Seminars</Link></li>
-                        <li><Link href="/index-2">Refund</Link></li>
-                        <li><Link href="/index-3">Payments</Link></li>
-                      </ul>
-                    </li>
+                    <Link scroll={false} href="/#0" onClick={toggleActive}>Courses</Link>
+                    <ul className="submenu">
+                      <li><Link href="/courses">Courses</Link></li>
+                      <li><Link href="/instructor">Instructor</Link></li>
+                      <li><Link href="/training">VIP Training</Link></li>
+                      <li><Link href="/webinars">Webinars</Link></li>
+                      <li><Link href="/seminars">Seminars</Link></li>
+                      <li><Link href="/refund">Refund</Link></li>
+                      <li><Link href="/payments">Payments</Link></li>
+                    </ul>
+                  </li>
                   {/* <li className="menu-item-has-children">
                     <Link scroll={false} href="/#0" onClick={toggleActive}>Pages</Link>
                     <ul className="submenu">
@@ -495,13 +505,13 @@ function Header({ headerClass = null }) {
               <div className="header-action">
                 <div className="menu-area">
                   <div className="header-btn">
-                    <Link href="blog-details" className="trk-btn trk-btn--border trk-btn--primary">
+                    {token ? <Link href="profile" className="trk-btn trk-btn--border trk-btn--primary">
                       <span>My Account</span>
-                    </Link>
-
-                    {/* <li>
-                    <Link href="blog-details">My Dashboard</Link>
-                  </li> */}
+                    </Link> :
+                      <Link href="signup" className="trk-btn trk-btn--border trk-btn--primary">
+                        <span>Get Started</span>
+                      </Link>
+                    }
 
                   </div>
 
@@ -513,7 +523,11 @@ function Header({ headerClass = null }) {
                   </div>
                 </div>
               </div>
-
+              {token &&<ul>
+                <li onClick={()=> logOut()}>
+                  <Link href="contact">Logout</Link>
+                </li>
+              </ul>}
             </div>
           </div>
         </div>

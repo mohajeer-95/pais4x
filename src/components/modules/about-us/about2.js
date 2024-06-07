@@ -24,11 +24,9 @@ function About() {
                                     <div className="about__thumb-image floating-content">
                                         <img
                                             className="dark"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdNuyzaBbvRi7jTZdk8GvU5rXA8PlKhkfsYEBq6gNtL0PV80i37XuhRrphVhCZjeAuWJI&usqp=CAU"
+                                            src="/images/global/Instructor.jpg" 
                                             alt="about-image"
                                         />
-
-
                                     </div>
                                 </div>
                             </div>

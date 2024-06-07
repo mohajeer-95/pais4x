@@ -9,6 +9,13 @@ import Form from 'react-bootstrap/Form';
 import { components } from "react-select";
 import { default as ReactSelect } from "react-select";
 import DatePicker from "react-datepicker";
+
+import Spinner from 'react-bootstrap/Spinner';
+import Toast from 'react-bootstrap/Toast'
+import { callApiWithToken } from '../../../public/api/api'
+import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
+
+
 const SignUp = () => {
 
   const [date, setDate] = useState(new Date());
@@ -18,6 +25,25 @@ const SignUp = () => {
 
   const [dataConference, setDataconference] = useState([])
   const [getConference, setconference] = useState(null)
+  const [favoriteCommunication, setFavoriteCommunication] = useState('')
+  const [errors, setErrors] = useState({});
+  const [companyName, setCompanyName] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const [successSubmited, setSuccessSubmited] = useState(false);
+  const [firstname, setFirstname] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [token, setToken] = useState('')
+
+
+  const [communicationMethod, setCommunicationMethod] = useState(null)
+
+  useEffect(() => {
+    const getToken = (getCookie('token'))
+    setToken(getToken)
+  }, []);
+
 
   const colourOptions = [
     { value: 1, label: "Missouri Brokers 48-Hour" },
@@ -35,7 +61,7 @@ const SignUp = () => {
     { value: 7, label: "Friday" },
   ];
 
-  const paymentMethodOptions = [
+  const communicationMethodOptions = [
     'Face to face ',
     'Live video ',
   ]
@@ -60,7 +86,10 @@ const SignUp = () => {
     states.sort()
   }
 
+
+
   let handleCommunicationMethod = (e) => {
+    setconference(e.target.value)
     let states = dataConference.filter((states) => {
       return states.country === e.target.value
     })
@@ -80,8 +109,8 @@ const SignUp = () => {
   const [getstates, setStates] = useState([])
   const [selectedState, setSelectedState] = useState(null)
   const [getcities, setCities] = useState([])
-  const [optionSelected, setOptionSelected] = useState([])
-  const [optionDaysSelected, setOptionDaysSelected] = useState([])
+  const [optionSelected, setOptionSelected] = useState(null)
+  const [optionDaysSelected, setOptionDaysSelected] = useState(null)
 
 
   useEffect(() => {
@@ -97,7 +126,6 @@ const SignUp = () => {
       console.log(error)
     })
   }, [])
-  console.log(data)
 
   const country = [... new Set(data.map((item) => {
     return item.country
@@ -106,6 +134,7 @@ const SignUp = () => {
   // console.log(data)
 
   let handleCountry = (e) => {
+    setCountry(e.target.value)
     let states = data.filter((states) => {
       return states.country === e.target.value
     })
@@ -118,6 +147,7 @@ const SignUp = () => {
     setStates(getstates => states)
   }
   let handleState = (e) => {
+    setSelectedState(e.target.value)
     let cities = data.filter((city) => {
       return city.subcountry === e.target.value
     })
@@ -163,18 +193,133 @@ const SignUp = () => {
   };
 
 
-  const changeDatePicker = (selected) => {
+  const setcommunicationMethod = (e) => {
 
-    console.log('HAHAHA', selected);
+    setMethod(e.target.value)
   };
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+
+    if (!firstname) {
+      errors.firstname = 'First name is required';
+      valid = false;
+    }
+    if (!lastName) {
+      errors.lastName = 'last name is required';
+      valid = false;
+    }
+    if (!email) {
+      errors.email = 'email is required';
+      valid = false;
+    }
+    if (!phone) {
+      errors.phone = 'phone is required';
+      valid = false;
+    }
+    if (!getMethod) {
+      errors.communicationMethod = 'Please enter the webinars number';
+      valid = false;
+    }
+    if (!getConference) {
+      errors.videoConference = 'Please select video Conference';
+      valid = false;
+    }
+    if (!optionSelected) {
+      errors.daysAvailable = 'Subject is required';
+      valid = false;
+    }
+    if (!optionDaysSelected) {
+      errors.courses = 'Subject is required';
+      valid = false;
+    }
+    if (!getcountry) {
+      errors.country = 'Subject is required';
+      valid = false;
+    }
+    if (!selectedState) {
+      errors.city = 'Subject is required';
+      valid = false;
+    }
+
+
+    setErrors(errors);
+    return valid;
+  };
+
+
+
+  const submit = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
+
+    const daysSelected = []
+    const courses = []
+
+    optionSelected.map((course) => {
+      courses.push(course.label)
+    })
+
+    optionDaysSelected.map((day) => {
+      daysSelected.push(day.label)
+    })
+
+    const resErrors = {};
+
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/suggest-payments', {
+      first_name: firstname,
+      last_name: lastName,
+      email: email,
+      phone: phone,
+      method_of_communication: getMethod,
+      video_conference_app: getConference,
+      course_required: courses[0],
+      days_availability: daysSelected[0],
+      country: getcountry,
+      city: selectedState,
+    }, 'POST');
+
+
+    console.log('response PAYMENT:  ', response);
+
+    if (response.status == 1) {
+      console.log('11111111111111111');
+      submitSuccess()
+    } else if (response.message) {
+      console.log('22222222222222222');
+      setLoading(false)
+      resErrors.response = response.message
+      setErrors(resErrors);
+    } else {
+      setLoading(false)
+      console.log('3333333333333333');
+      errors.response = 'Something is wrong'
+      setErrors(resErrors);
+    }
+  }
+  function submitSuccess() {
+    setLoading(false)
+    setSuccessSubmited(true)
+
+    setTimeout(() => {
+      setSuccessSubmited(false)
+    }, 4000);
+  }
+
   return (
     <>
       <section className="account padding-bottom sec-bg-color2">
-        
+
         <div className="container">
           <div
             className="account__wrapper"
@@ -186,13 +331,12 @@ const SignUp = () => {
                 <div className="account__content account__content--style1">
                   <div className="account__header">
                     <h2>Suggest a payment method</h2>
-                    <p>
+                    {/* <p>
                       Hey there! Ready to join the VIP Account,
-                    </p>
+                    </p> */}
                   </div>
 
                   <form
-                    action=""
                     className="account__form needs-validation"
                     noValidate
                   >
@@ -207,7 +351,10 @@ const SignUp = () => {
                             type="text"
                             id="first-name"
                             placeholder="Ex. Jhon"
+                            onChange={(res) => setFirstname(res.target.value)}
                           />
+                          {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}
+
                         </div>
                       </div>
                       <div className="col-12 col-md-6">
@@ -221,7 +368,10 @@ const SignUp = () => {
                             type="text"
                             id="last-name"
                             placeholder="Ex. Doe"
+                            onChange={(res) => setLastName(res.target.value)}
                           />
+                          {errors.lastName && <p style={{ color: 'red' }}>{errors.lastName}</p>}
+
                         </div>
                       </div>
                       <div className="col-12">
@@ -235,7 +385,10 @@ const SignUp = () => {
                             id="account-email"
                             placeholder="Enter your email"
                             required
+                            onChange={(res) => setEmail(res.target.value)}
                           />
+                          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+
                         </div>
                       </div>
                       <div className="col-12">
@@ -249,7 +402,10 @@ const SignUp = () => {
                             id="account-phone"
                             placeholder="Enter your Phone Number"
                             required
+                            onChange={(res) => setPhone(res.target.value)}
                           />
+                          {errors.phone && <p style={{ color: 'red' }}>{errors.phone}</p>}
+
                         </div>
                       </div>
 
@@ -259,12 +415,14 @@ const SignUp = () => {
                             Method of communication
                           </label>
 
-                          <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
+                          <select className="form-control" onChange={(e) => setcommunicationMethod(e)} >
                             <option>Select Method of communication ...</option>
-                            {paymentMethodOptions.map((item, index) => {
+                            {communicationMethodOptions.map((item, index) => {
                               return < option value={getMethod} key={item}>{item}</option>
                             })}
                           </select>
+                          {errors.communicationMethod && <p style={{ color: 'red' }}>{errors.communicationMethod}</p>}
+
                         </div>
                       </div>
 
@@ -285,6 +443,8 @@ const SignUp = () => {
                               return < option value={getConference} key={item}>{item}</option>
                             })}
                           </select>
+                          {errors.videoConference && <p style={{ color: 'red' }}>{errors.videoConference}</p>}
+
                         </div>
                       </div>
 
@@ -301,10 +461,11 @@ const SignUp = () => {
                             components={{
                               OptionDay
                             }}
-                            onChange={() => handleChange()}
+                            onChange={(e) => handleChange(e)}
                             allowSelectAll={true}
                             value={optionSelected}
                           />
+                          {errors.courses && <p style={{ color: 'red' }}>{errors.conferenceVideo}</p>}
                         </div>
                       </div>
 
@@ -321,31 +482,13 @@ const SignUp = () => {
                             components={{
                               Option
                             }}
-                            onChange={() => handleDaysChange()}
+                            onChange={(e) => handleDaysChange(e)}
                             allowSelectAll={true}
                             value={optionDaysSelected}
                           />
+                          {errors.daysAvailable && <p style={{ color: 'red' }}>{errors.daysAvailable}</p>}
                         </div>
                       </div>
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Days Availabil
-                          </label>
-
-                          <input
-                            onChange={() => changeDatePicker(date)}
-                            className="form-control"
-                            type="date"
-                            name="party"
-                            min="2024-04-01"
-                            max="2026-04-20"
-                            required />
-                        </div>
-                      </div>
-
-
-
 
                       <div className="col-12 col-md-6">
                         <div>
@@ -359,6 +502,7 @@ const SignUp = () => {
                               return < option value={getcountry} key={item}>{item}</option>
                             })}
                           </select>
+                          {errors.country && <p style={{ color: 'red' }}>{errors.country}</p>}
 
                         </div>
                       </div>
@@ -376,6 +520,7 @@ const SignUp = () => {
                               return <option value={selectedState} key={item}>{item}</option>
                             })}
                           </select>
+                          {errors.city && <p style={{ color: 'red' }}>{errors.city}</p>}
 
 
 
@@ -385,12 +530,36 @@ const SignUp = () => {
 
                     </div>
 
-                    <button
-                      type="submit"
-                      className="trk-btn trk-btn--border trk-btn--primary d-block mt-4"
-                    >
-                      Submit Now
-                    </button>
+                    {!isLoading && !successSubmited &&
+                      <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">
+                        Submit Now
+                      </button>}
+                    {errors.response && <p style={{ color: 'red' }}>{errors.response}</p>}
+
+                    {isLoading && !successSubmited &&
+                      <div style={{ textAlign: 'center' }}>
+                        <Spinner animation="border" variant="info" />
+                      </div>}
+
+                    {successSubmited && <>
+                      <Toast
+                        className="d-inline-block m-1"
+                        bg={'success'}
+                        style={{ width: '100%' }}
+                      >
+                        <Toast.Header>
+                          <img
+                            src="holder.js/20x20?text=%20"
+                            className="rounded me-2"
+                            alt=""
+                          />
+                          <strong className="me-auto">Success</strong>
+                        </Toast.Header>
+                        <Toast.Body className={'text-white'}>
+                          Hello, your message is sent.
+                        </Toast.Body>
+                      </Toast>
+                    </>}
                   </form>
 
                   <div className="account__switch">

@@ -1,12 +1,48 @@
 import React, { useState } from "react";
 import Link from "next/link";
+
+import Spinner from 'react-bootstrap/Spinner';
+import Toast from 'react-bootstrap/Toast'
+import { callApiWithToken } from '../../../../public/api/api'
+
 function ContactCard() {
   // const { register, handleSubmit, watch, formState: { errors } } = useForm();
   // const onSubmit = data => {
   // }
   const [getcountry, setCountry] = useState(null)
   const [data, setData] = useState([])
+  const [question, setQuestion] = useState('')
+  const [firstname, setFirstname] = useState('');
+  const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState({});
+  const [isLoading, setLoading] = useState(false);
+  const [message, setMessage] = useState(false);
+  const [successSubmited, setSuccessSubmited] = useState(false);
 
+  const validateForm = () => {
+    let valid = true;
+    const errors = {};
+
+    if (!firstname) {
+      errors.firstname = 'first name is required';
+      valid = false;
+    }
+    if (!email) {
+      errors.email = 'your email required';
+      valid = false;
+    }
+    if (!question) {
+      errors.question = 'your question type required';
+      valid = false;
+    }
+    if (!message) {
+      errors.message = 'your question type required';
+      valid = false;
+    }
+
+    setErrors(errors);
+    return valid;
+  };
   const paymentMethodOptions = [
     'For questions about your profile at Paid4X.com',
     'For questions about the cashback ',
@@ -24,6 +60,7 @@ function ContactCard() {
 
 
   let handlePaymentMethod = (e) => {
+    setQuestion(e.target.value)
     let states = data.filter((states) => {
       return states.country === e.target.value
     })
@@ -33,6 +70,59 @@ function ContactCard() {
     }))]
     states.sort()
   }
+
+  const submit = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
+
+    const dataForm = {
+      name: firstname,
+      email: email,
+      question: question,
+      message: message,
+    }
+
+    const resErrors = {};
+
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/contacts', {
+      name: firstname,
+      email: email,
+      contact_us_form: question,
+      message: message,
+    }, 'POST');
+
+    console.log('response CONTACTUS:  ', dataForm);
+
+    if (response.status == 1) {
+      console.log('11111111111111111');
+      submitSuccess()
+    } else if (response.message) {
+      console.log('22222222222222222');
+      setLoading(false)
+      resErrors.response = response.message
+      setErrors(resErrors);
+    } else {
+      setLoading(false)
+      console.log('3333333333333333');
+      errors.response = 'Something is wrong'
+      setErrors(resErrors);
+    }
+  }
+  function submitSuccess() {
+    setLoading(false)
+    setSuccessSubmited(true)
+
+    setTimeout(() => {
+      setSuccessSubmited(false)
+    }, 3000);
+  }
+
+
+
 
   return (
     <div className="contact padding-top padding-bottom">
@@ -114,18 +204,32 @@ function ContactCard() {
             </div>
             <div className="col-md-7">
               <div className="contact__form">
-                <form action="/" data-aos="fade-left" data-aos-duration="1000">
+                <form data-aos="fade-left" data-aos-duration="1000" onSubmit={submit}>
                   <div className="row g-4">
                     <div className="col-12">
                       <div>
                         <label htmlFor="name" className="form-label">Name</label>
-                        <input className="form-control" type="text" id="name" placeholder="Full Name" />
-                      </div>
+                        <input
+                          className="form-control"
+                          type="text"
+                          id="first-name"
+                          placeholder="Ex. Jhon"
+                          onChange={(res) => setFirstname(res.target.value)}
+                        />
+                        {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}                      </div>
                     </div>
                     <div className="col-12">
                       <div>
                         <label htmlFor="email" className="form-label">Email</label>
-                        <input className="form-control" type="email" id="email" placeholder="Email here" />
+                        <input
+                          type="email"
+                          className="form-control"
+                          id="account-email"
+                          placeholder="Enter your email"
+                          required
+                          onChange={(res) => setEmail(res.target.value)}
+                        />
+                        {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
                       </div>
                     </div>
                     <div className="col-12">
@@ -137,21 +241,53 @@ function ContactCard() {
                         <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
                           <option>Select -	Contact us form ...</option>
                           {paymentMethodOptions.map((item, index) => {
-                            return < option style={{ height: 22 }} value={getcountry} key={item}><h4>{item}</h4></option>
+                            return < option style={{ height: 22 }} value={getcountry} key={item}>{item}</option>
                           })}
                         </select>
+                        {errors.question && <p style={{ color: 'red' }}>{errors.question}</p>}
+
                       </div>
                     </div>
                     <div className="col-12">
                       <div>
                         <label htmlFor="textarea" className="form-label">Message</label>
-                        <textarea cols="30" rows="5" className="form-control" id="textarea"
+                        <textarea onChange={(res) => setMessage(res.target.value)} cols="30" rows="5" className="form-control" id="textarea"
                           placeholder="Enter Your Message"></textarea>
+                        {errors.message && <p style={{ color: 'red' }}>{errors.message}</p>}
+
                       </div>
                     </div>
                   </div>
-                  <button type="submit" className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">contact us
-                    now</button>
+
+                  {!isLoading && !successSubmited &&
+                    <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">contact us
+                      now
+                    </button>}
+
+                  {isLoading && !successSubmited &&
+                    <div style={{ textAlign: 'center' }}>
+                      <Spinner animation="border" variant="info" />
+                    </div>}
+
+                  {successSubmited && <>
+                    <Toast
+                      className="d-inline-block m-1"
+                      bg={'success'}
+                      style={{ width: '100%' }}
+                    >
+                      <Toast.Header>
+                        <img
+                          src="holder.js/20x20?text=%20"
+                          className="rounded me-2"
+                          alt=""
+                        />
+                        <strong className="me-auto">Success</strong>
+                      </Toast.Header>
+                      <Toast.Body className={'text-white'}>
+                        Hello, your message is sent.
+                      </Toast.Body>
+                    </Toast>
+                  </>}
                 </form>
               </div>
             </div>

@@ -9,7 +9,7 @@ import { MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import Partner from "@/components/modules/index/Partner";
 import Story from '@/components/modules/about-us/Story'
 
- 
+
 const TeamDetails = () => {
   const router = useRouter();
   const data = router.query;
@@ -19,12 +19,12 @@ const TeamDetails = () => {
       <Header />
       {/* <PageHeader title={data.name} text={data.name} /> */}
 
-            <Partner title={data.name} text={data.name} />
+      <Partner title={data.name} text={data.name} />
 
-            <Mentor title={data.name} />
-            
+      <Mentor title={data.name} />
+
       {/* <PageHeader title={data.name} text={data.name} /> */}
-      <Newsletter/>
+      <Newsletter />
       <Footer />
     </>
   )

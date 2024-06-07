@@ -18,7 +18,6 @@ const blogDetails = () => {
       <Partner />
       <PopularTag/>
       <Newsletter/>
-
       <Footer />
     </>
   )

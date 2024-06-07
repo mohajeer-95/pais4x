@@ -1,5 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
-import Link from 'next/link'
+import React, { useState, useEffect } from 'react'
+import { Link, useRouter } from 'next/router';
+import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
+import Spinner from 'react-bootstrap/Spinner';
 import {
   MDBContainer,
   MDBCol,
@@ -25,17 +27,131 @@ import {
 import Table from 'react-bootstrap/Table';
 import Accordion from "react-bootstrap/Accordion";
 import Story from '@/components/modules/about-us/Story'
+import { callApiWithToken } from '../../../../public/api/api'
 
 const Mentor = ({ title }) => {
 
+  const router = useRouter();
+  const { id, name } = router.query;
+  const imageUrl = 'https://lab.app2serve.com/storage/app/public/'
   const [statebuttonText, setStateButtonText] = useState(false);
   const [varyingState, setVaryingState] = useState(1);
   const [varyingModal, setVaryingModal] = useState(false);
-  const [varyingRecipient, setVaryingRecipient] = useState('');
+  const [linkEmail, setEmail] = useState('');
   const [varyingMessage, setVaryingMessage] = useState('');
+  const [autToken, setAutToken] = useState('');
+  const [linkLoading, setLinkLoading] = useState(false);
+  const [errors, setErrors] = useState(false);
+
+  const [broker_account, setbroker_account] = useState([])
+  const [broker_cashback_info, setbroker_cashback_info] = useState([])
+  const [broker_funding, setbroker_funding] = useState([])
+  const [broker_type, setbroker_type] = useState([])
+  const [info, setinfo] = useState([])
+  const [margin_leverage, setmargin_leverage] = useState([])
+  const [platform, setplatform] = useState([])
+  const [support, setsupport] = useState([])
+  const [trading_cost, settrading_cost] = useState([])
+  const [broker, setbroker] = useState([])
+  const [brokerData, setBrokerData] = useState([])
+  const [brokerId, setBrokerId] = useState(null)
+  const [query, setQuery] = useState(null);
+
+  const [pargraph, setpargraph] = useState('');
+
+
+  const [isValid, setIsValid] = useState(null);
+  const [bottomModal, setBottomModal] = useState(false);
+
+  const toggleOpen = () => setBottomModal(!bottomModal);
+  useEffect(() => {
+
+    if (router.isReady) {
+      setQuery(router.query);
+      getBrokerById(id)
+      setBrokerId(router.query.id)
+    }
+
+    if (id) {
+      setBrokerId(id)
+      getBrokerById(id)
+    } else if (brokerId) {
+      getBrokerById(brokerId)
+    } else {
+      console.log('GGGGGGGGGGGGGGGGGGGGGGGGG', router.isReady);
+      //to home mohaj just test
+      // window.location.href = '/brokers';
+
+    }
+    const getToken = (getCookie('token'))
+    setAutToken(getToken)
+  }, [router.isReady]);
+
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = imageUrl + info.logo;
+
+    const handleLoad = () => {
+      console.log('VALID');
+      setIsValid(true);
+    };
+
+    const handleError = () => {
+      console.log('INVALID');
+      setIsValid(false);
+    };
+    console.log('img . source', img.src);
+    img.onload = handleLoad;
+    img.onerror = handleError;
+
+    // Cleanup listeners
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [info.logo]);
+
+  const getBrokerById = async (brokerId) => {
+    const response = await callApiWithToken(`http://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
+    setBrokerData(response.broker)
+
+    setbroker_account(response.broker.broker_account)
+    setbroker_cashback_info(response.broker.broker_cashback_info)
+    setbroker_funding(response.broker.broker_funding[0])
+    setbroker_type(response.broker.broker_type)
+    setinfo(response.broker.info)
+
+    if (response.broker.info.description.length > 108) {
+      setpargraph(response.broker.info.description.substring(0, 110) + '...')
+    } else {
+      setpargraph(response.broker.info.description)
+    }
+
+    setmargin_leverage(response.broker.margin_leverage)
+    setplatform(response.broker.platform)
+    setsupport(response.broker.support)
+    settrading_cost(response.broker.trading_cost)
+    setbroker(response.broker.broker)
+  }
+
 
 
   const handleClick = () => {
+    console.log('router.query', router.query);
+
+    // console.log('broker_account', broker_account)
+    // console.log('broker_cashback_info', broker_cashback_info)
+    // console.log('broker_funding', broker_funding)
+    // console.log('broker_type', broker_type)
+    // console.log('info', info)
+    // console.log('margin_leverage', margin_leverage)
+    // console.log('platform', platform)
+    // console.log('support', support)
+    // console.log('trading_cost', trading_cost)
+    // console.log('brokerData', brokerData)
+    // console.log('broker', broker)
+
     if (statebuttonText) {
       setStateButtonText(false);
     } else {
@@ -44,21 +160,41 @@ const Mentor = ({ title }) => {
   };
 
   const onChangeRecipient = (event) => {
-    setVaryingRecipient(event.target.value);
+    setEmail(event.target.value);
   };
 
   const onChangeMessage = (event) => {
     setVaryingMessage(event.target.value);
   };
 
+
   const handleLinkWith = (event) => {
     setVaryingState(1)
     setVaryingModal(!varyingModal);
-    setVaryingRecipient('');
+    setEmail('');
   };
 
-  const sendMail = (event) => {
-    setVaryingState(2)
+  const sendMail = async (event) => {
+    setLinkLoading(true)
+    if (!linkEmail) {
+      setErrors('Email is requerd')
+      setLinkLoading(false)
+      return
+    }
+    setErrors('')
+    console.log('linkEmail: ', linkEmail);
+    console.log('autToken: ', autToken);
+    const responseEmailSent = await callApiWithToken('http://lab.app2serve.com/public/api/brokers_link', { broker_identifier: linkEmail, broker_id: brokerId }, 'POST', autToken);
+    console.log('responseEmailSent: ', responseEmailSent);
+    if (responseEmailSent.status == 1) {
+      setLinkLoading(false)
+      setVaryingState(2) //disable email input to step two
+    } else {
+      setErrors('Please Try later')
+      setLinkLoading(false)
+    }
+
+
   };
 
 
@@ -67,16 +203,35 @@ const Mentor = ({ title }) => {
       <div className="container">
         <div className="team__wrapper">
           <div className="col-md-12 g-5 align-items-center" style={{ display: 'flex', justifyContent: 'center' }}>
+            <>
+              {/* <MDBBtn onClick={toggleOpen}>Launch frame modal</MDBBtn> */}
 
-
+              <MDBModal animationDirection='bottom' open={bottomModal} tabIndex='-1' onClose={() => setBottomModal(false)}>
+                <MDBModalDialog position='bottom' frame>
+                  <MDBModalContent>
+                    <MDBModalBody className='py-1'>
+                      <div className='d-flex justify-content-center align-items-center my-3'>
+                        <p className='mb-0'>We use cookies to improve your website experience</p>
+                        <MDBBtn color='success' size='sm' className='ms-2' onClick={toggleOpen}>
+                          Ok, thanks
+                        </MDBBtn>
+                        <MDBBtn size='sm' className='ms-2'>
+                          Learn more
+                        </MDBBtn>
+                      </div>
+                    </MDBModalBody>
+                  </MDBModalContent>
+                </MDBModalDialog>
+              </MDBModal>
+            </>
             <>
 
-              <MDBModal open={varyingModal} onClose={() => setVaryingModal(false)} tabIndex='-1'>
+              <MDBModal staticBackdrop open={varyingModal} onClose={() => setVaryingModal(false)} tabIndex='-1'>
                 <MDBModalDialog>
                   <MDBModalContent>
 
                     <MDBModalHeader>
-                      <MDBModalTitle>New Link with FXCentrum</MDBModalTitle>
+                      <MDBModalTitle>New Link with {info.name}</MDBModalTitle>
                       <MDBBtn className='btn-close' color='none
                       ' onClick={() => setVaryingModal(false)}></MDBBtn>
                     </MDBModalHeader>
@@ -92,12 +247,16 @@ const Mentor = ({ title }) => {
                             <MDBInput
                               type='email'
                               disabled={varyingState == 2}
-                              value={varyingRecipient}
+                              value={linkEmail}
                               onChange={onChangeRecipient}
                               labelClass='col-form-label'
                             />
                           )}
                         </div>
+                        {errors && <p style={{ color: 'red' }}>{errors}</p>}
+                        {linkLoading && varyingState == 1 && <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+                          <Spinner animation="border" variant="info" />
+                        </div>}
                         {varyingState == 2 ? <p>We have sent a verification code to your email...</p> : null}
 
                         {varyingState == 2 ? <h6>Enter OTP:  <span class="badge badge-primary">New</span></h6> : null}
@@ -112,6 +271,11 @@ const Mentor = ({ title }) => {
                               labelClass='col-form-label'
                             />
                             : null}
+
+                          {linkLoading && varyingState == 2 && <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+                            <Spinner animation="border" variant="info" />
+                          </div>}
+
                         </div>
                       </form>
                     </MDBModalBody>
@@ -130,14 +294,14 @@ const Mentor = ({ title }) => {
               <MDBCard className="shadow-0 border rounded" style={{}}>
                 <MDBCardBody>
                   <MDBRow>
-                    <MDBCol md="12" lg="3" className="mb-4 mb-lg-0">
+                    <MDBCol md="12" lg="3" className="mb-4 mb-lg-0 flex" style={{ display: 'flex', alignItems: 'center' }}>
                       <MDBRipple
                         rippleColor="light"
                         rippleTag="div"
                         className="bg-image rounded hover-zoom hover-overlay"
                       >
                         <MDBCardImage
-                          src={'images/global/fxc.jpg'}
+                          src={isValid ? imageUrl + info.logo : 'images/global/logo2.png'}
                           fluid
                           className="w-100"
                           style={{ maxWidth: 150 }}
@@ -151,8 +315,8 @@ const Mentor = ({ title }) => {
                       </MDBRipple>
                     </MDBCol>
                     <MDBCol md="6">
-                      <h5>FXCentrum</h5>
-                      <div className="d-flex flex-row">
+                      <h5>{info.name}</h5>
+                      {/* <div className="d-flex flex-row">
                         <div className="text-danger mb-1 me-2">
                           <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
                           <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
@@ -160,9 +324,11 @@ const Mentor = ({ title }) => {
                           <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
                         </div>
                         <span>145</span>
-                      </div>
+                      </div> */}
                       <p className="">
-                        Welcome to FXCentrum - the ultimate forex trading destination for a seamless.
+                        {
+                          pargraph
+                        }
                       </p>
                     </MDBCol>
                     <MDBCol
@@ -176,11 +342,11 @@ const Mentor = ({ title }) => {
                         </span>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-1 justify-content-center" >
-                        <h6 className="text-success">33$</h6>
+                        <h6 className="text-success">{info.cashback}$</h6>
                       </div>
                       <div className="d-flex flex-column mt-4">
                         <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
-                          Link With FXCentrum
+                          Link With {info.name}
                         </MDBBtn>
                       </div>
                     </MDBCol>
@@ -189,7 +355,11 @@ const Mentor = ({ title }) => {
               </MDBCard>
             </MDBRow>
           </div>
-          <Story />
+
+
+          {info.youtube_link && <div style={{ marginTop: 20 }}>
+            <Story youtubeLink={info.youtube_link} />
+          </div>}
 
           <div className="row" style={{ marginTop: 70 }}>
             <div className="col-sm-8 col-md-8 col-lg-6" style={{ marginTop: 20, paddingInline: 20 }}>
@@ -197,9 +367,10 @@ const Mentor = ({ title }) => {
                 <div className="roadmap__item-inner">
                   <div className="roadmap__item-content">
                     <div className="roadmap__item-header">
-                      <h3>Get to Know (FXCentrum)</h3>
+                      <h3>Get to Know ({info.name})</h3>
                     </div>
-                    <p>Welcome to FXCentrum - the ultimate forex trading destination for a seamless, profitable trading experience. Our company was founded in 2019 by a team of experienced forex traders, customer service professionals, and risk managers, who prioritize customer satisfaction above all else. Our strongest point is our 5* personal care and easy-to-use platform, which includes fast deposits and withdrawals. We are a fully regulated forex broker, holding license number SD055 from the FSA Seychelles. At FXCentrum, we offer a wide range of local deposit and withdrawal methods, including wire transfers, card payments, and even cryptocurrencies, making account funding and withdrawal easy and hassle-free.</p>
+                    {/* <p>Welcome to FXCentrum - the ultimate forex trading destination for a seamless, profitable trading experience. Our company was founded in 2019 by a team of experienced forex traders, customer service professionals, and risk managers, who prioritize customer satisfaction above all else. Our strongest point is our 5* personal care and easy-to-use platform, which includes fast deposits and withdrawals. We are a fully regulated forex broker, holding license number SD055 from the FSA Seychelles. At FXCentrum, we offer a wide range of local deposit and withdrawal methods, including wire transfers, card payments, and even cryptocurrencies, making account funding and withdrawal easy and hassle-free.</p> */}
+                    <p>{info.description}</p>
                     {/* <span>P2</span> */}
                     <p>
                       Our platform is designed to cater to both beginners and professionals in the forex trading world, with leverages of up to 1:1000 and various account types to choose from. Whether youre looking to start with a demo account or jump straight into a real one, we have got you covered.
@@ -239,26 +410,20 @@ const Mentor = ({ title }) => {
                       <td style={{ textAlign: 'center' }} >Maximum Trading Size </td>
                     </tr>
 
-                    <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                      <td style={{ textAlign: 'center' }} >Acount 1 </td>
-                      <td style={{ textAlign: 'center' }} >Margin Bonus USD/EUR </td>
-                      <td style={{ textAlign: 'center' }} >0.01 LOT </td>
-                      <td style={{ textAlign: 'center' }} > No Max</td>
-                    </tr>
-                    <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                      <td style={{ textAlign: 'center' }}>Acount 2 </td>
-                      <td style={{ textAlign: 'center' }} >Floating Bonus USD </td>
-                      <td style={{ textAlign: 'center' }} >0.5 LOT </td>
-                      <td style={{ textAlign: 'center' }} > No Max</td>
-                    </tr>
-                    <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                      <td style={{ textAlign: 'center' }}>Acount 3 </td>
-                      <td style={{ textAlign: 'center' }} >Scalping Margin Bonus USD  </td>
-                      <td style={{ textAlign: 'center' }} >0.5 LOT </td>
-                      <td style={{ textAlign: 'center' }} > No Max</td>
-                    </tr>
+                    {broker_type.map((item, index) => (
+                      <tr key={index} style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
+                        <td style={{ textAlign: 'center' }} >Acount {item.id} </td>
+                        <td style={{ textAlign: 'center' }} >ss{item.account_type}</td>
+                        <td style={{ textAlign: 'center' }} >{item.account_type_minimum_trading_size}</td>
+                        <td style={{ textAlign: 'center' }} >{item.account_type_maximum_trading_size}</td>
+                      </tr>))}
                   </thead>
                 </Table>
+                {!broker_type.length &&
+                  <div className="text-center"
+                    style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
+                    Types data not found now
+                  </div>}
               </div> : null}
 
             </div>
@@ -292,19 +457,19 @@ const Mentor = ({ title }) => {
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Entity Name: </td>
-                              <td>FXCentrum</td>
+                              <td>{broker.entity_name}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Broker type: </td>
-                              <td>STP/ECN</td>
+                              <td>{broker.broker_type}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Headquarters: </td>
-                              <td>Mahe / Seychelles</td>
+                              <td>{broker.headquarters}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Branch Offices: </td>
-                              <td>AMMAN - Qatar - Bahreen</td>
+                              <td>{broker.branch_offices}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -329,39 +494,39 @@ const Mentor = ({ title }) => {
 
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Bonus: </td>
-                              <td>Yes, 50% to 100%</td>
+                              {/* <td>{broker_account.bonus}</td> */}
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Swap-Free/Islamic Accounts: </td>
-                              <td>Not Available</td>
+                              <td>{broker_account.islamic_accounts}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Trailing Stop: </td>
-                              <td>No</td>
+                              <td>{broker_account.trailing_stop}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Hedging: </td>
-                              <td>Allowed</td>
+                              <td>{broker_account.hedging}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Scalping: </td>
-                              <td>Not Allowed, only on Scalping Margin Bonus USD</td>
+                              <td>{broker_account.scalping}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>EA: </td>
-                              <td>Allowed</td>
+                              <td>{broker_account.ea}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Segregated Accounts: </td>
-                              <td>Aes</td>
+                              <td>{broker_account.segregated_accounts}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Number of Instruments: </td>
-                              <td>381</td>
+                              <td>{broker_account.number_of_instruments}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Categories of Instruments: </td>
-                              <td>Commodities, Crypto, Forex, Indices, Stocks</td>
+                              <td>{broker_account.categories_of_instruments}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -435,15 +600,15 @@ const Mentor = ({ title }) => {
                           <thead>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }}  >Avg Spread on EURUSD</td>
-                              <td style={{ textAlign: 'center' }} >12 </td>
-                              <td style={{ textAlign: 'center' }} >24  </td>
-                              <td style={{ textAlign: 'center' }} >12  </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost.avg_spread_on_EURUSD_val_1} </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost.avg_spread_on_EURUSD_val_2}  </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost.avg_spread_on_EURUSD_val_3}  </td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }} >Commissions on FX </td>
-                              <td style={{ textAlign: 'center' }} >0 </td>
-                              <td style={{ textAlign: 'center' }} >0  </td>
-                              <td style={{ textAlign: 'center' }} >0  </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost.commissions_on_FX_val_1} </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost.commissions_on_FX_val_2}  </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost.commissions_on_FX_val_3}  </td>
                             </tr>
 
 
@@ -471,19 +636,19 @@ const Mentor = ({ title }) => {
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Leverage levels: </td>
-                              <td>1:1000 (possible to lower in client potal)</td>
+                              <td>{margin_leverage.leverage_levels} </td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Margin Call Level: </td>
-                              <td>50</td>
+                              <td>{margin_leverage.margin_call_evel}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Stop Out Level: </td>
-                              <td>30</td>
+                              <td>{margin_leverage.stop_out_level}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Closing Method @ Stop Out: </td>
-                              <td>Margin : one by one Floating: all at once</td>
+                              <td>{margin_leverage.closing_method_stop_out}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -506,17 +671,17 @@ const Mentor = ({ title }) => {
                           <thead>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }}>Account Currency</td>
-                              <td style={{ textAlign: 'center' }} colSpan={3}>USD / EUR </td>
+                              <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding.account_currency}</td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }} >Minimum Deposit </td>
-                              <td style={{ textAlign: 'center' }} >10 </td>
-                              <td style={{ textAlign: 'center' }} >10 </td>
-                              <td style={{ textAlign: 'center' }} >1000 </td>
+                              <td style={{ textAlign: 'center' }} >{broker_funding.minimum_deposit_val1} </td>
+                              <td style={{ textAlign: 'center' }} >{broker_funding.minimum_deposit_val2} </td>
+                              <td style={{ textAlign: 'center' }} >{broker_funding.minimum_deposit_val3} </td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }}>Payment Methods </td>
-                              <td style={{ textAlign: 'center' }} colSpan={3}>All Local Deposit Types, Crypto, Wire Transfer, Match2Pay, AstroPay etc. </td>
+                              <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding.payment_methods} </td>
                             </tr>
 
                           </thead>
@@ -566,19 +731,19 @@ const Mentor = ({ title }) => {
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>PC Platforms: </td>
-                              <td> Browser Trader, FXC Trader App</td>
+                              <td>{platform.pc_platforms}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Mobile Platforms: </td>
-                              <td>FXC Trader Android / iOS </td>
+                              <td>{platform.mobile_platforms}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Demo Period: </td>
-                              <td> No Expiration on Demo Account</td>
+                              <td>{platform.demo_period}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>MAM/PAMM: </td>
-                              <td>Yes </td>
+                              <td>{platform.MAM_PAMM}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -603,15 +768,15 @@ const Mentor = ({ title }) => {
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Channels: </td>
-                              <td style={{ backgroundColor: 'white' }}>https://chat.conv.rs/5b2bc1c8ad96dd5c6715ab7e8c7371dfea73a098.html, support@fxcentrum.com, https://fxcentrum.com/contact/ </td>
+                              <td style={{ backgroundColor: 'white' }}>{support.channels} </td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Hours: </td>
-                              <td>From 8:00 to 17:00 CET Time </td>
+                              <td>{support.hours} </td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Languages: </td>
-                              <td>English 50+ Other </td>
+                              <td>{support.languages}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -642,33 +807,35 @@ const Mentor = ({ title }) => {
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >FX </td>
-                      <td style={{ textAlign: 'center' }} > </td>
-                      <td style={{ textAlign: 'center' }} > </td>
-                      <td style={{ textAlign: 'center' }} >  </td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.FX_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.FX_floating_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.FX_scalping_account} </td>
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >Metals</td>
-                      <td style={{ textAlign: 'center' }} >0,01 LOT </td>
-                      <td style={{ textAlign: 'center' }} >0,5 LOT  </td>
-                      <td style={{ textAlign: 'center' }} >0,5 LOT </td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.metals_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.metals_floating_bonus} </td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.metals_scalping_account}</td>
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >Energies</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.energies_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.energies_floating_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.energies_scalping_account}</td>
+
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >Indicies</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.indicies_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.indicies_floating_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.indicies_scalping_account}</td>
+
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >Stocks</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
-                      <td style={{ textAlign: 'center' }} >Not Max</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.stocks_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.stocks_floating_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.stocks_scalping_account}</td>
                     </tr>
 
 
@@ -690,27 +857,20 @@ const Mentor = ({ title }) => {
                         <td style={{ textAlign: 'center' }} >Maximum Trading Size </td>
                       </tr>
 
-                      <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                        <td style={{ textAlign: 'center' }} >Acount 1 </td>
-                        <td style={{ textAlign: 'center' }} >Margin Bonus USD/EUR </td>
-                        <td style={{ textAlign: 'center' }} >0,01 LOT </td>
-                        <td style={{ textAlign: 'center' }} > No Max</td>
-                      </tr>
-                      <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                        <td style={{ textAlign: 'center' }}>Acount 2 </td>
-                        <td style={{ textAlign: 'center' }} >Floating Bonus USD </td>
-                        <td style={{ textAlign: 'center' }} >0,5 LOT </td>
-                        <td style={{ textAlign: 'center' }} > No Max</td>
-                      </tr>
-                      <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                        <td style={{ textAlign: 'center' }}>Acount 3 </td>
-                        <td style={{ textAlign: 'center' }} >Scalping Margin Bonus USD  </td>
-                        <td style={{ textAlign: 'center' }} >0,5 LOT </td>
-                        <td style={{ textAlign: 'center' }} > No Max</td>
-                      </tr>
+                      {broker_type.map((item, index) => (
+                        <tr key={index} style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
+                          <td style={{ textAlign: 'center' }} >Acount {item.id} </td>
+                          <td style={{ textAlign: 'center' }} >ss{item.account_type}</td>
+                          <td style={{ textAlign: 'center' }} >{item.account_type_minimum_trading_size}</td>
+                          <td style={{ textAlign: 'center' }} >{item.account_type_maximum_trading_size}</td>
+                        </tr>))}
                     </thead>
                   </Table>
-
+                  {!broker_type.length &&
+                  <div className="text-center"
+                    style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
+                    Types data not found now
+                  </div>}
                 </div> : null}
 
               </div>

@@ -1,4 +1,5 @@
 import "../../node_modules/@fortawesome/fontawesome-svg-core/styles.css";
+import React, { useState, useEffect } from 'react'
 
 import Partner from "@/components/modules/index/Partner";
 import Hero from "./../components/modules/index/Hero";
@@ -14,18 +15,17 @@ import Testimonial from "@/components/modules/index/Testimonials";
 import Services from "@/components/modules/index/Services";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
 export default function Home() {
-
-
   return (
     <>
       <Header headerClass="header-section--style2" />
       <Hero />
       <Partner />
       {/* <About /> */}
-      <Featured />
- 
-      <Services />
+      <Featured/>
+
+      <Services/>
       <Roadmap />
       {/* <Pricing /> */}
       {/* <Team /> */}

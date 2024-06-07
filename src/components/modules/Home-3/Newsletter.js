@@ -12,7 +12,7 @@ const Newsletter = () => {
             </div>
             <div className="cta__subscribe">
               <h2 className="mb-0"> <span>Subscribe</span> our news</h2>
-              <p>Hey! Are you tired of missing out on our updates? Subscribe to our news now and stay in the loop!</p>
+              <p>uuuuuuHey! Are you tired of missing out on our updates? Subscribe to our news now and stay in the loop!</p>
               <form className="cta-form cta-form--style2 form-subscribe" action="">
                 <div className="cta-form__inner d-sm-flex align-items-center">
                   <input type="email" className="form-control form-control--style2 mb-3 mb-sm-0"

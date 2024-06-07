@@ -18,7 +18,7 @@ const Newsletter = () => {
                   <span>Subscribe</span> our news
                 </h2>
                 <p>
-                  Hey! Are you tired of missing out on our updates? Subscribe to
+                 ccccc Hey! Are you tired of missing out on our updates? Subscribe to
                   our news now and stay in the loop!
                 </p>
                 <form

@@ -1,9 +1,16 @@
 import Link from "next/link";
 import FsLightbox from "fslightbox-react";
-import { useState, } from "react";
+import { useState, useEffect} from "react";
 import Image from "next/image";
+import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
 const Hero = () => {
   const [toggler, setToggler] = useState(false);
+  const [token, setToken] = useState(false);
+
+  useEffect(() => {
+    setToken(getCookie('token'))
+  }, []);
+
 
   return (
     <>
@@ -38,7 +45,7 @@ const Hero = () => {
                     Get cash back with every deal
                   </p>
                   <div className="banner__btn-group btn-group">
-                    <Link
+                    {!token && <Link
                       href="signin"
                       className="trk-btn trk-btn--primary trk-btn--arrow"
                     >
@@ -46,8 +53,8 @@ const Hero = () => {
                       <span>
                         <i className="fa-solid fa-arrow-right"></i>
                       </span>{" "}
-                    </Link>
-{/* 
+                    </Link>}
+                    {/* 
                     <div style={{ maxWidth: '40%', borderRadius: 9, padding: 9 }} className="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
                       <img className="dark" src="/images/partner/light/14.jpg" alt="service-icon" />
 
@@ -109,12 +116,12 @@ const Hero = () => {
 
                 <div className="service__item service__item--style1" data-aos="fade-up" data-aos-duration="800">
                   <div className="service__item-inner text-center">
-                    <div style={{  justifyContent: 'center', paddingBottom: 20 }} >
-                      <img style={{borderRadius: 30, maxHeight:200}} className="dark" src="/images/global/train box.jpg" alt="service-icon" />
+                    <div style={{ justifyContent: 'center', paddingBottom: 20 }} >
+                      <img style={{ borderRadius: 30, maxHeight: 200 }} className="dark" src="/images/global/train box.jpg" alt="service-icon" />
                     </div>
                     <div className="service-content">
                       {/* <h5 className="banner__content-heading"> <span>You can follow our Education </span>courses</h5> */}
-                      <h3 className="mb-15"> <Link className="stretched-link" href="blog-sidebar">Train to win</Link> </h3>
+                      <h3 className="mb-15"> <Link className="stretched-link" href="courses">Train to win</Link> </h3>
                       <p className="mb-0">
                         Get the edge with our coaching
                       </p>

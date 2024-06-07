@@ -2,14 +2,14 @@ import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import FsLightbox from "fslightbox-react";
-const Story = () => {
+const Story = (youtubeLink) => {
   const [toggler, setToggler] = useState(false);
   return (
     <>
       <FsLightbox
         toggler={toggler}
         sources={[
-          "https://youtu.be/MHhIzIgFgJo",
+          youtubeLink,
         ]}
       />
       <div className="story padding-top bg-color-3">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BlogData from '../../../../public/api/blog-side-bar/BlogSideBar.json'
 import SidebarSearch from '@/components/base/SidebarSearch'
 import BlogCategories from '@/components/base/BlogCategories'
@@ -6,11 +6,32 @@ import RecentPost from '@/components/base/RecentPost'
 import PopularTag from '@/components/base/PopularTag'
 import BlogCard from '@/components/cards/BlogCard'
 import Link from 'next/link'
+import { callApiWithToken } from '../../../../public/api/api'
+
 const BlogWIthSideBar = () => {
   const [statebuttonText, setStateButtonText] = useState(false);
 
+  const [coursesList, setCourses] = useState([])
+
+  useEffect(() => {
+    if (coursesList.length < 1) {
+      getCourses()
+    }
+  }, [])
+
+  const getCourses = async () => {
+    const response = await callApiWithToken('http://lab.app2serve.com/public/api/courses', {}, 'GET');
+    console.log('response ', response);
+    if (response.status == 1) {
+      console.log('KKKKKKK', response);
+      setCourses(response.courses)
+    } else {
+      //have Error
+    }
+  }
+
   const handleClick = () => {
-    if (statebuttonText) { 
+    if (statebuttonText) {
       setStateButtonText(false);
     } else {
       setStateButtonText(true);
@@ -112,11 +133,16 @@ const BlogWIthSideBar = () => {
 
               </div>
               <div className="row g-4">
-                {BlogData.map((item, index) => (
+                {coursesList.map((item, index) => (
                   <div key={index} className="col-sm-12 ">
                     <BlogCard data={item} />
                   </div>
                 ))}
+                {!coursesList.length &&
+                  <div
+                    style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
+                    Courses data not found now
+                  </div>}
               </div>
               {/* <div className="paginations" data-aos="fade-up" data-aos-duration="800">
                 <ul className="lab-ul d-flex flex-wrap justify-content-center mb-1">
@@ -154,7 +180,7 @@ const BlogWIthSideBar = () => {
                   <div className="col-12">
                     {/* <RecentPost /> */}
                   </div>
-                  
+
                   <div className="col-12">
                     <div className="sidebar__social" >
                       <div className="sidebar__head">
