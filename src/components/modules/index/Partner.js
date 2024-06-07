@@ -21,7 +21,7 @@ const Partner = () => {
   const getcarousel = async () => {
     setLoading(true)
     const arr = []
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/broker-carousel', {}, 'GET');
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/broker-carousel', {}, 'GET');
     response.broker_carousel.map((item, index) => {
       arr.push(item)
       arr.unshift(item)

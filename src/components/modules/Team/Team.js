@@ -22,7 +22,7 @@ const Team = () => {
 
   const getBrokers = async () => {
     setLoading(true)
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/brokers', {}, 'GET');
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers', {}, 'GET');
     setBrokersList(response.brokers)
     setresponseCash(response.brokers)
     console.log('BROKER LIST', response.brokers);

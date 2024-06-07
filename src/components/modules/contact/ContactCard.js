@@ -88,7 +88,7 @@ function ContactCard() {
 
     const resErrors = {};
 
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/contacts', {
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/contacts', {
       name: firstname,
       email: email,
       contact_us_form: question,

@@ -454,7 +454,7 @@ const SignUp = () => {
 
     const resErrors = {};
 
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/suggest-webinars', {
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/suggest-webinars', {
       company_name: companyName,
       type_of_company: getMethod,
       planned_date: date,

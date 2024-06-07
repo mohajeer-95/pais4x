@@ -14,7 +14,7 @@ function Featured() {
 
   const getSponserImg = async () => {
     setLoading(true)
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/slider', {}, 'GET');
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/slider', {}, 'GET');
     // console.log('response getSponserImg', response);
     setSponserImg('https://lab.app2serve.com/storage/app/public/' + response.slider.image)
     setLoading(false)

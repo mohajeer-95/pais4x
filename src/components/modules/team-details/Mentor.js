@@ -113,7 +113,7 @@ const Mentor = ({ title }) => {
   }, [info.logo]);
 
   const getBrokerById = async (brokerId) => {
-    const response = await callApiWithToken(`http://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
+    const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
     setBrokerData(response.broker)
 
     setbroker_account(response.broker.broker_account)
@@ -184,7 +184,7 @@ const Mentor = ({ title }) => {
     setErrors('')
     console.log('linkEmail: ', linkEmail);
     console.log('autToken: ', autToken);
-    const responseEmailSent = await callApiWithToken('http://lab.app2serve.com/public/api/brokers_link', { broker_identifier: linkEmail, broker_id: brokerId }, 'POST', autToken);
+    const responseEmailSent = await callApiWithToken('https://lab.app2serve.com/public/api/brokers_link', { broker_identifier: linkEmail, broker_id: brokerId }, 'POST', autToken);
     console.log('responseEmailSent: ', responseEmailSent);
     if (responseEmailSent.status == 1) {
       setLinkLoading(false)

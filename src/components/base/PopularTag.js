@@ -66,26 +66,26 @@ const PopularTag = () => {
 
 
   const getBrokerList = async (token) => {
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/brokers-link-request', {}, 'GET', token);
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers-link-request', {}, 'GET', token);
     console.log('response getBrokerList', response);
     setListBroker(response)
   }
 
   const getPaymentsLog = async (token) => {
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/payments', {}, 'GET', token);
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/payments', {}, 'GET', token);
     // console.log('response paymentsLog', response);
     setPaymentLog(response)
   }
 
   const getCashBackLog = async (token) => {
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/cashback', {}, 'GET', token);
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/cashback', {}, 'GET', token);
     // console.log('response CashBackLog', response);
     setCashBackLog(response)
   }
 
 
   const getTotalPaymentsCashback = async (token) => {
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/total-payments-cashback', {}, 'GET', token);
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/total-payments-cashback', {}, 'GET', token);
     // console.log('response TotalPaymentsCashback', response);
     setTotalPaymentsCashback(response)
   }
@@ -93,13 +93,13 @@ const PopularTag = () => {
 
   const setCashback = async (token) => {
     const tok = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMjA0ZTg3YzI0OGY1Nzg3ODI3MmQ4Mzk4ODU0Njk2ZDAzYmRmZDAyNTE3NDI0NWYyYTk3NmU4ZmI3NjYwMDQ1ZWNkNTY2NGIzMGIxMTFjNTciLCJpYXQiOjE3MTc0ODU2ODMsIm5iZiI6MTcxNzQ4NTY4MywiZXhwIjoxNzQ5MDIxNjgzLCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.VpPcmjGgN2B9A1RaNxPOZqf6hEcC7UPueJeumPCXmOxe09ItIN6ygUKt7HsLVF1qzQPss6inPpvEJSEo5c4q7fjbtLH0ZuAkSHaEOwq5Nr2lV8sjbrBIm9qagru_xc4swywR1JdR4e71OWQFnQKCQ3RiH4Oz8OCT6dzzLqCGyExrK_QdVKTtp8IjhdfkUFnrAz4RABDETnUEmnQjqB9mAxaIqO8MHRxJyWFiLyFk4QoRp-_Mu3SIN0Da-flUqTYwR9mENngxCcrMiOj1zKz8Jh-ERabKZnd8birCGHH8Jq72TIrlRTrF4HBhbqkuEj_-PgfvAB30JvWU6E8XFz3oqMLLTq3glg4NCFHrZsbpZRxXPQP3M1f3f0qAtqfz4vJoqFa50AgXvpeqZE7Cj3SuwqkfB1eLkM2hUkFWXlDNaBM3xk8_6xc60QqIG12QVCutBMxVt71tWCpcY1Okv9Dl7m3LtxjL3QCERgK_Q-IN1XSWbVV3-UMpCfAJ9bpGTC0AjQPvX1b-tQUWQFjm54nxQfNsa8G_ivouG-KMLKMf0YfqPDjUZLFM7GT0frOd5TLcrvP3xN-0OcDe35NZooGdLVpwgxMJRB5N2otgjvKukX4Y2Ahpmlw6Jis-Zl02GgUSsiV-O5n2Jh-5W3Qvv5V25AJBI6rwSHi8Idahq3IPB48'
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/cashback', { broker_id: '15', user_id: '8', amount: '222', payment_type: 'click' }, 'POST', tok);
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/cashback', { broker_id: '15', user_id: '8', amount: '222', payment_type: 'click' }, 'POST', tok);
     // console.log('response setCashback', response);
   }
 
 
   const getUserData = async (token) => {
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/user-info', {}, 'GET', token);
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/user-info', {}, 'GET', token);
     // console.log('response User Data', response);
     setUserData(response.info)
   }

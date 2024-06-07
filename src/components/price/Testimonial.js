@@ -268,7 +268,7 @@ const SignUp = () => {
     console.log('city', selectedState)
     console.log('date', date)
 
-    const response = await callApiWithToken('http://lab.app2serve.com/public/api/vip-training', {
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/vip-training', {
       first_name: firstname,
       last_name: lastName,
       email: email,
