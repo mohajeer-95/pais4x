@@ -8,7 +8,6 @@ import Toast from 'react-bootstrap/Toast'
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import { createPortal } from 'react-dom';
-import axios from "axios";
 import {
   MDBBtn,
   MDBModal,
