@@ -336,7 +336,7 @@ const SignUp = () => {
                           <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
                             <option>Select payment method ...</option>
                             {paymentMethodOptions.map((item, index) => {
-                              return < option value={getMethod} key={item}>{item}</option>
+                              return < option value={getMethod} key={index}>{item}</option>
                             })}
                           </select>
                           {errors.getMethod && <p style={{ color: 'red' }}>{errors.getMethod}</p>}
@@ -354,7 +354,7 @@ const SignUp = () => {
                           <select className="form-control" onChange={(e) => handleCountry(e)} >
                             <option>Select country ...</option>
                             {country.map((item, index) => {
-                              return < option value={getcountry} key={item}>{item}</option>
+                              return < option value={getcountry} key={index}>{item}</option>
                             })}
                           </select>
                           {errors.selectedState && <p style={{ color: 'red' }}>{errors.selectedState}</p>}
@@ -370,7 +370,7 @@ const SignUp = () => {
                           <select className="form-control" onChange={(e) => handleState(e)} >
                             <option>Select City ...</option>
                             {getstates.map((item, index) => {
-                              return <option value={selectedState} key={item}>{item}</option>
+                              return <option value={selectedState} key={index}>{item}</option>
                             })}
                           </select>
                           {errors.selectedCountry && <p style={{ color: 'red' }}>{errors.selectedCountry}</p>}

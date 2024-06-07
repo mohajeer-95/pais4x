@@ -406,8 +406,8 @@ const PopularTag = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {cashBackLog?.cashback_list?.map((item) => (
-                            <tr>
+                          {cashBackLog?.cashback_list?.map((item, index) => (
+                            <tr key={index}>
                               <td>{item.amount} $</td>
                               <td>{item.name}</td>
                               <td>{item.created_at}s</td>
@@ -434,8 +434,8 @@ const PopularTag = () => {
                         </thead>
                         <tbody>
 
-                          {paymentLog?.payment_list?.map((item) => (
-                            <tr>
+                          {paymentLog?.payment_list?.map((item, index) => (
+                            <tr key={index}>
                               <td>{item.amount} $</td>
                               <td>{item.created_at}</td>
                               <td>{item.payment_type}</td>
@@ -505,7 +505,7 @@ const PopularTag = () => {
                           </tr>
                         </MDBTableHead>
                         <MDBTableBody>
-                          {brokerList?.brokers_link?.map((item) => (<tr style={{ textAlign: 'center' }} >
+                          {brokerList?.brokers_link?.map((item, index) => (<tr key={index} style={{ textAlign: 'center' }} >
                             <th style={{ textAlign: 'center' }} scope="row">{item.name}</th>
 
                             {item.date_added == '' ? <th scope="row">{item.date_added}</th> : <th scope="row">{item.date_added}</th>}

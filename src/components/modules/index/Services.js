@@ -31,7 +31,7 @@ function Services() {
         <div className="service__wrapper">
 
           {!loading ? <div className="row g-4 align-items-center" style={{}}>
-            {brokersList.map((item) => {
+            {brokersList.map((item, index) => {
               var pargraph = ''
               if (item.description.length > 105) {
                 pargraph = item.description.substring(0, 110)
@@ -39,7 +39,7 @@ function Services() {
                 pargraph = item.description
               }
               return (
-                <div className="col-sm-6 col-md-6 col-lg-4">
+                <div key={index} className="col-sm-6 col-md-6 col-lg-4">
                   <div className="service__item service__item--style1" data-aos="fade-up" data-aos-duration="800">
                     <div className="service__item-inner text-center">
                       <div className="service__item-thumb mb-30">

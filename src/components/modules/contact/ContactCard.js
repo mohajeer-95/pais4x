@@ -241,7 +241,7 @@ function ContactCard() {
                         <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
                           <option>Select -	Contact us form ...</option>
                           {paymentMethodOptions.map((item, index) => {
-                            return < option style={{ height: 22 }} value={getcountry} key={item}>{item}</option>
+                            return < option style={{ height: 22 }} value={getcountry} key={index}>{item}</option>
                           })}
                         </select>
                         {errors.question && <p style={{ color: 'red' }}>{errors.question}</p>}

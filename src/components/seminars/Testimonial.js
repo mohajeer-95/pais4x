@@ -306,7 +306,7 @@ const SignUp = () => {
                           <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
                             <option>Select company type ...</option>
                             {paymentMethodOptions.map((item, index) => {
-                              return < option value={getMethod} key={item}>{item}</option>
+                              return < option value={getMethod} key={index}>{item}</option>
                             })}
                           </select>
                           {errors.companyType && <p style={{ color: 'red' }}>{errors.companyType}</p>}
@@ -322,7 +322,7 @@ const SignUp = () => {
                           <select className="form-control" onChange={(e) => handleCountry(e)} >
                             <option>Select country ...</option>
                             {country.map((item, index) => {
-                              return < option value={getcountry} key={item}>{item}</option>
+                              return < option value={getcountry} key={index}>{item}</option>
                             })}
                           </select>
                           {errors.country && <p style={{ color: 'red' }}>{errors.country}</p>}
@@ -341,7 +341,7 @@ const SignUp = () => {
                           <select className="form-control" onChange={(e) => handleState(e)} >
                             <option>Select City ...</option>
                             {getstates.map((item, index) => {
-                              return <option value={selectedState} key={item}>{item}</option>
+                              return <option value={selectedState} key={index}>{item}</option>
                             })}
                           </select>
                           {errors.city && <p style={{ color: 'red' }}>{errors.city}</p>}
@@ -382,7 +382,7 @@ const SignUp = () => {
                           <select className="form-control" onChange={(e) => handleCommunicationMethod(e)} >
                             <option>Select languages ...</option>
                             {CommunicationOptions.map((item, index) => {
-                              return < option value={getConference} key={item}>{item}</option>
+                              return < option value={getConference} key={index}>{item}</option>
                             })}
                           </select>
                           {errors.language && <p style={{ color: 'red' }}>{errors.language}</p>}

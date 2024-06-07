@@ -86,8 +86,8 @@ const Team = () => {
               <Spinner animation="border" variant="info" />
             </div>}
 
-            {!loading && brokersList?.map((item)=>(
-              <div className="col-sm-6 col-lg-3">
+            {!loading && brokersList?.map((item,index)=>(
+              <div className="col-sm-6 col-lg-3" key={index} >
               <div className="team__item team__item--shape" data-aos="fade-up" data-aos-duration="800">
                 <div className="team__item-inner team__item-inner--shape">
                   <div className="team__item-thumb team__item-thumb--style1">
