@@ -135,7 +135,7 @@ const BlogWIthSideBar = () => {
               <div className="row g-4">
                 {coursesList.map((item, index) => (
                   // <div key={index} className="col-sm-12 ">
-                  <div className="course-list">
+                  <div key={index} className="course-list">
 
                     <BlogCard data={item} />
                   </div>

@@ -358,7 +358,7 @@ const Mentor = ({ title }) => {
                         <div className="text-danger mb-1 me-2">
 
                           {starRateNumber.map((index, item) => (
-                            <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
+                            <MDBIcon key={index} fas style={{ color: '#18e8ef' }} icon="star" />
                           ))
                           }
                         </div>
