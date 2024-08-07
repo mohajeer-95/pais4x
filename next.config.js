@@ -2,7 +2,8 @@
 const path = require('path')
 
 const nextConfig = {
-  
+  output: 'export',
+
   webpack: (config, options) => {
     if (options.isServer) {
       config.externals = ["react", ...config.externals];

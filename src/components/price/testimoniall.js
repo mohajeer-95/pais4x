@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
 import Header from '@/components/Header'
-import PageHeader from "@/components/base/PageHeader";
+import PageHeader from '@/components/modules/about-us/PageHeader';
 import Footer from "@/components/Footer";
 import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -212,39 +212,42 @@ const SignUp = () => {
       valid = false;
     }
     if (!lastName) {
-      errors.lastName = 'last name is required';
+      errors.lastName = 'Last name is required';
       valid = false;
     }
     if (!email) {
-      errors.email = 'email is required';
+      errors.email = 'Email is required';
       valid = false;
     }
     if (!phone) {
-      errors.phone = 'phone is required';
+      errors.phone = 'Phone is required';
       valid = false;
     }
     if (!getMethod) {
-      errors.communicationMethod = 'Please enter the webinars number';
+      errors.communicationMethod = 'Please select communication method';
       valid = false;
     }
     if (!getConference) {
       errors.videoConference = 'Please select video Conference';
       valid = false;
     }
-    if (!optionSelected) {
-      errors.daysAvailable = 'Subject is required';
+    if (!optionDaysSelected) {
+      errors.daysAvailable = 'Days available is required';
       valid = false;
     }
-    if (!optionDaysSelected) {
-      errors.courses = 'Subject is required';
+    console.log('optionSelected',optionSelected);
+    if (!optionSelected) {
+      console.log('optionSelectedQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ',optionSelected);
+
+      errors.courses = 'Courses is required';
       valid = false;
     }
     if (!getcountry) {
-      errors.country = 'Subject is required';
+      errors.country = 'Your country is required';
       valid = false;
     }
     if (!selectedState) {
-      errors.city = 'Subject is required';
+      errors.city = 'Your city is required';
       valid = false;
     }
 
@@ -465,14 +468,14 @@ const SignUp = () => {
                             allowSelectAll={true}
                             value={optionSelected}
                           />
-                          {errors.courses && <p style={{ color: 'red' }}>{errors.conferenceVideo}</p>}
+                          {errors.courses && <p style={{ color: 'red' }}>{errors.courses}</p>}
                         </div>
                       </div>
 
                       <div className="col-12">
                         <div className="form-pass">
                           <label htmlFor="account-pass" className="form-label">
-                            Days Availabil
+                            Days Available
                           </label>
                           <ReactSelect
                             options={daysOptions}

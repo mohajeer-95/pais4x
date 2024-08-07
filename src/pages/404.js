@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import PageHeader from "@/components/base/PageHeader";
+import PageHeader from '@/components/modules/about-us/PageHeader';
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";

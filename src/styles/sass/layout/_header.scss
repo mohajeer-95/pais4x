@@ -130,7 +130,7 @@
   }
 
   @include breakpoint(lg) {
-    padding-block: 26px;
+    // padding-block: 26px;
   }
 
 
@@ -186,11 +186,79 @@
     border-bottom: 1px solid $border-color-9;
   }
 }
+.header-wrapper-menue {
+  @extend %d-flex,
+  %justify-between,
+  %align-i-center,
+  %py-15;
+
+
+  @include breakpoint(sm) {
+    position: relative;
+  }
+
+  @include breakpoint(lg) {
+    // padding-block: 26px;
+  }
+
+
+  .logo {
+    a {
+      @extend %d-block;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    @include breakpoint(max-sm) {
+      max-width: 130px;
+    }
+
+    @include breakpoint(max-xl) {
+      @include breakpoint(lg) {
+        width: 200px;
+      }
+    }
+  }
+
+  .menu-area {
+    @extend %d-flex;
+    @extend %align-i-center;
+
+    .header-btn {
+      @include breakpoint(max-md) {
+        display: none;
+      }
+
+      @extend %d-flex;
+      @extend %align-i-center;
+      column-gap: 10px;
+
+      .switch-btn {
+        max-width: 30px;
+        cursor: pointer;
+      }
+
+      // .dark-btn {
+      //   max-width: 30px;
+      //   cursor: pointer;
+      // }
+
+    }
+  }
+
+
+  // style 2
+  &--style2 {
+    border-bottom: 1px solid $border-color-9;
+  }
+}
 
 .menu {
   @extend %d-flex,
   %mb-0;
-  column-gap: 10px;
+  column-gap: 5px;
 
   >li {
     >a {
@@ -937,10 +1005,10 @@
 .page-header {
   @extend %p-rel,
   %of-hidden;
-  padding-block: 70px;
+  padding-block: 50px;
 
   @include breakpoint(lg) {
-    padding-block: 100px;
+    // padding-block: 100px;
   }
 
   &__content {
@@ -994,7 +1062,7 @@
         }
 
         @include breakpoint(md) {
-          display: block;
+          // display: block;
           top: 0%;
           right: -3%;
           width: 500px;

@@ -13,8 +13,8 @@
             border-radius: 16px;
 
             @include breakpoint(md) {
-                padding-block: 52px;
-                padding-inline: 32px;
+                padding-block: 10px;
+                padding-inline: 1px;
             }
         }
 

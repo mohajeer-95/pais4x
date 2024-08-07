@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
 import Header from '@/components/Header'
-import PageHeader from "@/components/base/PageHeader";
+import PageHeader from '@/components/modules/about-us/PageHeader';
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import Toast from 'react-bootstrap/Toast'
@@ -85,7 +85,7 @@ const SignIn = () => {
 
     setTimeout(() => {
       window.location.href = '/';
-    }, 2000);
+    }, 1000);
   }
   return (
     <>

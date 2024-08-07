@@ -14,12 +14,14 @@ import Blog from "@/components/modules/index/Blogs";
 import Testimonial from "@/components/modules/index/Testimonials";
 import Services from "@/components/modules/index/Services";
 import Header from "@/components/Header";
+import MenueHeader from "@/components/menueHeader";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
       <Header headerClass="header-section--style2" />
+      {/* <MenueHeader headerClass="header-section--style2" /> */}
       <Hero />
       <Partner />
       {/* <About /> */}

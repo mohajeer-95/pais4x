@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
 import Header from '@/components/Header'
-import PageHeader from "@/components/base/PageHeader";
+import PageHeader from '@/components/modules/about-us/PageHeader';
 import Footer from "@/components/Footer";
 import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -169,19 +169,19 @@ const SignUp = () => {
       valid = false;
     }
     if (!getcountry) {
-      errors.country = 'country is required';
+      errors.country = 'Your country is required';
       valid = false;
     }
     if (!selectedState) {
-      errors.city = 'City is required';
+      errors.city = 'Your city is required';
       valid = false;
     }
     if (!date) {
-      errors.date = 'Please selectdate';
+      errors.date = 'Please select date';
       valid = false;
     }
     if (!getConference) {
-      errors.language = 'the Language is required';
+      errors.language = 'Language is required';
       valid = false;
     }
     if (!seminarsNumber) {
@@ -192,12 +192,6 @@ const SignUp = () => {
       errors.offer = 'Your Offer is required';
       valid = false;
     }
-    if (!subject) {
-      errors.subject = 'Subject is required';
-      valid = false;
-    }
-
-
     setErrors(errors);
     return valid;
   };

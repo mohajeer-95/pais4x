@@ -24,19 +24,19 @@ function ContactCard() {
     const errors = {};
 
     if (!firstname) {
-      errors.firstname = 'first name is required';
+      errors.firstname = 'First name is required';
       valid = false;
     }
     if (!email) {
-      errors.email = 'your email required';
+      errors.email = 'Your email is required';
       valid = false;
     }
     if (!question) {
-      errors.question = 'your question type required';
+      errors.question = 'Your question type is required';
       valid = false;
     }
     if (!message) {
-      errors.message = 'your question type required';
+      errors.message = 'Your Message is required';
       valid = false;
     }
 

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
 import Header from '@/components/Header'
-import PageHeader from "@/components/base/PageHeader";
+import PageHeader from '@/components/modules/about-us/PageHeader';
 import Footer from "@/components/Footer";
 import Link from 'next/link';
 import Toast from 'react-bootstrap/Toast'
@@ -9,7 +9,13 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import { createPortal } from 'react-dom';
 import {
-  MDBBtn,
+  MDBContainer,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBIcon,
+  MDBRipple,
   MDBModal,
   MDBModalDialog,
   MDBModalContent,
@@ -17,7 +23,13 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
-} from 'mdb-react-ui-kit';
+  MDBInput,
+  MDBRow,
+  MDBTable,
+  MDBTableBody,
+  MDBTableHead,
+  MDBBtn,
+} from "mdb-react-ui-kit";
 
 import { callApiWithToken } from '../../public/api/api'
 import Spinner from 'react-bootstrap/Spinner';
@@ -40,6 +52,11 @@ const SignUp = () => {
   const [isLoading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [successRegistration, setSuccessRegistration] = useState(false);
+  const [varyingModal, setVaryingModal] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpSuccess, setOtpSuccess] = useState(false);
+  const [authOtp, setAuthOtp] = useState('');
+  const [reference, setReference] = useState('');
 
   const [errors, setErrors] = useState({});
 
@@ -50,7 +67,7 @@ const SignUp = () => {
     'Skrill',
     'MoneyGram',
   ]
-  
+
   let handlePaymentMethod = (e) => {
     setMethod(e.target.value)
     let states = dataMethods.filter((states) => {
@@ -74,9 +91,12 @@ const SignUp = () => {
   const [getstates, setStates] = useState([])
   const [selectedState, setSelectedState] = useState(null)
   const [getcities, setCities] = useState([])
+  const [otp, setOtp] = useState('')
+  const [otpError, setOtpError] = useState('')
+  const [token, setToken] = useState('')
 
   useEffect(() => {
-    if(getCookie('token')){
+    if (getCookie('token')) {
       window.location.href = '/';
       return
     }
@@ -138,19 +158,19 @@ const SignUp = () => {
     const errors = {};
 
     if (!firstname) {
-      errors.firstname = 'first name is required';
+      errors.firstname = 'First name is required';
       valid = false;
     }
     if (!lastName) {
-      errors.lastName = 'last name is required';
+      errors.lastName = 'Last name is required';
       valid = false;
     }
     if (!email) {
-      errors.email = 'your email required';
+      errors.email = 'Your email is required';
       valid = false;
     }
     if (!phone) {
-      errors.phone = 'your phone is required';
+      errors.phone = 'Your phone is required';
       valid = false;
     }
     if (!password) {
@@ -162,15 +182,15 @@ const SignUp = () => {
       valid = false;
     }
     if (!getMethod) {
-      errors.getMethod = 'payment method is required';
+      errors.getMethod = 'Payment method is required';
       valid = false;
     }
     if (!selectedState) {
-      errors.selectedState = 'state is required';
+      errors.selectedState = 'State is required';
       valid = false;
     }
     if (!selectedCountry) {
-      errors.selectedCountry = 'city is required';
+      errors.selectedCountry = 'City is required';
       valid = false;
     }
     if (password !== conPassword) {
@@ -208,7 +228,12 @@ const SignUp = () => {
     if (response.status == 1) {
       console.log('11111111111111111');
 
-      loginSuccess(response.access_token)
+      await setToken(response.access_token.token)
+      await setReference(response.reference)
+      await setAuthOtp(response.otp)
+      await loginSuccess(response.access_token)
+
+
     } else if (response.email) {
       console.log('22222222222222222');
 
@@ -224,18 +249,137 @@ const SignUp = () => {
   };
 
   const loginSuccess = async (token) => {
-    setCookie('token', token);
+    console.log('111111111111111111otp', otp);
+    console.log('222222222222222222Authotp', authOtp);
+    console.log('3333333333333333333referance', reference);
+
+
+    // setCookie('token', token);
     setLoading(false)
     setSuccessRegistration(true)
 
-
     setTimeout(() => {
-      window.location.href = '/';
-    }, 2000);
+      setVaryingModal(true)
+    }, 1000);
+  }
+
+  const sendOtp = async () => {
+    console.log('otp', otp);
+    console.log('authOtp', authOtp);
+    console.log('reference', reference);
+    console.log('token', token);
+    setOtpError('')
+
+    if (!otp) {
+      setOtpLoading(false);
+      setOtpError('verification code is requerd')
+      return;
+    }
+    if (Number(otp) !== Number(authOtp)) {
+      setOtpLoading(false);
+      setOtpError('verification code is not correct')
+      return;
+    }
+    setOtpLoading(true);
+
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/verify-otp', {
+      otp: otp,
+      reference: reference
+    }, 'POST', token);
+
+    console.log('OTP response >>', response);
+    if (response.status == 1) {
+      // setOtpLoading(false)
+      setOtpSuccess(true)
+      setCookie('token', token);
+      setTimeout(() => {
+        console.log('GoOOOOooolLLLLLL');
+        window.location.href = '/';
+      }, 4000);
+    } else {
+      setOtpLoading(false)
+      setOtpSuccess(false)
+      setOtpError('Pleas try later')
+    }
+
   }
 
   return (
     <>
+      <>
+
+        <MDBModal staticBackdrop open={varyingModal} onClose={() => setVaryingModal(false)} tabIndex='-1'>
+          <MDBModalDialog>
+
+            {!otpLoading ? <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Email Verification</MDBModalTitle>
+                <MDBBtn className='btn-close' color='none' onClick={() => setVaryingModal(false)}></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <form>
+                  {/* <p>We have sent a verification code to your email...</p> */}
+                  <p>
+                    Please verification code from your Email to complete the registration...
+                  </p>
+                  <h6>Enter OTP:  <span class="badge badge-primary">New</span></h6>
+                  <div className='mb-3'>
+                    <MDBInput
+                      type='number'
+                      disabled={false}
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      labelClass='col-form-label'
+                    />
+                  </div>
+                </form>
+                {otpError && <p style={{ color: 'red' }}>{otpError}</p>}
+
+              </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn className='ms-1' color='secondary' onClick={() => setVaryingModal(!varyingModal)}>
+                  Close
+                </MDBBtn>
+                <MDBBtn className="ms-1" onClick={() => sendOtp()}>sent</MDBBtn>
+              </MDBModalFooter>
+
+            </MDBModalContent>
+
+              :
+
+              <MDBModalContent>
+
+                <div className="logo text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+                  <Link href="/">
+                    <img style={{ maxHeight: 70, }} className="dark" src="/images/global/logo.png" alt="logo" />
+                  </Link>
+                </div>
+
+                {otpLoading && !otpSuccess ? <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+                  <Spinner animation="border" variant="info" />
+                </div> :
+
+                  <div className="logo text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+                    <img style={{ maxHeight: 70, }} className="dark" src="/images/global/success.png" alt="logo" />
+                  </div>
+
+                }
+
+                <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+                  {otpLoading && !otpSuccess ? <h4>Loading...</h4> : <h4 style={{ color: 'green' }}>Success...</h4>}
+                </div>
+
+                <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+                  {otpError && <p style={{ color: 'red' }}>{otpError}</p>}
+                </div>
+
+
+              </MDBModalContent>}
+
+          </MDBModalDialog>
+        </MDBModal>
+      </>
+
       <Header />
       <PageHeader title="Register" text="Register" />
       <section className="account padding-top padding-bottom sec-bg-color2">
@@ -428,6 +572,7 @@ const SignUp = () => {
                     {!isLoading && !successRegistration && <div>
                       <button
                         type="submit"
+                        // onClick={() => submit(e)}
                         className="trk-btn trk-btn--border trk-btn--primary d-block mt-4"
                       >
                         Sign Up
@@ -455,7 +600,7 @@ const SignUp = () => {
                           <strong className="me-auto">Success</strong>
                         </Toast.Header>
                         <Toast.Body className={'text-white'}>
-                          Hello, The Account successfully created.
+                          Hello, We have sent a verification code to your email....
                         </Toast.Body>
                       </Toast>
                     </>}

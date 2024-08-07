@@ -58,8 +58,8 @@ function Footer() {
                         </li>
                         <li className="footer__linklist-item"> <Link href="team">Brokers</Link>
                         </li>
-                        <li className="footer__linklist-item"> <Link href="services">Instructor</Link> </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">My Account</Link>
+                        <li className="footer__linklist-item"> <Link href="instructor">Instructor</Link> </li>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="profile">My Account</Link>
                         </li>
                       </ul>
                     </div>
@@ -73,12 +73,12 @@ function Footer() {
                     </div>
                     <div className="footer__links-content">
                       <ul className="footer__linklist">
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">Courses</Link>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="courses">Courses</Link>
                         </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">VIP traning</Link>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="training">VIP training</Link>
                         </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">Cash Back</Link></li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="">Contact Us</Link> </li>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="cashback">Cashback</Link></li>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="contact">Contact Us</Link> </li>
                       </ul>
                     </div>
                   </div>
@@ -126,7 +126,10 @@ function Footer() {
                       <Link scroll={false} href="" className="social__link social__link--style22"><i className="fab fa-youtube"></i></Link>
                     </li>
                     <li className="social__item">
-                      <Link scroll={false} href="" className="social__link social__link--style22 "><i className="fab fa-twitter"></i></Link>
+                      <Link scroll={false} href="" className="social__link social__link--style22 "><i className="fab fa-x"></i></Link>
+                    </li>
+                    <li className="social__item">
+                      <Link scroll={false} href="" className="social__link social__link--style22 "><i className="fab fa-u"></i></Link>
                     </li>
                   </ul>
                 </div>

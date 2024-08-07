@@ -28,8 +28,16 @@ import Table from 'react-bootstrap/Table';
 import Accordion from "react-bootstrap/Accordion";
 import Story from '@/components/modules/about-us/Story'
 import { callApiWithToken } from '../../../../public/api/api'
+import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
+
 
 const Mentor = ({ title }) => {
+
+  const [value, setValue] = useState(0);
+  const [isLinked, setIsLinked] = useState(false);
+  const [brokerList, setListBroker] = useState([]);
 
   const router = useRouter();
   const { id, name } = router.query;
@@ -58,14 +66,15 @@ const Mentor = ({ title }) => {
   const [query, setQuery] = useState(null);
 
   const [pargraph, setpargraph] = useState('');
+  const [starRateNumber, setStarRateNumber] = useState(['star']);
 
 
   const [isValid, setIsValid] = useState(null);
   const [bottomModal, setBottomModal] = useState(false);
-
+  const [token, setToken] = useState(null)
   const toggleOpen = () => setBottomModal(!bottomModal);
   useEffect(() => {
-
+    setToken(getCookie('token'))
     if (router.isReady) {
       setQuery(router.query);
       getBrokerById(id)
@@ -87,6 +96,19 @@ const Mentor = ({ title }) => {
     setAutToken(getToken)
   }, [router.isReady]);
 
+
+  const getBrokerList = async (name) => {
+    const authToken = getCookie('token')
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers-link-request', {}, 'GET', authToken);
+    console.log('response getBrokerList', response);
+    response?.brokers_link?.map((item, index) => {
+      console.log('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ', name);
+      if (item.name == name) {
+        console.log('aaaaaaaaaaaaa', name);
+        setIsLinked(true)
+      }
+    })
+  }
 
   useEffect(() => {
     const img = new Image();
@@ -122,7 +144,18 @@ const Mentor = ({ title }) => {
     setbroker_type(response.broker.broker_type)
     setinfo(response.broker.info)
 
-    if (response.broker.info.description.length > 108) {
+    var starNumber = ['star']
+
+    for (let index = 1; index < response.broker.info.avg_rating; index++) {
+      starNumber.push('star')
+    }
+    console.log('FFFFFFFFFFFFSSSSSSSSSSSSSSSSSSSSSSSSSS', starNumber);
+
+    setStarRateNumber(starNumber)
+    if (getCookie('token')) {
+      getBrokerList(response.broker.info.name)
+    }
+    if (response?.broker?.info?.description?.length > 108) {
       setpargraph(response.broker.info.description.substring(0, 110) + '...')
     } else {
       setpargraph(response.broker.info.description)
@@ -135,8 +168,12 @@ const Mentor = ({ title }) => {
     setbroker(response.broker.broker)
   }
 
-
-
+  const handleRate = async (value) => {
+    setValue(value)
+    console.log('value', value);
+    const responseRating = await callApiWithToken('https://lab.app2serve.com/public/api/add-rating', { value: value, broker_id: brokerId }, 'POST', autToken);
+    console.log('responseRating: ', responseRating);
+  }
   const handleClick = () => {
     console.log('router.query', router.query);
 
@@ -290,11 +327,11 @@ const Mentor = ({ title }) => {
                 </MDBModalDialog>
               </MDBModal>
             </>
-            <MDBRow className="col-md-8 justify-content-center aline">
+            <MDBRow className="col-md-8 justify-content-center aline" style={{ width: '70%' }}>
               <MDBCard className="shadow-0 border rounded" style={{}}>
                 <MDBCardBody>
                   <MDBRow>
-                    <MDBCol md="12" lg="3" className="mb-4 mb-lg-0 flex" style={{ display: 'flex', alignItems: 'center' }}>
+                    <MDBCol md="10" lg="3" className="mb-4 mb-lg-0 flex" style={{ display: 'flex', alignItems: 'center' }}>
                       <MDBRipple
                         rippleColor="light"
                         rippleTag="div"
@@ -316,15 +353,17 @@ const Mentor = ({ title }) => {
                     </MDBCol>
                     <MDBCol md="6">
                       <h5>{info.name}</h5>
-                      {/* <div className="d-flex flex-row">
+                      <div className="d-flex flex-row">
+
                         <div className="text-danger mb-1 me-2">
-                          <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
-                          <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
-                          <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
-                          <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
+
+                          {starRateNumber.map((index, item) => (
+                            <MDBIcon fas style={{ color: '#18e8ef' }} icon="star" />
+                          ))
+                          }
                         </div>
-                        <span>145</span>
-                      </div> */}
+                        <span>{info.avg_rating}</span>
+                      </div>
                       <p className="">
                         {
                           pargraph
@@ -337,18 +376,37 @@ const Mentor = ({ title }) => {
                       className="border-sm-start-none border-start"
                     >
                       <div className="d-flex flex-row align-items-center mb-1 justify-content-center">
-                        <h4 className="mb-1 me-1">Cash back:</h4>
+                        <h4 className="mb-1 me-1">Cashback:</h4>
                         <span className="text-danger">
                         </span>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-1 justify-content-center" >
                         <h6 className="text-success">{info.cashback}$</h6>
                       </div>
-                      <div className="d-flex flex-column mt-4">
-                        <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
-                          Link With {info.name}
-                        </MDBBtn>
-                      </div>
+                      {isLinked ?
+                        <div className="d-flex flex-column mt-4 align-items-center">
+                          <Rating
+                            name="simple-controlled"
+                            value={value}
+                            onChange={(event, newValue) => {
+                              handleRate(newValue)
+                            }}
+                          />
+                        </div>
+                        : token ? <div className="d-flex flex-column mt-4">
+                          <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
+                            Link With {info.name}
+                          </MDBBtn>
+                        </div>
+
+
+                          :
+                          <div className="d-flex flex-column mt-4">
+                            <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" href='signin'>
+                              Login to Link
+                            </MDBBtn>
+                          </div>}
+
                     </MDBCol>
                   </MDBRow>
                 </MDBCardBody>
@@ -356,48 +414,64 @@ const Mentor = ({ title }) => {
             </MDBRow>
           </div>
 
+          {/* <Box
+            sx={{
+              '& > legend': { mt: 2 },
+            }}
+          >
+            <Typography component="legend">Controlled</Typography>
+            <Rating
+              name="simple-controlled"
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+            />
+            
+          </Box> */}
+
 
           {info.youtube_link && <div style={{ marginTop: 20 }}>
             <Story youtubeLink={info.youtube_link} />
           </div>}
 
-          <div className="row" style={{ marginTop: 70 }}>
+          <div className="row" style={{ marginTop: 70, maxWidth: '100%' }}>
             <div className="col-sm-8 col-md-8 col-lg-6" style={{ marginTop: 20, paddingInline: 20 }}>
-              <div className="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
-                <div className="roadmap__item-inner">
-                  <div className="roadmap__item-content">
-                    <div className="roadmap__item-header">
-                      <h3>Get to Know ({info.name})</h3>
-                    </div>
-                    {/* <p>Welcome to FXCentrum - the ultimate forex trading destination for a seamless, profitable trading experience. Our company was founded in 2019 by a team of experienced forex traders, customer service professionals, and risk managers, who prioritize customer satisfaction above all else. Our strongest point is our 5* personal care and easy-to-use platform, which includes fast deposits and withdrawals. We are a fully regulated forex broker, holding license number SD055 from the FSA Seychelles. At FXCentrum, we offer a wide range of local deposit and withdrawal methods, including wire transfers, card payments, and even cryptocurrencies, making account funding and withdrawal easy and hassle-free.</p> */}
-                    <p>{info.description}</p>
-                    {/* <span>P2</span> */}
-                    <p>
-                      Our platform is designed to cater to both beginners and professionals in the forex trading world, with leverages of up to 1:1000 and various account types to choose from. Whether youre looking to start with a demo account or jump straight into a real one, we have got you covered.
-                    </p>
-                    {statebuttonText ? <p>
-                      With our award-winning platform, the FXC Trader, you can trade more than 500 instruments, including forex, metals, commodities, indices, crypto, CFD, stocks, and ETFs. Copy trading is available on both our platform and the Zulutrade social trading system, making it easy for you to follow the most successful traders in the industry. Our platform is also available in 24 languages, and we offer a wealth of educational videos on www.fxcentrum.com, helping you master simple systems like take profit or stop loss, as well as advanced ones like trading indicators, trailing stop or market news.
-                      https://www.fxcentrum.com/
-                    </p> : null}
-                    {statebuttonText ? <p>
-                      At FXCentrum, we always offer zero commissions and tight spreads from 0.3 pips for EURUSD, USDJPY or GBPUSD. Most of our clients trade not only forex and indices but also commodities like Gold, Silver, Natural Gas or Coffee, thanks to our FXC Trading Signals on Telegram.
-                    </p> : null}
-                    {statebuttonText ? <p>
-                      We take social media seriously, and our highly advanced channels provide you with a wealth of information on promotions, economic news, and everything you need for the best trading experience. And if you dont speak English, thats not a problem - you can communicate with us via email, web chat, or your favorite social media platform in over 50 languages.
-                    </p> : null}
-                    {statebuttonText ? <p>
-                      At FXCentrum, we strive to offer a trading experience that is not only seamless but also profitable. With our easy-to-use platform, competitive pricing, and top-notch customer service, you can trust us to deliver the best possible forex trading experience. Open an account with us today and see for yourself why we are the go-to forex broker for traders around the world.
-                    </p> : null}
+              <div>
 
 
-                    <button onClick={() => handleClick()}
-                      style={styles.btn}>
-                      {!statebuttonText ? 'See more' : 'Show less'}
-                    </button>
-                  </div>
+
+                <div className="roadmap__item-header">
+                  <h3>Get to Know ({info.name})</h3>
                 </div>
+                {/* <p>Welcome to FXCentrum - the ultimate forex trading destination for a seamless, profitable trading experience. Our company was founded in 2019 by a team of experienced forex traders, customer service professionals, and risk managers, who prioritize customer satisfaction above all else. Our strongest point is our 5* personal care and easy-to-use platform, which includes fast deposits and withdrawals. We are a fully regulated forex broker, holding license number SD055 from the FSA Seychelles. At FXCentrum, we offer a wide range of local deposit and withdrawal methods, including wire transfers, card payments, and even cryptocurrencies, making account funding and withdrawal easy and hassle-free.</p> */}
+                <p>{info.description}</p>
+                {/* <span>P2</span> */}
+                <p>
+                  Our platform is designed to cater to both beginners and professionals in the forex trading world, with leverages of up to 1:1000 and various account types to choose from. Whether youre looking to start with a demo account or jump straight into a real one, we have got you covered.
+                </p>
+                {statebuttonText ? <p>
+                  With our award-winning platform, the FXC Trader, you can trade more than 500 instruments, including forex, metals, commodities, indices, crypto, CFD, stocks, and ETFs. Copy trading is available on both our platform and the Zulutrade social trading system, making it easy for you to follow the most successful traders in the industry. Our platform is also available in 24 languages, and we offer a wealth of educational videos on www.fxcentrum.com, helping you master simple systems like take profit or stop loss, as well as advanced ones like trading indicators, trailing stop or market news.
+                  https://www.fxcentrum.com/
+                </p> : null}
+                {statebuttonText ? <p>
+                  At FXCentrum, we always offer zero commissions and tight spreads from 0.3 pips for EURUSD, USDJPY or GBPUSD. Most of our clients trade not only forex and indices but also commodities like Gold, Silver, Natural Gas or Coffee, thanks to our FXC Trading Signals on Telegram.
+                </p> : null}
+                {statebuttonText ? <p>
+                  We take social media seriously, and our highly advanced channels provide you with a wealth of information on promotions, economic news, and everything you need for the best trading experience. And if you dont speak English, thats not a problem - you can communicate with us via email, web chat, or your favorite social media platform in over 50 languages.
+                </p> : null}
+                {statebuttonText ? <p>
+                  At FXCentrum, we strive to offer a trading experience that is not only seamless but also profitable. With our easy-to-use platform, competitive pricing, and top-notch customer service, you can trust us to deliver the best possible forex trading experience. Open an account with us today and see for yourself why we are the go-to forex broker for traders around the world.
+                </p> : null}
 
+
+                <button onClick={() => handleClick()}
+                  style={styles.btn}>
+                  {!statebuttonText ? 'See more' : 'Show less'}
+                </button>
               </div>
+
+
 
 
               {!statebuttonText ? <div key={8} className="col-12" style={{ marginTop: 50 }}>
@@ -413,7 +487,7 @@ const Mentor = ({ title }) => {
                     {broker_type.map((item, index) => (
                       <tr key={index} style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                         <td style={{ textAlign: 'center' }} >Acount {item.id} </td>
-                        <td style={{ textAlign: 'center' }} >ss{item.account_type}</td>
+                        <td style={{ textAlign: 'center' }} >{item.account_type}</td>
                         <td style={{ textAlign: 'center' }} >{item.account_type_minimum_trading_size}</td>
                         <td style={{ textAlign: 'center' }} >{item.account_type_maximum_trading_size}</td>
                       </tr>))}
@@ -494,7 +568,7 @@ const Mentor = ({ title }) => {
 
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Bonus: </td>
-                              {/* <td>{broker_account.bonus}</td> */}
+                              <td>{broker_account.bonus}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Swap-Free/Islamic Accounts: </td>
@@ -867,10 +941,10 @@ const Mentor = ({ title }) => {
                     </thead>
                   </Table>
                   {!broker_type.length &&
-                  <div className="text-center"
-                    style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
-                    Types data not found now
-                  </div>}
+                    <div className="text-center"
+                      style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
+                      Types data not found now
+                    </div>}
                 </div> : null}
 
               </div>

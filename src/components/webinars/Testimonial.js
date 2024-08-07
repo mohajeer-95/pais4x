@@ -1,7 +1,7 @@
 // /* eslint-disable react/no-unescaped-entities */
 // import React, { useState, useEffect } from 'react'
 // import Header from '@/components/Header'
-// import PageHeader from "@/components/base/PageHeader";
+// import PageHeader from '@/components/modules/about-us/PageHeader';
 // import Footer from "@/components/Footer";
 // import Link from 'next/link';
 // import Dropdown from 'react-bootstrap/Dropdown';
@@ -342,7 +342,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
 import Header from '@/components/Header'
-import PageHeader from "@/components/base/PageHeader";
+import PageHeader from '@/components/modules/about-us/PageHeader';
 import Footer from "@/components/Footer";
 import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -421,7 +421,7 @@ const SignUp = () => {
       valid = false;
     }
     if (!getConference) {
-      errors.language = 'the Language is required';
+      errors.language = 'Language is required';
       valid = false;
     }
     if (!webinarsNumber) {
@@ -432,10 +432,7 @@ const SignUp = () => {
       errors.offer = 'Your Offer is required';
       valid = false;
     }
-    if (!subject) {
-      errors.subject = 'Subject is required';
-      valid = false;
-    }
+ 
 
 
     setErrors(errors);

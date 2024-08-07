@@ -5,7 +5,7 @@ import BlogCategories from '@/components/base/BlogCategories'
 import RecentPost from '@/components/base/RecentPost'
 import PopularTag from '@/components/base/PopularTag'
 import BlogCard from '@/components/cards/BlogCard'
-import Link from 'next/link'
+import Link from "next/link";
 import { callApiWithToken } from '../../../../public/api/api'
 
 const BlogWIthSideBar = () => {
@@ -134,7 +134,9 @@ const BlogWIthSideBar = () => {
               </div>
               <div className="row g-4">
                 {coursesList.map((item, index) => (
-                  <div key={index} className="col-sm-12 ">
+                  // <div key={index} className="col-sm-12 ">
+                  <div className="course-list">
+
                     <BlogCard data={item} />
                   </div>
                 ))}
@@ -190,17 +192,17 @@ const BlogWIthSideBar = () => {
                         <div className="sidebar__social-content">
                           <ul className="social mt-25">
                             <li className="social__item">
-                              <Link scroll={false} href="" className="social__link social__link--style2 active"><i className="fab fa-facebook-f"></i></Link>
+                              <Link scroll={false} href="https://www.youtube.com/" passHref className="social__link social__link--style2 active"><i className="fab fa-facebook-f"></i></Link>
                             </li>
                             <li className="social__item">
-                              <Link scroll={false} href="" className="social__link social__link--style2 "><i className="fab fa-instagram"></i></Link>
+                              <Link scroll={false} href="https://www.youtube.com/" passHref className="social__link social__link--style2 "><i className="fab fa-instagram"></i></Link>
                             </li>
                             <li className="social__item">
-                              <Link scroll={false} href="" className="social__link social__link--style2"><i
+                              <Link scroll={false} href="https://www.youtube.com/" passHref className="social__link social__link--style2"><i
                                 className="fa-brands fa-linkedin-in"></i></Link>
                             </li>
                             <li className="social__item">
-                              <Link scroll={false} href="" className="social__link social__link--style2"><i className="fab fa-youtube"></i></Link>
+                              <Link scroll={false} href="https://www.youtube.com/" passHref className="social__link social__link--style2"><i className="fab fa-youtube"></i></Link>
                             </li>
                           </ul>
                         </div>

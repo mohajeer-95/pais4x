@@ -1,13 +1,16 @@
 import React from 'react'
 import Header from '@/components/Header'
-import PageHeader from '@/components/base/PageHeader'
+import PageHeader from '@/components/modules/about-us/PageHeader'
 import BlogWithSideBar from '@/components/modules/blog-with-sidebar/BlogWIthSideBar'
 import Footer from '@/components/Footer'
-const BlogSideBar = () => {
+import Partner from "@/components/modules/index/Partner";
+
+const BlogSideBar = () => { 
   return (
     <>
     <Header />
-    <PageHeader title = "Courses" text = "Courses" />
+    <PageHeader title = "Courses" page = "Courses" />
+    <Partner title='Instructor' page='Instructor' />
     <BlogWithSideBar />
     <Footer />
     </>

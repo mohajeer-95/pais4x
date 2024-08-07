@@ -5,7 +5,7 @@ import Roadmap from '@/components/modules/about-us/Roadmap'
 import About from '@/components/modules/about-us/about5'
 import Team from '@/components/modules/about-us/Team'
 import Newsletter from "@/components/modules/index/Newsletter";
-
+import Featured from "@/components/modules/index/Featured";
 import Footer from '@/components/Footer'
 import Story from '@/components/modules/about-us/Story'
 import Partner from "@/components/modules/index/Partner";
@@ -17,6 +17,7 @@ const AboutUs = () => {
     <Header/>
     <PageHeader title='Refund' page= 'Refund'/>
     <Partner/>
+    <Featured />
     {/* <Story/> */}
     <About />
     <Newsletter/>

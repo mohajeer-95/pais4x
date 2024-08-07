@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
 import Header from '@/components/Header'
-import PageHeader from "@/components/base/PageHeader";
+import PageHeader from '@/components/modules/about-us/PageHeader';
 import Footer from "@/components/Footer";
 import Link from 'next/link';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -190,23 +190,23 @@ const SignUp = () => {
     const errors = {};
 
     if (!firstname) {
-      errors.firstname = 'first name is required';
+      errors.firstname = 'First name is required';
       valid = false;
     }
     if (!lastName) {
-      errors.lastName = 'last name is required';
+      errors.lastName = 'Last name is required';
       valid = false;
     }
     if (!email) {
-      errors.email = 'your email required';
+      errors.email = 'Your email is required';
       valid = false;
     }
     if (!phone) {
-      errors.phone = 'your phone is required';
+      errors.phone = 'Your phone is required';
       valid = false;
     }
     if (!optionSelected) {
-      errors.courseSelected = 'Please select course';
+      errors.courseSelected = 'Please select Course';
       valid = false;
     }
     if (!optionDaysSelected) {
@@ -218,11 +218,11 @@ const SignUp = () => {
       valid = false;
     }
     if (!getcountry) {
-      errors.country = 'your country is required';
+      errors.country = 'Your country is required';
       valid = false;
     }
     if (!selectedState) {
-      errors.city = 'your City is required';
+      errors.city = 'Your City is required';
       valid = false;
     }
     if (!getMethod) {

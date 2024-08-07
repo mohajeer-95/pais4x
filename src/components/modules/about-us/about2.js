@@ -63,7 +63,7 @@ function About() {
                         The cashback is usually a small amount of dollars per standard lot, but this small amount accumulates and its total increases with every trade the client closes, until it reaches a satisfactory amount.                     </p>
 
                     <p className="mb-0" style={{ paddingBottom: 20 }}>
-                        Depending on the client’s activity level, accumulating $100 in cash back may takes 2-3 months, or it 2-3 hours.                     </p>
+                        Depending on the client’s activity level, accumulating $100 in cashback may takes 2-3 months, or it 2-3 hours.                     </p>
 
                     <h5 className="mb-0" style={{ paddingBottom: 20 }}>
                         What is a cashback introducing broker?                    </h5>

@@ -1,4 +1,203 @@
+// GridContainer.js
+import React from 'react';
+
+ 
+const images = [
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  'https://via.placeholder.com/300',
+  // Add more image URLs as needed
+];
+const GridContainer = ({ }) => (
+
+
+  <div className="grid-container">
+    {images.map((src, index) => (
+      <div key={index} className="card">
+        <img key={index} src={src} alt="Card" />
+      </div>
+
+    ))}
+  </div>
+
+
+
+);
+
+export default GridContainer;
+
+
+
+
+
+
+
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
+import Link from "next/link";
+import { callApiWithToken } from '../../../../public/api/api'
+import Spinner from 'react-bootstrap/Spinner';
+
+function Services() {
+
+  const [brokersList, setBrokersList] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    getBrokers()
+  }, [])
+
+  const getBrokers = async () => {
+    var newArr = []
+    setLoading(true)
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers', {}, 'GET');
+    // setBrokersList(response.brokers)
+    response.brokers.map((item) => {
+      newArr.push(item)
+      newArr.push(item)
+      newArr.push(item)
+      newArr.push(item)
+      newArr.push(item)
+    })
+    setBrokersList(newArr)
+
+    // console.log('BROKER LIST', response.brokers);
+    setLoading(false)
+  }
+
+  return (
+    <section className="service padding-top padding-bottom">
+      <div className="section-header section-header--max50">
+        <h2 className="mb-15 mt-minus-5"><span>here </span>brokers</h2>
+        <p>Supported Forex Cashback Rebate brokers</p>
+      </div>
+      <div className="container">
+        <div className="service__wrapper">
+
+          {!loading ? <div className="row g-4 align-items-center" style={{}}>
+            {brokersList.map((item, index) => {
+              var pargraph = ''
+              if (item.description.length > 105) {
+                pargraph = item.description.substring(0, 110)
+              } else {
+                pargraph = item.description
+              }
+              return (
+                <div key={index} className="col-sm-6 col-md-6 col-lg-2">
+                  <div className="service__item service__item--style1" data-aos="fade-up" data-aos-duration="800">
+                    <div className="service__item-inner text-center">
+                      <div className="service__item-thumb">
+                        <Link href={{
+                          pathname: '/broker',
+                          query: { name: item.name, id: item.broker_id } // the data
+                        }}>
+                          <img style={{ width: 90, height: 90 }} className="dark" src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt="service-icon" />
+                        </Link>
+                      </div>
+                      {/* <div className="service-content">
+                        <h5 className="mb-15">
+
+                          <Link
+                            className="stretched-link"
+                            href={{
+                              pathname: '/broker',
+                              query: { name: item.name, id: item.broker_id } // the data
+                            }}>{item.name}</Link>
+                        </h5>
+                        <p className="mb-0">{pargraph}</p>
+                      </div> */}
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+            )}
+
+            {!brokersList.length && <div style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>Data not found</div>}
+          </div>
+            :
+            <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+              <Spinner animation="border" variant="info" />
+            </div>}
+
+          <div className="text-center">
+            <Link href="brokers" className="trk-btn trk-btn--border trk-btn--primary mt-30">View more </Link>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default Services;
+
+
+
+
+{brokersList.map((item, index) => {
+    var pargraph = ''
+    if (item.description.length > 105) {
+      pargraph = item.description.substring(0, 110)
+    } else {
+      pargraph = item.description
+    }
+    return (
+      <div key={index} className="col-sm-6 col-md-6 col-lg-2">
+        <div className="service__item service__item--style1" data-aos="fade-up" data-aos-duration="800">
+          <div className="service__item-inner text-center">
+            <div className="service__item-thumb">
+              <Link href={{
+                pathname: '/broker',
+                query: { name: item.name, id: item.broker_id } // the data
+              }}>
+                <img style={{ width: 90, height: 90 }} className="dark" src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt="service-icon" />
+              </Link>
+            </div>
+            {/* <div className="service-content">
+              <h5 className="mb-15">
+
+                <Link
+                  className="stretched-link"
+                  href={{
+                    pathname: '/broker',
+                    query: { name: item.name, id: item.broker_id } // the data
+                  }}>{item.name}</Link>
+              </h5>
+              <p className="mb-0">{pargraph}</p>
+            </div> */}
+          </div>
+        </div>
+      </div>
+    )
+  }
+  )}
+
+
+
+
+
+
+  import React, { useState, useEffect } from 'react'
 import Link from "next/link";
 import FsLightbox from "fslightbox-react";
 import Image from "next/image";
@@ -286,7 +485,58 @@ const PopularTag = () => {
 
 
 
-       
+          <div className="col-lg-12 col-md-12"
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div
+              style={{ marginTop: 40, marginBottom: 70 }}
+              className="banner__content"
+              data-aos="fade-right"
+              data-aos-duration="1000"
+            >
+              <Container>
+                <Row>
+                  <Col>
+                    <Row>
+                      <Col style={{ textAlign: 'center' }}>
+                        <div style={{ backgroundColor: '#E0E3B9', borderRadius: 9, minHeight: 140 }} className="card__footer">
+                          <div className="card__Footer__first">
+                            <div>
+                              <p style={{ color: '#0C263A' }}>{'40 $'}</p>
+                            </div>
+                            <label style={{ fontFamily: 'monospace', color: '#0C263A' }}>My credit</label>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col style={{ textAlign: 'center' }}>
+                        <div style={{ backgroundColor: '#E0E3B9', borderRadius: 9, minHeight: 140 }} className="card__footer">
+                          <div className="card__Footer__first">
+                            <div>
+                              <p style={{ color: '#0C263A' }}>{totalPaymentsCashback.total_cashback}</p>
+                            </div>
+                            <label style={{ fontFamily: 'monospace', color: '#0C263A' }}>total cashback</label>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col style={{ textAlign: 'center' }}>
+                        <div style={{ backgroundColor: '#E0E3B9', borderRadius: 9, minHeight: 140 }} className="card__footer">
+                          <div className="card__Footer__first">
+                            <div>
+                              <p style={{ color: '#0C263A' }}>{totalPaymentsCashback.total_payment}</p>
+                            </div>
+                            <label style={{ fontFamily: 'monospace', color: '#0C263A' }}>Total Payment</label>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+
+              </Container>
+
+            </div>
+          </div>
+
+
 
 
           <div className="banner__wrapper">
@@ -304,7 +554,7 @@ const PopularTag = () => {
                     data-aos-duration="1000"
                   >
 
-                    <div style={{ width: 150, justifySelf: 'center' }}>
+                    <div style={{ width: 150,   justifySelf: 'center' }}>
                       <ToggleButtonGroup type="radio" name="options" value={value} defaultValue={1} onChange={handleChange}>
                         <ToggleButton id="tbg-btn-1" value={1}>
                           My Informations
@@ -377,7 +627,24 @@ const PopularTag = () => {
                     data-aos="fade-right"
                     data-aos-duration="1000"
                   >
-                    {value == 1 ? <Table striped>
+                    <div style={{  justifySelf: 'center' }}>
+                      <ToggleButtonGroup type="radio" name="options" value={value} defaultValue={1} onChange={handleChange}>
+                        <ToggleButton id="tbg-btn-1" value={1}>
+                          My Informations
+                        </ToggleButton>
+                        <ToggleButton id="tbg-btn-2" value={2}>
+                          Cashback log
+                        </ToggleButton>
+                        <ToggleButton id="tbg-btn-2" value={2}>
+                          Cashback log
+                        </ToggleButton>
+                        <ToggleButton id="tbg-btn-3" value={3}>
+                          Payment history
+                        </ToggleButton>
+                      </ToggleButtonGroup>
+                    </div>
+
+                    {value == 1 ? <Table bordered hover>
                       <thead>
                       </thead>
                       <tbody>
@@ -385,24 +652,19 @@ const PopularTag = () => {
                           <td style={{ textAlign: 'center' }} colSpan={2}><h6 style={{ fontweight: 'bold' }}>My Information </h6></td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>Name: </td>
+                          <td style={{ fontFamily: 'cursive' }}>My credit: </td>
                           <td>{userData?.name + ' ' + userData?.last_name}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>Email: </td>
+                          <td style={{ fontFamily: 'cursive' }}>total cashback: </td>
                           <td>{userData?.email}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>Phone: </td>
-                          <td>{userData?.phone}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontFamily: 'cursive' }}>ExPhone: </td>
+                          <td style={{ fontFamily: 'cursive' }}>Total Payment: </td>
                           <td>{userData?.phone}</td>
                         </tr>
                       </tbody>
                     </Table> : null}
-
                     {value == 4 ? <Table bordered hover>
                       <thead>
                       </thead>
@@ -412,15 +674,19 @@ const PopularTag = () => {
                         </tr>
                         <tr>
                           <td style={{ fontFamily: 'cursive' }}>My credit: </td>
-                          <td>{'40 $'}</td>
+                          <td>{userData?.name + ' ' + userData?.last_name}</td>
                         </tr>
                         <tr>
                           <td style={{ fontFamily: 'cursive' }}>total cashback: </td>
-                          <td>{totalPaymentsCashback?.total_cashback}</td>
+                          <td>{userData?.email}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>Total Payment: </td>
-                          <td>{totalPaymentsCashback?.total_payment}</td>
+                          <td style={{ fontFamily: 'cursive' }}>Phone: </td>
+                          <td>{userData?.phone}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ fontFamily: 'cursive' }}>ExPhone: </td>
+                          <td>{userData?.phone}</td>
                         </tr>
                       </tbody>
                     </Table> : null}

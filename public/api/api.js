@@ -74,7 +74,6 @@ const callApi = (domain, data, headerToken, methodName = 'POST', files = false) 
     if (methodName != 'GET') {
         configApi['headers'] = {
             'X-Custom-Token': headerToken,
-            'Authorization': headerToken,
             'Content-Type': 'application/json',
         }
     } else {

@@ -17,6 +17,129 @@
   font-style : normal
 }
 
+.grid-container {
+  display              : grid;
+  grid-template-columns: repeat(6, 1fr);
+  /* 6 columns by default */
+  gap                  : 16px;
+  /* Adjust gap between cards as needed */
+}
+
+.cardb {
+  width      : 100%;
+  padding-top: 100%;
+  /* This makes the card square */
+  position   : relative;
+  overflow   : hidden;
+}
+
+.cardb img {
+  position  : absolute;
+  top       : 0;
+  left      : 0;
+  width     : 100%;
+  height    : 100%;
+  object-fit: cover;
+  /* Makes sure the image covers the card */
+}
+
+/* CourseCard.css */
+.course-card {
+  display       : flex;
+  flex-direction: column;
+  /* width      : 100%; */
+  max-width     : 400px;
+  border        : 1px solid #ddd;
+  border-radius : 10px;
+  overflow      : hidden;
+  box-shadow    : 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin        : 16px;
+  transition    : transform 0.2s, box-shadow 0.2s;
+}
+
+.course-card:hover {
+  transform : translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.course-image {
+  width : 50%;
+  height: auto;
+}
+
+.course-content {
+  text-align: center;
+}
+
+.course-content h3 {
+  margin   : 0 0 8px;
+  font-size: 1.5rem;
+}
+
+.course-content p {
+  margin: 0 0 16px;
+  color : #555;
+}
+
+
+
+.course-button:hover {
+  background-color: #0056b3;
+}
+
+@media (min-width: 768px) {
+  .course-card {
+    flex-direction: row;
+    max-width     : none;
+  }
+
+  .course-image {
+    width : 100%;
+    height: auto;
+  }
+
+  
+}
+
+
+.button-container {
+  display        : flex;
+  text-align     : center;
+  justify-content: end;
+  padding        : 16px;
+  flex-direction : column;
+}
+
+.course-button {
+  padding         : 10px 20px;
+  background-color: #007bff;
+  color           : #fff;
+  border          : none;
+  border-radius   : 5px;
+  cursor          : pointer;
+  transition      : background-color 0.3s;
+  width           : 100%;
+  max-width       : 200px;
+}
+
+
+
+/* Responsive layout for mobile devices */
+@media (max-width: 768px) {
+  .responsive-image-container {
+    width  : 2px;
+    height : auto;
+    /* Maintain aspect ratio */
+    display: block;
+    /* Remove default inline spacing */
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 columns on mobile */
+  }
+}
+
 :root {
   --swiper-theme-color: #007aff
 }
@@ -59,11 +182,11 @@
 }
 
 .swiper-slide {
-  flex-shrink        : 0;
-  width              : 100%;
-  height             : 100%;
-  position           : relative;
-  transition-property: transform
+  flex-shrink           : 0;
+  /* width              : 100%; */
+  height                : 100%;
+  position              : relative;
+  transition-property   : transform
 }
 
 .swiper-slide-invisible-blank {
@@ -746,16 +869,16 @@ button.swiper-pagination-bullet {
 
 .card {
   /* max-width         : 300px; */
-  max-height        : 600px;
-  /* border         : 1px solid black; */
-  border-radius     : 15px;
-  margin            : 0px 20px;
-  cursor            : pointer;
-  transition        : transform 150ms ease-in, box-shadow 0.2s linear;
-  background        : white;
+  max-height           : 600px;
+  /* border            : 1px solid black; */
+  border-radius        : 15px;
+  margin               : 0px 20px;
+  cursor               : pointer;
+  transition           : transform 150ms ease-in, box-shadow 0.2s linear;
+  background           : white;
   /* box-shadow        : 10px 10px 5px -2px rgba(0, 0, 0, 0.75); */
   /* -webkit-box-shadow: 10px 10px 5px -2px rgba(0, 0, 0, 0.75); */
-  -moz-box-shadow   : 10px 10px 5px -2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow      : 10px 10px 5px -2px rgba(0, 0, 0, 0.75);
 }
 
 .card:hover {
@@ -841,4 +964,32 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* ResponsiveImage.css */
+.responsive-image-container {
+  width  : 22px;
+  height : auto;
+  /* Maintain aspect ratio */
+  display: block;
+  /* Remove default inline spacing */
+}
+
+.responsive-image {
+  width  : 100%;
+  height : auto;
+  /* Maintain aspect ratio */
+  display: block;
+  /* Remove default inline spacing */
+}
+
+/* Responsive layout for different screen sizes */
+@media (max-width: 768px) {
+  .responsive-image-container {
+    width  : 22px;
+    height : auto;
+    /* Maintain aspect ratio */
+    display: block;
+    /* Remove default inline spacing */
+  }
 }

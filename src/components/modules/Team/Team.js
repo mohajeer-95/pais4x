@@ -92,7 +92,7 @@ const Team = () => {
                 <div className="team__item-inner team__item-inner--shape">
                   <div className="team__item-thumb team__item-thumb--style1">
                     <div style={{ padding: 30, borderRadius: 9, }}>
-                      <img style={{ maxHeight: 60, marginBottom: 100 }} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt="partner logo" className="dark" />
+                      <img style={{ maxHeight: 100, marginBottom: 100 }} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt="partner logo" className="dark" />
                     </div>
                     <div className="team__item-content team__item-content--style1">
                       <div className="team__item-author team__item-author--style1">
@@ -109,11 +109,11 @@ const Team = () => {
                   <div style={{ backgroundColor: '#454545' }} className="card__footer">
                     <div className="card__Footer__first">
                       <div>
-                        <p>{'4 / 10'}</p>
+                        <p>{item.avg_rating}{' / 5'}</p>
                       </div>
                       <label>Rating</label>
                     </div>
-                    <div className="card__Footer__third">
+                    <div className="card__Footer__third"> 
                       <div>
                         <p>{'17 $'}</p>
                       </div>
