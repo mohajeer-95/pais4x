@@ -10,7 +10,7 @@ const services = () => {
   return (
     <>
     <Header />
-    <PageHeader />
+    <PageHeader withSocialComponent={0} />
     <Service />
     <Testimonial/>
     <Newsletter/>

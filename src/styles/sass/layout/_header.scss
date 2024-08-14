@@ -123,6 +123,7 @@
   %justify-between,
   %align-i-center,
   %py-15;
+  margin-inline: 10px;
 
 
   @include breakpoint(sm) {

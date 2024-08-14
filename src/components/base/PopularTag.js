@@ -385,21 +385,21 @@ const PopularTag = () => {
                           <td style={{ textAlign: 'center' }} colSpan={2}><h6 style={{ fontweight: 'bold' }}>My Information </h6></td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>Name: </td>
+                          <td style={{ fontweight: 'bold' }}>Name: </td>
                           <td>{userData?.name + ' ' + userData?.last_name}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>Email: </td>
+                          <td style={{ fontweight: 'bold' }}>Email: </td>
                           <td>{userData?.email}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>Phone: </td>
+                          <td style={{ fontweight: 'bold' }}>Phone: </td>
                           <td>{userData?.phone}</td>
                         </tr>
-                        <tr>
-                          <td style={{ fontFamily: 'cursive' }}>ExPhone: </td>
+                        {/* <tr>
+                          <td style={{ fontweight: 'bold' }}>ExPhone: </td>
                           <td>{userData?.phone}</td>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </Table> : null}
 
@@ -411,15 +411,15 @@ const PopularTag = () => {
                           <td style={{ textAlign: 'center' }} colSpan={2}><h6 style={{ fontweight: 'bold' }}>Walet information </h6></td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>My credit: </td>
-                          <td>{'40 $'}</td>
+                          <td style={{ fontweight: 'bold' }}>My credit: </td>
+                          <td>{Number(totalPaymentsCashback?.total_cashback) + Number(totalPaymentsCashback?.total_cashback) +'$'}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>total cashback: </td>
+                          <td style={{ fontweight: 'bold' }}>total cashback: </td>
                           <td>{totalPaymentsCashback?.total_cashback}</td>
                         </tr>
                         <tr>
-                          <td style={{ fontFamily: 'cursive' }}>Total Payment: </td>
+                          <td style={{ fontweight: 'bold' }}>Total Payment: </td>
                           <td>{totalPaymentsCashback?.total_payment}</td>
                         </tr>
                       </tbody>
@@ -517,7 +517,7 @@ const PopularTag = () => {
                           <tr>
                             <th style={{ textAlign: 'center' }} scope="col">Broker Name</th>
                             <th style={{ textAlign: 'center' }} scope="col">Date of Link</th>
-                            <th style={{ textAlign: 'center' }} scope="col">link or unlink</th>
+                            <th style={{ textAlign: 'center' }} scope="col">Status</th>
                           </tr>
                         </MDBTableHead>
                         <MDBTableBody>

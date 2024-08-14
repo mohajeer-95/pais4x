@@ -14,8 +14,8 @@ import Featured from "@/components/modules/index/Featured";
 const blogDetails = () => {
   return (
     <>
-      <Header />
-      <PageHeader title="My Account" page="My Account" />
+      <Header pageName={'profile'}/>
+      <PageHeader withSocialComponent={0} title="My Account" page="My Account" />
       <Partner />
       <Featured />
       <PopularTag/>

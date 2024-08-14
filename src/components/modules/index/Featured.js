@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 function Featured() {
 
   const [sponserImg, setSponserImg] = useState('')
+  const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -13,15 +14,19 @@ function Featured() {
   }, [])
 
   const getSponserImg = async () => {
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+ 
     setLoading(true)
     const response = await callApiWithToken('https://lab.app2serve.com/public/api/slider', {}, 'GET');
     // console.log('response getSponserImg', response);
-    setSponserImg('https://lab.app2serve.com/storage/app/public/' + response.slider.image)
+    setSponserImg('https://lab.app2serve.com/storage/app/public/' + response.sliders[randomNumber].image)
+    setUrl(response.sliders[randomNumber].link)
+
     setLoading(false)
   }
 
   return (
-    <section className="feature feature--style1 bg-color" style={{paddingTop: 60, paddingBottom: 60}}>
+    <section className="feature feature--style1 bg-color" style={{ paddingTop: 60, paddingBottom: 60 }}>
       <div className="container">
         <div className="feature__wrapper">
           <div style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} className=" g-5 align-items-center justify-content-between">
@@ -34,7 +39,10 @@ function Featured() {
                 <div className="container" style={{ textAlign: 'center' }}>
                   <div className="feature__image floating-content">
                     {!loading ?
-                      <img style={{ maxHeight: 130 }} src={sponserImg} alt="Feature image" />
+                      <a href={url} target="_blank" rel="noopener noreferrer">
+
+                        <img style={{ maxHeight: 130 }} src={sponserImg} alt="Feature image" />
+                      </a>
                       :
                       <Spinner animation="border" variant="info" />
                     }

@@ -18,11 +18,10 @@ const TeamDetails = () => {
   return (
     <>
       <Header />
-      <PageHeader title={data.name + ' Broker'} page={data.name} />
+      <PageHeader  brokerId={data.id} withSocialComponent={1} data={data} title={data.name + ' Broker'} page={data.name} />
       <Partner title={data.name} text={data.name} />
       <Featured />
       <Mentor title={data.name} />
-      {/* <PageHeader title={data.name} text={data.name} /> */}
       <Newsletter />
       <Footer />
     </>

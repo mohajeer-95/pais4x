@@ -6,7 +6,7 @@ const Contact = () => {
   return (
     <>
       <Header />
-      <PageHeader title="Contact Us" text="Contact Us" />
+      <PageHeader withSocialComponent={0} title="Contact Us" text="Contact Us" />
       <ContactCard />
       <Footer />
     </>

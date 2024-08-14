@@ -9,7 +9,7 @@ const ErrorPage = () => {
   return (
     <>
       <Header />
-      <PageHeader text="404" title="404" />
+      <PageHeader withSocialComponent={0} text="404" title="404" />
       <div className="error padding-top padding-bottom sec-bg-color2">
         <div className="container">
           <div className="error__wrapper">

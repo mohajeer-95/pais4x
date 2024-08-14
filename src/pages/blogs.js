@@ -199,7 +199,7 @@ const Blogs = () => {
   return (
     <>
     <Header/>
-    <PageHeader title='Frequently' page= 'Faq' />
+    <PageHeader withSocialComponent={0} title='Frequently' page= 'Faq' />
     {/* <Story/> */}
     {/* <About /> */}
     <section className="faq padding-top padding-bottom of-hidden">

@@ -2,7 +2,7 @@ import React from "react";
 import Pricing from "@/components/modules/index/pricingg";
 import Featured from "@/components/modules/index/Featured";
 import Newsletter from "@/components/modules/index/Newsletter";
-import PageHeader from "@/components/price/PageHeader";
+import PageHeader from '@/components/modules/about-us/PageHeader'
 import Testimonial from "@/components/price/testimoniall";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,7 +12,7 @@ const Price = () => {
   return (
     <>
       <Header />
-      <PageHeader title={'Payment'} page={'About Payment'}/>
+      <PageHeader withSocialComponent={0} title={'Payment'} page={'About Payment'}/>
       <Partner title='Instructor' page='Instructor' />
       <Featured />
       <Pricing />

@@ -173,7 +173,7 @@ function Header({ headerClass = null }) {
     <>
       {/* <!-- ===============>> light&dark switch start here <<================= --> */}
 
-      {/* <div className="lightdark-switch" onClick={toggleTheme}>
+      <div className="lightdark-switch" onClick={toggleTheme}>
         <span
           className="switch-btn"
           id="btnSwitch"
@@ -185,7 +185,7 @@ function Header({ headerClass = null }) {
 
           />
         </span>
-      </div> */}
+      </div>
 
       {/* <!-- ===============>> light&dark switch start here <<================= --> */}
       <header style={{marginTop: 50}} className={`header-section ${headerClass ? headerClass : 'bg-color-3'}`} onScroll={isSticky}>

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image';
 import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
 
-function Header({ headerClass = null }) {
+function Header({ headerClass = null, pageName }) {
   const [menu, setMenu] = useState(false);
   const [show, setShow] = useState(false);
   const [token, setToken] = useState(false);
@@ -175,63 +175,59 @@ function Header({ headerClass = null }) {
         <div className="header-bottom">
           <div className="container">
             <div style={{}} className="header-wrapper">
-              <div className="logo">
+
+
+
+
+              <div className="logo" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
                 <Link href="/">
-                  <img style={{ maxHeight: 50, }} className="dark" src="/images/global/logo.png" alt="logo" />
+                  <img style={{ maxHeight: 45, }} className="dark" src="/images/global/logo.png" alt="logo" />
                 </Link>
-              </div>
 
-              <div className="logo">
-                <Link href="courses">
-                  <img style={{ maxHeight: 50, }} className="dark" src="/images/global/el.png" alt="logo" />
-                </Link>
-              </div>
-
-
-
-              {/* <div className="menu-area">
-              </div> */}
-
-              <div className="header-action">
-                <div className="menu-area">
-                  <div className="header-btn">
-
-
-                  </div>
-
-                  {/* <!-- toggle icons --> */}
-                  <div className={menu ? "header-bar d-lg-none header-bar--style1 active" : "header-bar d-lg-none header-bar--style1"} onClick={() => toggleMenu()}>
-
-                  </div>
+                <div style={{ display: 'flex', flexDirection: 'column', bottom: 0 }}>
+                  <span style={{ fontSize: '9px', bottom: 0 }}>Sponsored by</span>
+                  <Link href="/">
+                    <img style={{ maxHeight: 20 }} className="dark" src="/images/global/el.png" alt="logo" />
+                  </Link>
                 </div>
               </div>
 
-              {token ? <Link href="profile" className="trk-btn trk-btn--border trk-btn--primary">
+
+
+              <div className="logo" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+                <Link href="courses">
+                  <img style={{ maxHeight: 45, marginRight: '10px' }} className="dark" src="/images/global/el.png" alt="logo" />
+                </Link>
+
+                <div style={{ display: 'flex', flexDirection: 'column', bottom: 0 }}>
+                  <span style={{ fontSize: '9px', bottom: 0 }}>Sponsored by</span>
+                  <Link href="courses">
+                    <img style={{ maxHeight: 20, }} className="dark" src="/images/global/el.png" alt="logo" />
+                  </Link>
+                </div>
+              </div>
+
+
+              {token ? <Link href="profile" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
                 <span>My Account</span>
               </Link> :
-                <Link href="signup" className="trk-btn trk-btn--border trk-btn--primary">
+                <Link href="signup" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
                   <span>Get Started</span>
                 </Link>
               }
 
-
-              {/* 
-              {token && <ul>
-                <li onClick={() => logOut()}>
-                  <Link href="contact">Logout</Link>
-                </li>
-              </ul>}
-
-              {token && <ul>
-                <li onClick={() => logOut()}>
-                  <Link href="contact">Logout</Link>
-                </li>
-              </ul>} */}
-
-
             </div>
 
-            <div style={{ backgroundColor: '#F8FFFD', borderTopStyle: 'ridge' }} className="header-wrapper-menue">
+            <div style={{ backgroundColor: '#F8FFFD', borderTopStyle: 'ridge', paddingBlock: pageName == 'profile' ? 15 : 5}} className="header-wrapper-menue">
+
+
+              {token ? <Link style={{ display: pageName == 'profile' ? 'none' : 'block' }} href="profile" className="hidden-pc get-started-btn">
+                <span>My Account</span>
+              </Link> :
+                <Link href="signup" className="hidden-pc get-started-btn">
+                  <span>Get Started</span>
+                </Link>
+              }
 
               <div className="menu-area">
 

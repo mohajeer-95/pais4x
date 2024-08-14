@@ -90,7 +90,7 @@ const SignIn = () => {
   return (
     <>
       <Header />
-      <PageHeader title="Register" text="Register" />
+      <PageHeader withSocialComponent={0} title="Register" text="Register" />
       <section className="account padding-top padding-bottom sec-bg-color2">
         <div className="container">
           <div

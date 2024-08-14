@@ -11,7 +11,7 @@ const ServiceDetails = () => {
   return (
     <>
       <Header />
-      <PageHeader />
+      <PageHeader withSocialComponent={0} />
       <div className="service-details padding-top padding-bottom section-bg-color">
         <div className="container">
           <div className="service-details__wrapper">

@@ -12,7 +12,7 @@ const Team = () => {
   return (
     <>
       <Header />
-      <PageHeader title="Brokers List" page="Brokers" />
+      <PageHeader withSocialComponent={0} title="Brokers List" page="Brokers" />
       <Partner title="Paid4x" text="Brokers" />
       <Featured />
       <Advisor />

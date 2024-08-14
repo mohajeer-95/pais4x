@@ -98,7 +98,7 @@
     height: auto;
   }
 
-  
+
 }
 
 
@@ -872,7 +872,7 @@ button.swiper-pagination-bullet {
   max-height           : 600px;
   /* border            : 1px solid black; */
   border-radius        : 15px;
-  margin               : 0px 20px;
+  /* margin               : 0px 20px; */
   cursor               : pointer;
   transition           : transform 150ms ease-in, box-shadow 0.2s linear;
   background           : white;
@@ -991,5 +991,80 @@ code {
     /* Maintain aspect ratio */
     display: block;
     /* Remove default inline spacing */
+  }
+}
+
+.partner__details {
+  display        : flex;
+  justify-content: space-between;
+  margin-top     : 8px;
+}
+
+.partner__rating,
+.partner__price {
+  display    : flex;
+  align-items: center;
+}
+
+.partner__rating-icon,
+.partner__coin-icon {
+  width       : 16px;
+  /* Adjust size as needed */
+  height      : 16px;
+  margin-right: 4px;
+}
+
+.partner__rating-value,
+.partner__price-value {
+  font-size  : 14px;
+  /* Adjust font size as needed */
+  color      : #CBA80B;
+  /* Adjust color as needed */
+  font-weight: bold;
+}
+
+.hidden-mobile {
+  display: none !important;
+}
+
+.hidden-pc {
+  display: block !important;
+}
+
+@media (min-width: 769px) {
+  .hidden-mobile {
+    display: block !important;
+  }
+
+  .hidden-pc {
+    display: none !important;
+  }
+
+}
+
+.get-started-btn {
+  /* Hidden by default */
+  padding         : 5px 10px;
+  background-color: #18e8ef;
+  color: #0C263A;
+  border-radius   : 3px;
+  font-size       : 13px;
+  cursor          : pointer;
+  box-shadow      : 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition      : background-color 0.3s ease;
+}
+
+.get-started-btn:hover {
+  background-color: #18e8ef;
+}
+
+@media (max-width: 768px) {
+  .get-started-btn {
+    background-color: #18e8ef;
+    color: #0C263A;
+    /* Show the button on mobile */
+    bottom  : 20px;
+    right   : 10px;
+    z-index : 1000;
   }
 }

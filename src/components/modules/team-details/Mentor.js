@@ -50,6 +50,10 @@ const Mentor = ({ title }) => {
   const [autToken, setAutToken] = useState('');
   const [linkLoading, setLinkLoading] = useState(false);
   const [errors, setErrors] = useState(false);
+  const [otpErrors, setOtpErrors] = useState(false);
+  const [success, setSuccess] = useState(0);
+  const [reference, setReference] = useState('');
+
 
   const [broker_account, setbroker_account] = useState([])
   const [broker_cashback_info, setbroker_cashback_info] = useState([])
@@ -75,6 +79,8 @@ const Mentor = ({ title }) => {
   const toggleOpen = () => setBottomModal(!bottomModal);
   useEffect(() => {
     setToken(getCookie('token'))
+    console.log(getCookie('token'));
+    
     if (router.isReady) {
       setQuery(router.query);
       getBrokerById(id)
@@ -212,6 +218,7 @@ const Mentor = ({ title }) => {
   };
 
   const sendMail = async (event) => {
+    setErrors('')
     setLinkLoading(true)
     if (!linkEmail) {
       setErrors('Email is requerd')
@@ -224,16 +231,66 @@ const Mentor = ({ title }) => {
     const responseEmailSent = await callApiWithToken('https://lab.app2serve.com/public/api/brokers_link', { broker_identifier: linkEmail, broker_id: brokerId }, 'POST', autToken);
     console.log('responseEmailSent: ', responseEmailSent);
     if (responseEmailSent.status == 1) {
+      setReference(responseEmailSent.reference)
       setLinkLoading(false)
       setVaryingState(2) //disable email input to step two
     } else {
+
+
       setErrors('Please Try later')
       setLinkLoading(false)
     }
 
 
   };
+  const sendOtp = async (event) => {
+    setOtpErrors('')
 
+    setLinkLoading(true)
+    if (!linkEmail) {
+      setOtpErrors('try ag later')
+      setLinkLoading(false)
+      return
+    }
+    if (!varyingMessage) {
+      setOtpErrors('OTP is requerd')
+      setLinkLoading(false)
+      return
+    }
+
+
+    setOtpErrors('')
+    console.log('email: ', linkEmail);
+    console.log('otp: ', varyingMessage);
+    console.log('reference: ', reference);
+    console.log('autToken: ', autToken);
+    const responseOTPSent = await callApiWithToken('https://lab.app2serve.com/public/api/verify-link-otp', { broker_identifier: linkEmail, reference: reference, otp: varyingMessage }, 'POST', autToken);
+    console.log('responseOTPSent: ', responseOTPSent);
+    if (responseOTPSent.status == 1) {
+      setVaryingState(3)
+      setLinkLoading(false)
+      setVaryingState(2) //disable email input to step two
+      setSuccess(true)
+      cleanAfterSuccess()
+    } else {
+      setOtpErrors('Please Try later')
+      setLinkLoading(false)
+    }
+
+  };
+
+
+  const cleanAfterSuccess = () => {
+
+    setTimeout(() => {
+      setVaryingState(1)
+      setVaryingMessage('')
+      setEmail('')
+      setVaryingModal(false)
+      setErrors('')
+      setOtpErrors('')
+    }, 2000);
+  }
 
   return (
     <div className="team team--details padding-bottom bg-color-3" style={{ paddingTop: 50 }}>
@@ -263,7 +320,7 @@ const Mentor = ({ title }) => {
             </>
             <>
 
-              <MDBModal staticBackdrop open={varyingModal} onClose={() => setVaryingModal(false)} tabIndex='-1'>
+              <MDBModal staticBackdrop open={varyingModal} onClose={() => cleanAfterSuccess()} tabIndex='-1'>
                 <MDBModalDialog>
                   <MDBModalContent>
 
@@ -283,7 +340,7 @@ const Mentor = ({ title }) => {
                           {varyingModal && (
                             <MDBInput
                               type='email'
-                              disabled={varyingState == 2}
+                              disabled={varyingState != 1}
                               value={linkEmail}
                               onChange={onChangeRecipient}
                               labelClass='col-form-label'
@@ -294,15 +351,15 @@ const Mentor = ({ title }) => {
                         {linkLoading && varyingState == 1 && <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
                           <Spinner animation="border" variant="info" />
                         </div>}
-                        {varyingState == 2 ? <p>We have sent a verification code to your email...</p> : null}
+                        {varyingState > 1 ? <p>We have sent a verification code to your email...</p> : null}
 
-                        {varyingState == 2 ? <h6>Enter OTP:  <span class="badge badge-primary">New</span></h6> : null}
+                        {varyingState > 1 ? <h6>Enter OTP:  <span class="badge badge-primary"></span></h6> : null}
 
                         <div className='mb-3'>
-                          {varyingState == 2 ?
+                          {varyingState > 1 ?
                             <MDBInput
                               type='number'
-                              disabled={false}
+                              disabled={success}
                               value={varyingMessage}
                               onChange={onChangeMessage}
                               labelClass='col-form-label'
@@ -312,22 +369,27 @@ const Mentor = ({ title }) => {
                           {linkLoading && varyingState == 2 && <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
                             <Spinner animation="border" variant="info" />
                           </div>}
+                          {otpErrors && <p style={{ color: 'red' }}>{otpErrors}</p>}
+
+                          {success == true ? <div className="logo text-center" style={{ marginTop: 30, marginBottom: 30 }}>
+                            <img style={{ maxHeight: 70, }} className="dark" src="/images/global/success.png" alt="logo" />
+                          </div> : null}
 
                         </div>
                       </form>
                     </MDBModalBody>
                     <MDBModalFooter>
-                      <MDBBtn className='ms-1' color='secondary' onClick={() => setVaryingModal(!varyingModal)}>
+                      <MDBBtn className='ms-1' color='secondary' onClick={() => cleanAfterSuccess()}>
                         Close
                       </MDBBtn>
                       {varyingState == 1 ? <MDBBtn className="ms-1" onClick={() => sendMail()}>sent</MDBBtn> : null}
-                      {varyingState == 2 ? <MDBBtn className="ms-1" onClick={() => setVaryingModal(!varyingModal)}>sent</MDBBtn> : null}
+                      {varyingState != 1 ? <MDBBtn className="ms-1" onClick={() => sendOtp()}>sent</MDBBtn> : null}
                     </MDBModalFooter>
                   </MDBModalContent>
                 </MDBModalDialog>
               </MDBModal>
             </>
-            <MDBRow className="col-md-8 justify-content-center aline" style={{ width: '70%' }}>
+            <MDBRow className="col-md-8 justify-content-center aline" style={{  maxWidth: '97%' }}>
               <MDBCard className="shadow-0 border rounded" style={{}}>
                 <MDBCardBody>
                   <MDBRow>

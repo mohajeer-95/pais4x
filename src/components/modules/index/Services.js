@@ -18,12 +18,11 @@ function Services() {
     setLoading(true)
     const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers', {}, 'GET');
     // setBrokersList(response.brokers)
-    response.brokers.map((item) => {
-      newArr.push(item)
-      newArr.push(item)
-      newArr.push(item)
-      newArr.push(item)
-      newArr.push(item)
+    response.brokers.map((item, index) => {
+      if (index < 12) {
+        newArr.push(item)
+      }
+
     })
     setBrokersList(newArr)
 
@@ -46,7 +45,7 @@ function Services() {
 
 
 
-            <div className="grid-container" style={{ width: '90%' }}>
+            <div className="grid-container" style={{ width: '100%' }}>
               {brokersList?.map((item, index) => (
                 <div key={index} className="card cardb">
                   <Link href={{

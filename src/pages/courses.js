@@ -9,7 +9,7 @@ const BlogSideBar = () => {
   return (
     <>
     <Header />
-    <PageHeader title = "Courses" page = "Courses" />
+    <PageHeader withSocialComponent={0} title = "Courses" page = "Courses" />
     <Partner title='Instructor' page='Instructor' />
     <BlogWithSideBar />
     <Footer />
