@@ -19,8 +19,8 @@ function Featured() {
     setLoading(true)
     const response = await callApiWithToken('https://lab.app2serve.com/public/api/slider', {}, 'GET');
     // console.log('response getSponserImg', response);
-    setSponserImg('https://lab.app2serve.com/storage/app/public/' + response.sliders[randomNumber].image)
-    setUrl(response.sliders[randomNumber].link)
+    setSponserImg('https://lab.app2serve.com/storage/app/public/' + response?.sliders[randomNumber]?.image)
+    setUrl(response?.sliders[randomNumber]?.link)
 
     setLoading(false)
   }
@@ -38,7 +38,7 @@ function Featured() {
               >
                 <div className="container" style={{ textAlign: 'center' }}>
                   <div className="feature__image floating-content">
-                    {!loading ?
+                    {!loading && sponserImg ?
                       <a href={url} target="_blank" rel="noopener noreferrer">
 
                         <img style={{ maxHeight: 130 }} src={sponserImg} alt="Feature image" />

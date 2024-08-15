@@ -59,29 +59,7 @@ const Team = () => {
       <div className="container">
         <div className="team__wrapper">
           <div className="row g-4 align-items-center">
-            <Container>
-              <Row>
-                <Col>
-                  <Row style={{ maxHeight:50}}>
-                    <Col>
-                      <InputGroup className="mb-3" >
-                        <Form.Control
-                        style={{maxHeight:50}}
-                          placeholder="Broker name .."
-                         onChange={(res)=> handleTextSearch(res.target.value)}
-                          aria-describedby="basic-addon2"
-                        />
-                        <Button disabled={!textSearch.length} onClick={(res)=> handleSearch(textSearch)} variant="outline-secondary" id="button-addon2">
-                        <i class="fa fa-search"></i>              
-                                  </Button>
-                      </InputGroup>
-                    </Col>
-                    <Col></Col>
-                  </Row>
-                </Col>
-                <Col></Col>
-              </Row>
-            </Container>
+           
             {loading && <div className="text-center" style={{marginTop: 50, marginBottom: 30}}>
               <Spinner animation="border" variant="info" />
             </div>}
