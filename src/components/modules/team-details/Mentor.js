@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useRouter } from 'next/router';
 import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
 import Spinner from 'react-bootstrap/Spinner';
+import TextWithNewLines from '../../../components/handleTextLong'
 import {
   MDBContainer,
   MDBCol,
@@ -68,6 +69,7 @@ const Mentor = ({ title }) => {
   const [brokerData, setBrokerData] = useState([])
   const [brokerId, setBrokerId] = useState(null)
   const [query, setQuery] = useState(null);
+  const longText = "This is a long text, it should be displayed properly. React is awesome, it allows you to build complex UIs.";
 
   const [pargraph, setpargraph] = useState('');
   const [starRateNumber, setStarRateNumber] = useState(['star']);
@@ -80,10 +82,11 @@ const Mentor = ({ title }) => {
   useEffect(() => {
     setToken(getCookie('token'))
     console.log(getCookie('token'));
-    
-    if (router.isReady) {
+    const getToken = (getCookie('token'))
+
+    if (router.isReady && getToken) {
       setQuery(router.query);
-      getBrokerById(id)
+      getBrokerById(id, getToken)
       setBrokerId(router.query.id)
     }
 
@@ -98,7 +101,6 @@ const Mentor = ({ title }) => {
       // window.location.href = '/brokers';
 
     }
-    const getToken = (getCookie('token'))
     setAutToken(getToken)
   }, [router.isReady]);
 
@@ -108,9 +110,8 @@ const Mentor = ({ title }) => {
     const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers-link-request', {}, 'GET', authToken);
     console.log('response getBrokerList', response);
     response?.brokers_link?.map((item, index) => {
-      console.log('QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ', name);
       if (item.name == name) {
-        console.log('aaaaaaaaaaaaa', name);
+        // setValue(item.avg_rating)
         setIsLinked(true)
       }
     })
@@ -140,8 +141,9 @@ const Mentor = ({ title }) => {
     };
   }, [info.logo]);
 
-  const getBrokerById = async (brokerId) => {
-    const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
+  const getBrokerById = async (brokerId, tokenA) => {
+    const token = tokenA ? tokenA : autToken
+    const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET', token);
     setBrokerData(response.broker)
 
     setbroker_account(response.broker.broker_account)
@@ -149,7 +151,7 @@ const Mentor = ({ title }) => {
     setbroker_funding(response.broker.broker_funding[0])
     setbroker_type(response.broker.broker_type)
     setinfo(response.broker.info)
-
+    setValue(response.broker.info.rating)
     var starNumber = ['star']
 
     for (let index = 1; index < response.broker.info.avg_rating; index++) {
@@ -389,7 +391,7 @@ const Mentor = ({ title }) => {
                 </MDBModalDialog>
               </MDBModal>
             </>
-            <MDBRow className="col-md-8 justify-content-center aline" style={{  maxWidth: '97%' }}>
+            <MDBRow className="col-md-8 justify-content-center aline" style={{ maxWidth: '97%' }}>
               <MDBCard className="shadow-0 border rounded" style={{}}>
                 <MDBCardBody>
                   <MDBRow>
@@ -476,21 +478,6 @@ const Mentor = ({ title }) => {
             </MDBRow>
           </div>
 
-          {/* <Box
-            sx={{
-              '& > legend': { mt: 2 },
-            }}
-          >
-            <Typography component="legend">Controlled</Typography>
-            <Rating
-              name="simple-controlled"
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-            />
-            
-          </Box> */}
 
 
           {info.youtube_link && <div style={{ marginTop: 20 }}>
@@ -507,9 +494,12 @@ const Mentor = ({ title }) => {
                   <h3>Get to Know ({info.name})</h3>
                 </div>
                 {/* <p>Welcome to FXCentrum - the ultimate forex trading destination for a seamless, profitable trading experience. Our company was founded in 2019 by a team of experienced forex traders, customer service professionals, and risk managers, who prioritize customer satisfaction above all else. Our strongest point is our 5* personal care and easy-to-use platform, which includes fast deposits and withdrawals. We are a fully regulated forex broker, holding license number SD055 from the FSA Seychelles. At FXCentrum, we offer a wide range of local deposit and withdrawal methods, including wire transfers, card payments, and even cryptocurrencies, making account funding and withdrawal easy and hassle-free.</p> */}
-                <p>{info.description}</p>
+                {/* <p>{info.description}</p> */}
+                <div>
+                  <TextWithNewLines statebuttonText={statebuttonText} text={info.description ? info.description : longText} />
+                </div>
                 {/* <span>P2</span> */}
-                <p>
+                {/* <p>
                   Our platform is designed to cater to both beginners and professionals in the forex trading world, with leverages of up to 1:1000 and various account types to choose from. Whether youre looking to start with a demo account or jump straight into a real one, we have got you covered.
                 </p>
                 {statebuttonText ? <p>
@@ -524,7 +514,7 @@ const Mentor = ({ title }) => {
                 </p> : null}
                 {statebuttonText ? <p>
                   At FXCentrum, we strive to offer a trading experience that is not only seamless but also profitable. With our easy-to-use platform, competitive pricing, and top-notch customer service, you can trust us to deliver the best possible forex trading experience. Open an account with us today and see for yourself why we are the go-to forex broker for traders around the world.
-                </p> : null}
+                </p> : null} */}
 
 
                 <button onClick={() => handleClick()}
@@ -546,9 +536,9 @@ const Mentor = ({ title }) => {
                       <td style={{ textAlign: 'center' }} >Maximum Trading Size </td>
                     </tr>
 
-                    {broker_type.map((item, index) => (
+                    {broker_type?.map((item, index) => (
                       <tr key={index} style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                        <td style={{ textAlign: 'center' }} >Acount {item.id} </td>
+                        <td style={{ textAlign: 'center' }} >Acount {index + 1} </td>
                         <td style={{ textAlign: 'center' }} >{item.account_type}</td>
                         <td style={{ textAlign: 'center' }} >{item.account_type_minimum_trading_size}</td>
                         <td style={{ textAlign: 'center' }} >{item.account_type_maximum_trading_size}</td>
@@ -670,57 +660,7 @@ const Mentor = ({ title }) => {
                     </Accordion.Item>
                   </div>
 
-                  {/* <div key={8} className="col-12">
-                    <Accordion.Item className="accordion__item" eventKey={8}>
-                      <div className="accordion__header">
-                        <Accordion.Button className="accordion__button">
-                          <span className="accordion__button-content">Account Types </span>
-                        </Accordion.Button>
-                      </div>
-                      <Accordion.Body className="accordion__body">
-                        <Table striped>
-                          <thead>
-                          </thead>
-                          <tbody>
-                            <Table striped bordered hover>
-                              <thead>
-                                <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                                  <td style={{ textAlign: 'center' }} rowSpan={2} ><h6 style={{ fontFamily: 'FontAwesome' }}> </h6></td>
-                                  <td style={{ textAlign: 'center' }} >Account 1 </td>
-                                  <td style={{ textAlign: 'center' }} >Account 2  </td>
-                                  <td style={{ textAlign: 'center' }} >Account 3  </td>
-                                </tr>
-                                <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                                  <td style={{ textAlign: 'center' }} >Margin Bonus USD/EUR </td>
-                                  <td style={{ textAlign: 'center' }} >Floating Bonus USD  </td>
-                                  <td style={{ textAlign: 'center' }} >Scalping Margin Bonus USD  </td>
-                                </tr>
-                                <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                                  <td style={{ textAlign: 'center' }} >Minimum Trading Size</td>
-                                  <td style={{ textAlign: 'center' }} >0,01 LOT </td>
-                                  <td style={{ textAlign: 'center' }} >0,5 LOT  </td>
-                                  <td style={{ textAlign: 'center' }} >0,5 LOT </td>
-                                </tr>
-                                <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                                  <td style={{ textAlign: 'center' }} >Minimum Trading Size</td>
-                                  <td style={{ textAlign: 'center' }} >Not Max</td>
-                                  <td style={{ textAlign: 'center' }} >Not Max</td>
-                                  <td style={{ textAlign: 'center' }} >Not Max</td>
-                                </tr>
-                                <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                                </tr>
-
-                              </thead>
-                              <tbody>
-
-                              </tbody>
-                            </Table>
-                          </tbody>
-                        </Table>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </div> */}
-
+                
 
                   <div key={3} className="col-12">
                     <Accordion.Item className="accordion__item" eventKey={3}>

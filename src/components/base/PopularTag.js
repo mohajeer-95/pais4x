@@ -396,10 +396,15 @@ const PopularTag = () => {
                           <td style={{ fontweight: 'bold' }}>Phone: </td>
                           <td>{userData?.phone}</td>
                         </tr>
-                        {/* <tr>
-                          <td style={{ fontweight: 'bold' }}>ExPhone: </td>
-                          <td>{userData?.phone}</td>
-                        </tr> */}
+                        <tr>
+                          <td style={{ fontweight: 'bold' }}>Logout: </td>
+                          <td>
+                            <MDBBtn onClick={() => logOut()} style={{ minWidth: 75, maxWidth: 100, fontSize: 13, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
+                              Logout
+                            </MDBBtn>
+                          </td>
+                        </tr>
+                        
                       </tbody>
                     </Table> : null}
 
@@ -412,7 +417,7 @@ const PopularTag = () => {
                         </tr>
                         <tr>
                           <td style={{ fontweight: 'bold' }}>My credit: </td>
-                          <td>{Number(totalPaymentsCashback?.total_cashback) + Number(totalPaymentsCashback?.total_cashback) +'$'}</td>
+                          <td>{Number(totalPaymentsCashback?.total_cashback) + Number(totalPaymentsCashback?.total_cashback) + '$'}</td>
                         </tr>
                         <tr>
                           <td style={{ fontweight: 'bold' }}>total cashback: </td>

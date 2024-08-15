@@ -21,11 +21,6 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId }) => {
     const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
 
     setinfo(response.broker.info)
-    // youtube_link
-    // instagram_link
-    // whatsapp_link
-    // twitter_link
-    // facebook_link
 
   }
 
@@ -59,9 +54,6 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId }) => {
                 {info.twitter_link && <li className="social__item">
                   <button scroll={false} onClick={() => openNewWindow()} className="social__link social__link--style22 "><i className="fab fa-x"></i></button>
                 </li>}
-                {/* <li className="social__item">
-                  <button scroll={false} onClick={() => openNewWindow()} className="social__link social__link--style22 "><i className="fab fa-u"></i></button>
-                </li> */}
               </ul>
             </div> : null}
 
