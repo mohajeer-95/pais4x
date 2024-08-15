@@ -468,7 +468,7 @@ const Partner = () => {
     <div className="partner partner--gradient">
       <div className="container">
         <div className="partner__wrapper">
-          {!loading ? <Swiper
+           <Swiper
             className="partner__slider"
             spaceBetween={20}
             slidesPerView={2}
@@ -532,43 +532,7 @@ const Partner = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-
-            :
-            <Swiper
-              className="partner__slider"
-              spaceBetween={50}
-              slidesPerView={2}
-              breakpoints={breakpoints}
-              speed={2000}
-              loop={true}
-              autoplay={{
-                delay: 1,
-                disableOnInteraction: true,
-              }}
-              modules={[Navigation, Pagination, Autoplay]}
-
-            >
-              {(spinnerCount.map((item, index) => (
-
-                <SwiperSlide style={{}} key={index} >
-                  <div style={{ flexDirection: 'column', display: 'flex' }}>
-                    <div className="swiper-slide" >
-                      <div className="partner__item" >
-                        <div className="partner__item-inner" style={{ alignItems: 'center', textAlign: 'center' }}>
-                          <Spinner animation="border" variant="info" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
-
-
-
-              )))}
-              { }
-              {/* </div> */}
-            </Swiper>
-          }
+  
         </div>
       </div>
     </div>
