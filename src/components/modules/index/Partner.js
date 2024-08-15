@@ -125,10 +125,9 @@ const Partner = () => {
     })
     rendomArr = shuffleArray(arr)
     setCarousel(rendomArr)
-if(carousel?.length){
   setLoading(false)
 }
-  }
+  
 
 
   return (
