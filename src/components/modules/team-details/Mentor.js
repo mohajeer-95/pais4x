@@ -54,13 +54,16 @@ const Mentor = ({ title }) => {
   const [otpErrors, setOtpErrors] = useState(false);
   const [success, setSuccess] = useState(0);
   const [reference, setReference] = useState('');
-
+  const [loadindAllData, setLoadindAllData] = useState(false);
+  
 
   const [broker_account, setbroker_account] = useState([])
   const [broker_cashback_info, setbroker_cashback_info] = useState([])
   const [broker_funding, setbroker_funding] = useState([])
   const [broker_type, setbroker_type] = useState([])
   const [info, setinfo] = useState([])
+  const [description, setDescription] = useState('')
+  
   const [margin_leverage, setmargin_leverage] = useState([])
   const [platform, setplatform] = useState([])
   const [support, setsupport] = useState([])
@@ -117,63 +120,45 @@ const Mentor = ({ title }) => {
     })
   }
 
-  useEffect(() => {
-    const img = new Image();
-    img.src = imageUrl + info.logo;
-
-    const handleLoad = () => {
-      console.log('VALID');
-      setIsValid(true);
-    };
-
-    const handleError = () => {
-      console.log('INVALID');
-      setIsValid(false);
-    };
-    console.log('img . source', img.src);
-    img.onload = handleLoad;
-    img.onerror = handleError;
-
-    // Cleanup listeners
-    return () => {
-      img.onload = null;
-      img.onerror = null;
-    };
-  }, [info.logo]);
-
+  
   const getBrokerById = async (brokerId, tokenA) => {
+    
     const token = tokenA ? tokenA : autToken
     const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET', token);
-    setBrokerData(response.broker)
+    setBrokerData(response?.broker)
 
-    setbroker_account(response.broker.broker_account)
-    setbroker_cashback_info(response.broker.broker_cashback_info)
-    setbroker_funding(response.broker.broker_funding[0])
-    setbroker_type(response.broker.broker_type)
-    setinfo(response.broker.info)
-    setValue(response.broker.info.rating)
+    setbroker_account(response?.broker?.broker_account)
+    setbroker_cashback_info(response?.broker?.broker_cashback_info)
+    setbroker_funding(response?.broker?.broker_funding[0])
+    setbroker_type(response?.broker?.broker_type)
+    setinfo(response?.broker?.info)
+    setDescription(response?.broker?.info?.description.slice(0,400) + '...')
+    setValue(response?.broker?.info?.rating)
     var starNumber = ['star']
 
-    for (let index = 1; index < response.broker.info.avg_rating; index++) {
+    for (let index = 1; index < response?.broker?.info?.avg_rating; index++) {
       starNumber.push('star')
     }
     console.log('FFFFFFFFFFFFSSSSSSSSSSSSSSSSSSSSSSSSSS', starNumber);
 
     setStarRateNumber(starNumber)
     if (getCookie('token')) {
-      getBrokerList(response.broker.info.name)
+      getBrokerList(response?.broker?.info?.name)
     }
     if (response?.broker?.info?.description?.length > 108) {
-      setpargraph(response.broker.info.description.substring(0, 110) + '...')
+      setpargraph(response?.broker?.info?.description.substring(0, 110) + '...')
     } else {
-      setpargraph(response.broker.info.description)
+      setpargraph(response?.broker?.info?.description)
     }
 
-    setmargin_leverage(response.broker.margin_leverage)
-    setplatform(response.broker.platform)
-    setsupport(response.broker.support)
-    settrading_cost(response.broker.trading_cost)
-    setbroker(response.broker.broker)
+    setmargin_leverage(response?.broker?.margin_leverage)
+    setplatform(response?.broker?.platform)
+    setsupport(response?.broker?.support)
+    settrading_cost(response?.broker?.trading_cost)
+    setbroker(response?.broker?.broker)
+setTimeout(() => {
+  setLoadindAllData(true)
+}, 4000);
   }
 
   const handleRate = async (value) => {
@@ -184,22 +169,11 @@ const Mentor = ({ title }) => {
   }
   const handleClick = () => {
     console.log('router.query', router.query);
-
-    // console.log('broker_account', broker_account)
-    // console.log('broker_cashback_info', broker_cashback_info)
-    // console.log('broker_funding', broker_funding)
-    // console.log('broker_type', broker_type)
-    // console.log('info', info)
-    // console.log('margin_leverage', margin_leverage)
-    // console.log('platform', platform)
-    // console.log('support', support)
-    // console.log('trading_cost', trading_cost)
-    // console.log('brokerData', brokerData)
-    // console.log('broker', broker)
-
     if (statebuttonText) {
+      setDescription(info?.description.slice(0,400) + '...')
       setStateButtonText(false);
     } else {
+      setDescription(info?.description)
       setStateButtonText(true);
     }
   };
@@ -296,7 +270,7 @@ const Mentor = ({ title }) => {
 
   return (
     <div className="team team--details padding-bottom bg-color-3" style={{ paddingTop: 50 }}>
-      <div className="container">
+      {loadindAllData ?<div className="container">
         <div className="team__wrapper">
           <div className="col-md-12 g-5 align-items-center" style={{ display: 'flex', justifyContent: 'center' }}>
             <>
@@ -327,7 +301,7 @@ const Mentor = ({ title }) => {
                   <MDBModalContent>
 
                     <MDBModalHeader>
-                      <MDBModalTitle>New Link with {info.name}</MDBModalTitle>
+                      <MDBModalTitle>New Link with {info?.name}</MDBModalTitle>
                       <MDBBtn className='btn-close' color='none
                       ' onClick={() => setVaryingModal(false)}></MDBBtn>
                     </MDBModalHeader>
@@ -402,7 +376,7 @@ const Mentor = ({ title }) => {
                         className="bg-image rounded hover-zoom hover-overlay"
                       >
                         <MDBCardImage
-                          src={isValid ? imageUrl + info.logo : 'images/global/logo2.png'}
+                          src={isValid ? imageUrl + info?.logo : 'images/global/logo2.png'}
                           fluid
                           className="w-100"
                           style={{ maxWidth: 150 }}
@@ -416,7 +390,7 @@ const Mentor = ({ title }) => {
                       </MDBRipple>
                     </MDBCol>
                     <MDBCol md="6">
-                      <h5>{info.name}</h5>
+                      <h5>{info?.name}</h5>
                       <div className="d-flex flex-row">
 
                         <div className="text-danger mb-1 me-2">
@@ -426,7 +400,7 @@ const Mentor = ({ title }) => {
                           ))
                           }
                         </div>
-                        <span>{info.avg_rating}</span>
+                        <span>{info?.avg_rating}</span>
                       </div>
                       <p className="">
                         {
@@ -445,7 +419,7 @@ const Mentor = ({ title }) => {
                         </span>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-1 justify-content-center" >
-                        <h6 className="text-success">{info.cashback}$</h6>
+                        <h6 className="text-success">{info?.cashback}$</h6>
                       </div>
                       {isLinked ?
                         <div className="d-flex flex-column mt-4 align-items-center">
@@ -458,8 +432,8 @@ const Mentor = ({ title }) => {
                           />
                         </div>
                         : token ? <div className="d-flex flex-column mt-4">
-                          <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
-                            Link With {info.name}
+                          <MDBBtn style={{ maxHeight: 55 ,fontSize: 14 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
+                            Link With {info?.name}
                           </MDBBtn>
                         </div>
 
@@ -480,8 +454,8 @@ const Mentor = ({ title }) => {
 
 
 
-          {info.youtube_link && <div style={{ marginTop: 20 }}>
-            <Story youtubeLink={info.youtube_link} />
+          {info?.youtube_link && <div style={{ marginTop: 20 }}>
+            <Story youtubeLink={info?.youtube_link} /> 
           </div>}
 
           <div className="row" style={{ marginTop: 70, maxWidth: '100%' }}>
@@ -491,13 +465,20 @@ const Mentor = ({ title }) => {
 
 
                 <div className="roadmap__item-header">
-                  <h3>Get to Know ({info.name})</h3>
+                  <h3>Get to Know ({info?.name})</h3>
                 </div>
                 {/* <p>Welcome to FXCentrum - the ultimate forex trading destination for a seamless, profitable trading experience. Our company was founded in 2019 by a team of experienced forex traders, customer service professionals, and risk managers, who prioritize customer satisfaction above all else. Our strongest point is our 5* personal care and easy-to-use platform, which includes fast deposits and withdrawals. We are a fully regulated forex broker, holding license number SD055 from the FSA Seychelles. At FXCentrum, we offer a wide range of local deposit and withdrawal methods, including wire transfers, card payments, and even cryptocurrencies, making account funding and withdrawal easy and hassle-free.</p> */}
-                {/* <p>{info.description}</p> */}
-                <div>
-                  <TextWithNewLines statebuttonText={statebuttonText} text={info.description ? info.description : longText} />
-                </div>
+                {/* <p>{info?.description}</p> */}
+                     {description.length ? 
+                       <div>
+                        <TextWithNewLines statebuttonText={statebuttonText} text={description ? description : longText} />
+                       </div> :
+                      <div className="spinner-container">
+                      <Spinner animation="border" variant="info" />
+                    </div>
+                }
+
+
                 {/* <span>P2</span> */}
                 {/* <p>
                   Our platform is designed to cater to both beginners and professionals in the forex trading world, with leverages of up to 1:1000 and various account types to choose from. Whether youre looking to start with a demo account or jump straight into a real one, we have got you covered.
@@ -545,7 +526,7 @@ const Mentor = ({ title }) => {
                       </tr>))}
                   </thead>
                 </Table>
-                {!broker_type.length &&
+                {!broker_type?.length &&
                   <div className="text-center"
                     style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
                     Types data not found now
@@ -583,19 +564,19 @@ const Mentor = ({ title }) => {
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Entity Name: </td>
-                              <td>{broker.entity_name}</td>
+                              <td>{broker?.entity_name}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Broker type: </td>
-                              <td>{broker.broker_type}</td>
+                              <td>{broker?.broker_type}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Headquarters: </td>
-                              <td>{broker.headquarters}</td>
+                              <td>{broker?.headquarters}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Branch Offices: </td>
-                              <td>{broker.branch_offices}</td>
+                              <td>{broker?.branch_offices}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -620,39 +601,39 @@ const Mentor = ({ title }) => {
 
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Bonus: </td>
-                              <td>{broker_account.bonus}</td>
+                              <td>{broker_account?.bonus}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Swap-Free/Islamic Accounts: </td>
-                              <td>{broker_account.islamic_accounts}</td>
+                              <td>{broker_account?.islamic_accounts}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Trailing Stop: </td>
-                              <td>{broker_account.trailing_stop}</td>
+                              <td>{broker_account?.trailing_stop}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Hedging: </td>
-                              <td>{broker_account.hedging}</td>
+                              <td>{broker_account?.hedging}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Scalping: </td>
-                              <td>{broker_account.scalping}</td>
+                              <td>{broker_account?.scalping}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>EA: </td>
-                              <td>{broker_account.ea}</td>
+                              <td>{broker_account?.ea}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Segregated Accounts: </td>
-                              <td>{broker_account.segregated_accounts}</td>
+                              <td>{broker_account?.segregated_accounts}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Number of Instruments: </td>
-                              <td>{broker_account.number_of_instruments}</td>
+                              <td>{broker_account?.number_of_instruments}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Categories of Instruments: </td>
-                              <td>{broker_account.categories_of_instruments}</td>
+                              <td>{broker_account?.categories_of_instruments}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -676,15 +657,15 @@ const Mentor = ({ title }) => {
                           <thead>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }}  >Avg Spread on EURUSD</td>
-                              <td style={{ textAlign: 'center' }} >{trading_cost.avg_spread_on_EURUSD_val_1} </td>
-                              <td style={{ textAlign: 'center' }} >{trading_cost.avg_spread_on_EURUSD_val_2}  </td>
-                              <td style={{ textAlign: 'center' }} >{trading_cost.avg_spread_on_EURUSD_val_3}  </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost?.avg_spread_on_EURUSD_val_1} </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost?.avg_spread_on_EURUSD_val_2}  </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost?.avg_spread_on_EURUSD_val_3}  </td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }} >Commissions on FX </td>
-                              <td style={{ textAlign: 'center' }} >{trading_cost.commissions_on_FX_val_1} </td>
-                              <td style={{ textAlign: 'center' }} >{trading_cost.commissions_on_FX_val_2}  </td>
-                              <td style={{ textAlign: 'center' }} >{trading_cost.commissions_on_FX_val_3}  </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost?.commissions_on_FX_val_1} </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost?.commissions_on_FX_val_2}  </td>
+                              <td style={{ textAlign: 'center' }} >{trading_cost?.commissions_on_FX_val_3}  </td>
                             </tr>
 
 
@@ -883,35 +864,35 @@ const Mentor = ({ title }) => {
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >FX </td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.FX_margin_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.FX_floating_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.FX_scalping_account} </td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.FX_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.FX_floating_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.FX_scalping_account} </td>
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >Metals</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.metals_margin_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.metals_floating_bonus} </td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.metals_scalping_account}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.metals_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.metals_floating_bonus} </td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.metals_scalping_account}</td>
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >Energies</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.energies_margin_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.energies_floating_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.energies_scalping_account}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.energies_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.energies_floating_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.energies_scalping_account}</td>
 
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >Indicies</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.indicies_margin_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.indicies_floating_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.indicies_scalping_account}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.indicies_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.indicies_floating_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.indicies_scalping_account}</td>
 
                     </tr>
                     <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                       <td style={{ textAlign: 'center' }} >Stocks</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.stocks_margin_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.stocks_floating_bonus}</td>
-                      <td style={{ textAlign: 'center' }} >{broker_cashback_info.stocks_scalping_account}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.stocks_margin_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.stocks_floating_bonus}</td>
+                      <td style={{ textAlign: 'center' }} >{broker_cashback_info?.stocks_scalping_account}</td>
                     </tr>
 
 
@@ -933,7 +914,7 @@ const Mentor = ({ title }) => {
                         <td style={{ textAlign: 'center' }} >Maximum Trading Size </td>
                       </tr>
 
-                      {broker_type.map((item, index) => (
+                      {broker_type?.map((item, index) => (
                         <tr key={index} style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                           <td style={{ textAlign: 'center' }} >Acount {item.id} </td>
                           <td style={{ textAlign: 'center' }} >ss{item.account_type}</td>
@@ -942,7 +923,7 @@ const Mentor = ({ title }) => {
                         </tr>))}
                     </thead>
                   </Table>
-                  {!broker_type.length &&
+                  {!broker_type?.length &&
                     <div className="text-center"
                       style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
                       Types data not found now
@@ -958,6 +939,14 @@ const Mentor = ({ title }) => {
           </div>
         </div>
       </div>
+      
+      :
+      
+    <div className="preloader">
+    <img src="images/global/logo.png" alt="preloader icon" />
+  </div>
+
+      }
     </div>
   )
 }

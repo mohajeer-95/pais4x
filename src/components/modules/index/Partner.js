@@ -195,11 +195,9 @@ const Partner = () => {
       </div>
       </div>
       :
-      <div>
-                      <Spinner animation="border" variant="info" />
-
-
-      </div>
+      <div className="spinner-container">
+      <Spinner animation="border" variant="info" />
+    </div>
       }
       </div>
     );

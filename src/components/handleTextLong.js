@@ -1,7 +1,7 @@
 import React from 'react';
 
 function TextWithNewLines({ text = "", statebuttonText }) {
-    var longText = text.slice(0, 4000)
+    var longText = text
     // Replace commas with a comma followed by a space
     const formattedText = longText.replace(/,/g, ', ');
 

@@ -44,8 +44,9 @@ function Featured() {
                         <img style={{ maxHeight: 130 }} src={sponserImg} alt="Feature image" />
                       </a>
                       :
+                      <div className="spinner-container">
                       <Spinner animation="border" variant="info" />
-                    }
+                    </div>                    }
                   </div>
                 </div>
               </div>

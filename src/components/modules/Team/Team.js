@@ -63,45 +63,78 @@ const Team = () => {
             {loading && <div className="text-center" style={{marginTop: 50, marginBottom: 30}}>
               <Spinner animation="border" variant="info" />
             </div>}
+            <div className="grid-container">
 
             {!loading && brokersList?.map((item,index)=>(
-              <div className="col-sm-6 col-lg-3" key={index} >
-              <div className="team__item team__item--shape" data-aos="fade-up" data-aos-duration="800">
-                <div className="team__item-inner team__item-inner--shape">
-                  <div className="team__item-thumb team__item-thumb--style1">
-                    <div style={{ padding: 30, borderRadius: 9, }}>
-                      <img style={{ maxHeight: 100, marginBottom: 100 }} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt="partner logo" className="dark" />
-                    </div>
-                    <div className="team__item-content team__item-content--style1">
-                      <div className="team__item-author team__item-author--style1">
-                        <div className="team__item-authorinfo">
-                          <h6 className="mb-1"><Link 
+
+
+
+// {cardData.map((card, index) => (
+      <div key={index}className="card">
+      <div className="card-image">
+        <img style={{height: 120}} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt={item.name} />
+      </div>
+      <div className="card-content">
+      <Link 
                            href={{
                             pathname: '/broker',
                             query: { name: item.name, id: item.broker_id } // the data
-                          }} className="stretched-link">{item.name}</Link> </h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div style={{ backgroundColor: '#454545' }} className="card__footer">
-                    <div className="card__Footer__first">
-                      <div>
-                        <p>{item.avg_rating}{' / 5'}</p>
-                      </div>
-                      <label>Rating</label>
-                    </div>
-                    <div className="card__Footer__third"> 
-                      <div>
-                        <p>{'17 $'}</p>
-                      </div>
-                      <label>Cashback</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                          }}>
+        <h3 className="card-title">{item.name}</h3>
+        </Link>
+        <div className="card-info">
+          <span className="label">Cashback:</span>
+          <span className="value">{item.cashback}</span>
+        </div>
+        <div className="card-info">
+          <span className="label">Rate:</span>
+          <span className="value">{item.avg_rating}</span>
+        </div>
+      </div>
+    </div>
+
+
+            //   <div className="col-sm-6 col-lg-3" key={index} >
+            //   <div className="team__item team__item--shape" data-aos="fade-up" data-aos-duration="800">
+            //     <div className="team__item-inner team__item-inner--shape">
+            //       <div className="team__item-thumb team__item-thumb--style1">
+            //         <div style={{ padding: 30, borderRadius: 9, }}>
+            //           <img style={{ maxHeight: 100, marginBottom: 100 }} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt="partner logo" className="dark" />
+            //         </div>
+            //         <div className="team__item-content team__item-content--style1">
+            //           <div className="team__item-author team__item-author--style1">
+            //             <div className="team__item-authorinfo">
+            //               <h6 className="mb-1"><Link 
+            //                href={{
+            //                 pathname: '/broker',
+            //                 query: { name: item.name, id: item.broker_id } // the data
+            //               }} className="stretched-link">{item.name}</Link> </h6>
+            //             </div>
+            //           </div>
+            //         </div>
+            //       </div>
+            //       <div style={{ backgroundColor: '#454545' }} className="card__footer">
+            //         <div className="card__Footer__first">
+            //           <div>
+            //             <p>{item.avg_rating}{' / 5'}</p>
+            //           </div>
+            //           <label>Rating</label>
+            //         </div>
+            //         <div className="card__Footer__third"> 
+            //           <div>
+            //             <p>{'17 $'}</p>
+            //           </div>
+            //           <label>Cashback</label>
+            //         </div>
+            //       </div>
+            //     </div>
+            //   </div>
+            // </div>
+
+
+
             ))}
+    </div>
 
            {!brokersList.length &&
             <div

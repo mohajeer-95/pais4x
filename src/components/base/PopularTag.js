@@ -124,7 +124,11 @@ const PopularTag = () => {
     window.location.href = '/';
 
   };
+  const changePassword = () => {
+    window.location.href = '/services';
 
+  };
+  
   const onChangeRecipient = (event) => {
     setVaryingRecipient(event.target.value);
   };
@@ -397,13 +401,22 @@ const PopularTag = () => {
                           <td>{userData?.phone}</td>
                         </tr>
                         <tr>
+                          <td style={{ fontweight: 'bold' }}>Change Password: </td>
+                          <td>
+                            <MDBBtn onClick={() => changePassword()} style={{ maxHeight: 30, minWidth: 75, width: 120, maxWidth: 170, fontSize: 10, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
+                              Change Password
+                            </MDBBtn>
+                          </td>
+                        </tr>
+                        <tr>
                           <td style={{ fontweight: 'bold' }}>Logout: </td>
                           <td>
-                            <MDBBtn onClick={() => logOut()} style={{ minWidth: 75, maxWidth: 100, fontSize: 13, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
+                            <MDBBtn onClick={() => logOut()} style={{ maxHeight: 30, width: 120, maxWidth: 170, fontSize: 10, fontWeight: 'bold' }} type="submit" color="danger" className="ms-1">
                               Logout
                             </MDBBtn>
                           </td>
                         </tr>
+                      
                         
                       </tbody>
                     </Table> : null}

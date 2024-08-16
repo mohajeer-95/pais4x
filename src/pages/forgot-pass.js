@@ -1,10 +1,50 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/Header";
 import PageHeader from '@/components/modules/about-us/PageHeader';
 import Link from "next/link";
 import Footer from "@/components/Footer";
+
 const ResetPass = () => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Basic validation
+    if (!email) {
+      setError("Email is required.");
+      return;
+    }
+
+    // Reset errors
+    setError("");
+    setSuccess("");
+
+    try {
+      // Replace with your API endpoint
+      const response = await fetch("/api/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSuccess("Password reset link sent successfully.");
+      } else {
+        setError(result.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      setError("An error occurred. Please try again.");
+    }
+  };
+
   return (
     <>
       <Header />
@@ -29,9 +69,9 @@ const ResetPass = () => {
                   </div>
 
                   <form
-                    action=""
                     className="account__form needs-validation"
                     noValidate
+                    onSubmit={handleSubmit}
                   >
                     <div className="row g-4">
                       <div className="col-12">
@@ -44,8 +84,16 @@ const ResetPass = () => {
                             className="form-control"
                             id="account-email"
                             placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                           />
+                          {error && (
+                            <div className="text-danger mt-2">{error}</div>
+                          )}
+                          {success && (
+                            <div className="text-success mt-2">{success}</div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -60,7 +108,6 @@ const ResetPass = () => {
 
                   <div className="account__switch">
                     <p>
-                      {" "}
                       <Link href="signin" className="style2">
                         <i className="fa-solid fa-arrow-left-long"></i> Back to{" "}
                         <span>Login</span>

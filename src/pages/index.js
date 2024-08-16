@@ -24,8 +24,9 @@ export default function Home() {
       {/* <MenueHeader headerClass="header-section--style2" /> */}
       <Hero />
       <Partner />
+      {/* <Featured/> */}
+
       {/* <About /> */}
-      <Featured/>
 
       <Services/>
       <Roadmap />

@@ -2,15 +2,14 @@ import React, { useEffect } from 'react'
 import Header from '@/components/Header'
 import PageHeader from '@/components/modules/about-us/PageHeader'
 import Roadmap from '@/components/modules/about-us/Roadmap'
-import About from '@/components/modules/about-us/About'
-import Team from '@/components/modules/about-us/Team'
-import Newsletter from "@/components/modules/index/Newsletter";
+import Featured from "@/components/modules/index/Featured";
 
+import Partner from "@/components/modules/index/Partner";
 import Footer from '@/components/Footer'
 import Story from '@/components/modules/about-us/Story'
 import Accordion from "react-bootstrap/Accordion";
 import Link from "next/link";
-
+ 
 const faqdata = [
   
   {
@@ -200,8 +199,9 @@ const Blogs = () => {
     <>
     <Header/>
     <PageHeader withSocialComponent={0} title='Frequently' page= 'Faq' />
-    {/* <Story/> */}
-    {/* <About /> */}
+     <Partner/> 
+    <Featured /> 
+   
     <section className="faq padding-top padding-bottom of-hidden">
       <div className="section-header section-header--max65">
         <h2 className="mb-15 mt-minus-5">
