@@ -1068,13 +1068,6 @@ code {
     z-index : 1000;
   }
 
-  .spinner-container {
-    background-color: #0056b3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Adjust this value if you need a different height */
-}
 }
 
 

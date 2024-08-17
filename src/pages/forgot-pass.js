@@ -1,14 +1,23 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Header from "@/components/Header";
 import PageHeader from '@/components/modules/about-us/PageHeader';
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { getCookie } from 'cookies-next';
 
 const ResetPass = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  useEffect(() => {
+
+    if (getCookie('token')) {
+      window.location.href = '/';
+      return;
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,9 +32,59 @@ const ResetPass = () => {
     setError("");
     setSuccess("");
 
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      email: email
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+
+    try {
+      const response = await fetch("http://lab.app2serve.com/public/api/forgot-password", requestOptions);
+         const result = await response.json();
+
+      if (result.status) {
+        setSuccess("Password reset link sent successfully, We sent The new Password to your email.");
+       
+        setTimeout(() => {
+          window.location.href = '/signin';
+        }, 4000);
+
+      } else {
+        setError(result.message || "Something went wrong. Please try again.");
+      }
+
+    } catch (error) {
+      setError("An error occurred. Please try again.");
+    }
+  };
+
+
+
+  const handleSubmitTEMP = async (event) => {
+    event.preventDefault();
+
+    // Basic validation
+    if (!email) {
+      setError("Email is required.");
+      return;
+    }
+
+    // Reset errors
+    setError("");
+    setSuccess("");
+
     try {
       // Replace with your API endpoint
-      const response = await fetch("/api/reset-password", {
+      const response = await fetch("https://lab.app2serve.com/public/api/for", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,6 +96,9 @@ const ResetPass = () => {
 
       if (response.ok) {
         setSuccess("Password reset link sent successfully.");
+        setTimeout(() => {
+          
+        }, 2000);
       } else {
         setError(result.message || "Something went wrong. Please try again.");
       }
@@ -88,12 +150,7 @@ const ResetPass = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                           />
-                          {error && (
-                            <div className="text-danger mt-2">{error}</div>
-                          )}
-                          {success && (
-                            <div className="text-success mt-2">{success}</div>
-                          )}
+                        
                         </div>
                       </div>
                     </div>
@@ -107,12 +164,20 @@ const ResetPass = () => {
                   </form>
 
                   <div className="account__switch">
-                    <p>
+                    {/* <p>
                       <Link href="signin" className="style2">
                         <i className="fa-solid fa-arrow-left-long"></i> Back to{" "}
                         <span>Login</span>
                       </Link>
-                    </p>
+                    </p> */}
+
+{error && (
+                            <div className="text-danger mt-2">{error}</div>
+                          )}
+                          {success && 
+                            <div className="text-success mt-2">{success}</div>
+                          }
+                          
                   </div>
                 </div>
               </div>

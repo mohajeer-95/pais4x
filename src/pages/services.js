@@ -13,6 +13,7 @@ const ResetPass = () => {
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [token, setToken] = useState("");
 
   const validatePassword = (password) => {
     const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*])[A-Za-z\d@#$%^&*]{8,}$/;
@@ -20,8 +21,11 @@ const ResetPass = () => {
   };
 
   useEffect(() => {
+    const authToken = getCookie('token')
+    setToken(authToken)
+    setToken(getCookie('token'))
     if (!getCookie('token')) {
-      // window.location.href = '/';
+      window.location.href = '/';
       return;
     }
   }, []);
@@ -31,12 +35,20 @@ const ResetPass = () => {
     const newErrors = {};
 
     // Validate passwords
-    if (!validatePassword(currentPassword)) {
-      newErrors.currentPassword = "Current password must include at least one uppercase letter, one number, and one special character.";
+    // if (!validatePassword(currentPassword)) {
+    //   newErrors.currentPassword = "Current password must include at least one uppercase letter, one number, and one special character.";
+    // }
+
+    // if (!validatePassword(newPassword)) {
+    //   newErrors.newPassword = "New password must include at least one uppercase letter, one number, and one special character.";
+    // }
+
+    if (!currentPassword) {
+      newErrors.currentPassword = "The password is required.";
     }
 
-    if (!validatePassword(newPassword)) {
-      newErrors.newPassword = "New password must include at least one uppercase letter, one number, and one special character.";
+    if (!newPassword) {
+      newErrors.newPassword = "The New password is required.";
     }
 
     if (newPassword !== confirmPassword) {
@@ -55,23 +67,34 @@ const ResetPass = () => {
     setErrorMessage("");
     setSuccessMessage("");
 
+    // Define headers as in the Postman example
+    const myHeaders = new Headers();
+    myHeaders.append("X-Custom-Token", token);
+    myHeaders.append("Content-Type", "application/json");
+
+    // Prepare request options as in the Postman example
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        old_password: currentPassword,
+        new_password: newPassword
+      }),
+      redirect: "follow"
+    };
+
     try {
-      const response = await fetch("/api/change-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${getCookie('token')}`, // Include token if needed
-        },
-        body: JSON.stringify({
-          currentPassword,
-          newPassword,
-        }),
-      });
-
+      // Call the API
+      const response = await fetch("http://lab.app2serve.com/public/api/update-password", requestOptions);
       const result = await response.json();
+      console.log('result',result);
+      console.log('response',result);
 
-      if (response.ok) {
+      if (result.status) {
         setSuccessMessage("Password changed successfully!");
+        setTimeout(() => {
+          window.location.href = '/profile';
+        }, 2000);
       } else {
         setErrorMessage(result.message || "Failed to change password. Please try again.");
       }
@@ -187,14 +210,7 @@ const ResetPass = () => {
                     )}
                   </form>
 
-                  <div className="account__switch">
-                    <p>
-                      <Link href="signin" className="style2">
-                        <i className="fa-solid fa-arrow-left-long"></i> Back to{" "}
-                        <span>Login</span>
-                      </Link>
-                    </p>
-                  </div>
+                 
                 </div>
               </div>
             </div>

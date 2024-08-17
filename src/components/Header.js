@@ -211,7 +211,7 @@ function Header({ headerClass = null, pageName }) {
               {token ? <Link href="profile" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
                 <span>My Account</span>
               </Link> :
-                <Link href="signup" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
+                <Link href="signin" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
                   <span>Get Started</span>
                 </Link>
               }
@@ -224,7 +224,7 @@ function Header({ headerClass = null, pageName }) {
               {token ? <Link style={{ display: pageName == 'profile' ? 'none' : 'block' }} href="profile" className="hidden-pc get-started-btn">
                 <span>My Account</span>
               </Link> :
-                <Link href="signup" className="hidden-pc get-started-btn">
+                <Link href="signin" className="hidden-pc get-started-btn">
                   <span>Get Started</span>
                 </Link>
               }

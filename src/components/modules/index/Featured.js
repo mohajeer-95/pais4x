@@ -21,14 +21,17 @@ function Featured() {
     // console.log('response getSponserImg', response);
     setSponserImg('https://lab.app2serve.com/storage/app/public/' + response?.sliders[randomNumber]?.image)
     setUrl(response?.sliders[randomNumber]?.link)
-
     setLoading(false)
   }
 
   return (
-    <section className="feature feature--style1 bg-color" style={{ paddingTop: 60, paddingBottom: 60 }}>
+    <section className="feature feature--style1 " style={{ paddingTop: 60, paddingBottom: 60 }}>
+    
+    
       <div className="container">
-        <div className="feature__wrapper">
+
+
+        {sponserImg?.length ?<div className="feature__wrapper" style={{}}>
           <div style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} className=" g-5 align-items-center justify-content-between">
             <div>
               <div
@@ -54,16 +57,17 @@ function Featured() {
 
           </div>
         </div>
+        
+        :
+        <div style={{height:150}} className="preloaderslider">
+        <img src="images/global/logo.png" alt="preloaderslider icon" />
       </div>
-      <div className="feature__shape">
-        <span className="feature__shape-item feature__shape-item--1">
-          <img src="/images/feature/shape/1.png" alt="shape-icon" />
-        </span>
-        <span className="feature__shape-item feature__shape-item--2">
-          {" "}
-          <span></span>{" "}
-        </span>
+        }
+
+
       </div>
+     
+      
     </section>
   );
 }

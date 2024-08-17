@@ -13924,7 +13924,7 @@ code {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 25vh; /* Adjust this value if you need a different height */
+    height: 100px; /* Adjust this value if you need a different height */
 }
 /* styles/grid.css */
 .grid-container {

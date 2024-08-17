@@ -326,45 +326,6 @@ const PopularTag = () => {
                     </div>
 
 
-                    {/* <Container>
-                      <Row>
-                        <Col>
-                          <Row>
-                            <Col style={{ textAlign: 'center' }}>
-                              <div style={{ backgroundColor: '#E0E3B9', borderRadius: 9, minHeight: 140 }} className="card__footer">
-                                <div className="card__Footer__first">
-                                  <div>
-                                    <p style={{ color: '#0C263A' }}>{'40 $'}</p>
-                                  </div>
-                                  <label style={{ fontFamily: 'monospace', color: '#0C263A' }}>My credit</label>
-                                </div>
-                              </div>
-                            </Col>
-                            <Col style={{ textAlign: 'center' }}>
-                              <div style={{ backgroundColor: '#E0E3B9', borderRadius: 9, minHeight: 140 }} className="card__footer">
-                                <div className="card__Footer__first">
-                                  <div>
-                                    <p style={{ color: '#0C263A' }}>{totalPaymentsCashback.total_cashback}</p>
-                                  </div>
-                                  <label style={{ fontFamily: 'monospace', color: '#0C263A' }}>total cashback</label>
-                                </div>
-                              </div>
-                            </Col>
-                            <Col style={{ textAlign: 'center' }}>
-                              <div style={{ backgroundColor: '#E0E3B9', borderRadius: 9, minHeight: 140 }} className="card__footer">
-                                <div className="card__Footer__first">
-                                  <div>
-                                    <p style={{ color: '#0C263A' }}>{totalPaymentsCashback.total_payment}</p>
-                                  </div>
-                                  <label style={{ fontFamily: 'monospace', color: '#0C263A' }}>Total Payment</label>
-                                </div>
-                              </div>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-
-                    </Container> */}
 
                   </div>
                 </div>
@@ -539,14 +500,9 @@ const PopularTag = () => {
                           </tr>
                         </MDBTableHead>
                         <MDBTableBody>
-                          {!brokerList?.brokers_link?.length &&
-                            <div
-                              style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 20 }}>
 
-                              <span style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center' }}>
-                                You do not have a link with any borker at this time
-                              </span>
-                            </div>}
+
+
 
 
                           {brokerList?.brokers_link?.map((item, index) => (<tr key={index} style={{ textAlign: 'center' }} >
@@ -575,7 +531,14 @@ const PopularTag = () => {
                 </MDBContainer>
 
 
+                {!brokerList?.brokers_link &&
+                            <div
+                              style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 20 }}>
 
+                              <span style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center' }}>
+                                You do not have a link with any borker at this time
+                              </span>
+                            </div>}
 
               </div>
 
