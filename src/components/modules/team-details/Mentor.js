@@ -122,8 +122,12 @@ const Mentor = ({ title }) => {
 
   
   const getBrokerById = async (brokerId, tokenA) => {
+    console.log('qqqqqqqqqqqqqqqqqqqqqqq');
+    console.log('qqqqqqqqqqqqqqqqqqqqqqqbrokerId',brokerId);
+    console.log('qqqqqqqqqqqqqqqqqqqqqqqtokenA',tokenA);
+    console.log('qqqqqqqqqqqqqqqqqqqqqqq  AUTHTOKEN',autToken);
     
-    const token = tokenA ? tokenA : autToken
+    const token = tokenA ? tokenA : 'autToken'
     const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET', token);
     setBrokerData(response?.broker)
 
@@ -150,6 +154,7 @@ const Mentor = ({ title }) => {
     } else {
       setpargraph(response?.broker?.info?.description)
     }
+console.log('response?.broker?.margin_leverage',response?.broker?.margin_leverage);
 
     setmargin_leverage(response?.broker?.margin_leverage)
     setplatform(response?.broker?.platform)
@@ -693,19 +698,19 @@ setTimeout(() => {
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Leverage levels: </td>
-                              <td>{margin_leverage.leverage_levels} </td>
+                              <td>{margin_leverage?.leverage_levels} </td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Margin Call Level: </td>
-                              <td>{margin_leverage.margin_call_evel}</td>
+                              <td>{margin_leverage?.margin_call_evel}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Stop Out Level: </td>
-                              <td>{margin_leverage.stop_out_level}</td>
+                              <td>{margin_leverage?.stop_out_level}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Closing Method @ Stop Out: </td>
-                              <td>{margin_leverage.closing_method_stop_out}</td>
+                              <td>{margin_leverage?.closing_method_stop_out}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -728,17 +733,17 @@ setTimeout(() => {
                           <thead>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }}>Account Currency</td>
-                              <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding.account_currency}</td>
+                              <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding?.account_currency}</td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }} >Minimum Deposit </td>
-                              <td style={{ textAlign: 'center' }} >{broker_funding.minimum_deposit_val1} </td>
-                              <td style={{ textAlign: 'center' }} >{broker_funding.minimum_deposit_val2} </td>
-                              <td style={{ textAlign: 'center' }} >{broker_funding.minimum_deposit_val3} </td>
+                              <td style={{ textAlign: 'center' }} >{broker_funding?.minimum_deposit_val1} </td>
+                              <td style={{ textAlign: 'center' }} >{broker_funding?.minimum_deposit_val2} </td>
+                              <td style={{ textAlign: 'center' }} >{broker_funding?.minimum_deposit_val3} </td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
                               <td style={{ textAlign: 'center' }}>Payment Methods </td>
-                              <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding.payment_methods} </td>
+                              <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding?.payment_methods} </td>
                             </tr>
 
                           </thead>
@@ -788,19 +793,19 @@ setTimeout(() => {
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>PC Platforms: </td>
-                              <td>{platform.pc_platforms}</td>
+                              <td>{platform?.pc_platforms}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Mobile Platforms: </td>
-                              <td>{platform.mobile_platforms}</td>
+                              <td>{platform?.mobile_platforms}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Demo Period: </td>
-                              <td>{platform.demo_period}</td>
+                              <td>{platform?.demo_period}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>MAM/PAMM: </td>
-                              <td>{platform.MAM_PAMM}</td>
+                              <td>{platform?.MAM_PAMM}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -825,15 +830,15 @@ setTimeout(() => {
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Channels: </td>
-                              <td style={{ backgroundColor: 'white' }}>{support.channels} </td>
+                              <td style={{ backgroundColor: 'white' }}>{support?.channels} </td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Hours: </td>
-                              <td>{support.hours} </td>
+                              <td>{support?.hours} </td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Languages: </td>
-                              <td>{support.languages}</td>
+                              <td>{support?.languages}</td>
                             </tr>
                           </tbody>
                         </Table>

@@ -152,7 +152,7 @@ const Partner = () => {
                     <div className="partner__item-inner" style={{ flexDirection: 'row', display: 'flex' }}>
 
                       <img
-                        src={'https://lab.app2serve.com/storage/app/public/' + item.logo}
+                        src={'https://lab.app2serve.com/storage/app/public/' + item?.logo}
                         alt="partner logo"
                         className="dark"
                         style={{ maxWidth: '68%' }}
@@ -161,14 +161,14 @@ const Partner = () => {
                       <div style={{ marginInline: 5, maxWidth: '28%' }}>
                         <div className="partner__rating">
                           <img
-                            src={item.currency == 'dollar' ? "images/icon/dollar.png" : "images/icon/gold-polkadot.png"}
+                            src={item?.currency == 'dollar' ? "images/icon/dollar.png" : "images/icon/gold-polkadot.png"}
                             alt="rating icon"
                             className="partner__rating-icon"
                           />
                           {/* <span className="partner__rating-value">
                             {'22'}
                           </span> */}
-                          <span style={{ fontWeight: 'bold', color: 'green' }}>{item.cashback + '$'}</span>
+                          <span style={{ fontWeight: 'bold', color: 'green' }}>{item?.cashback + '$'}</span>
 
                         </div>
                         <div className="partner__rating">
@@ -178,7 +178,7 @@ const Partner = () => {
                             className="partner__rating-icon"
                           />
                           <span className="partner__rating-value">
-                            {item.avg_rating}
+                            {item?.avg_rating}
                           </span>
                         </div>
                       </div>
