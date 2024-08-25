@@ -17,7 +17,7 @@ const AboutUs = () => {
       <Header />
       <PageHeader withSocialComponent={0} title='Instructor' page='Instructor' />
       <Partner title='Instructor' page='Instructor' />
-      <Featured />
+      <Featured pageId={8}/>
       {/* <Story/> */}
       <About />
       <Footer />

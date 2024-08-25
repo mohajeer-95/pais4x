@@ -244,15 +244,18 @@ function Header({ headerClass = null, pageName }) {
                   <li>
                     <Link style={{ fontSize: 13 }} href="brokers">Brokers</Link>
                   </li>
-                  {/* 
+                  
                   <li>
                     <Link style={{ fontSize: 13 }} href="enroll">Enroll</Link>
-                  </li> */}
-
-                  {/* 
+                  </li>                  
                   <li>
-                    <Link style={{fontSize: 13}} href="Promotions">Promotions</Link>
-                  </li> */}
+                    <Link style={{ fontSize: 13 }} href="training">VIP</Link>
+                  </li>
+
+                  
+                  <li>
+                    <Link style={{fontSize: 13}} href="/promotions">Promotions</Link>
+                  </li>
 
 
                   <li>
@@ -264,6 +267,10 @@ function Header({ headerClass = null, pageName }) {
                     <Link style={{ fontSize: 13 }} href="/payments">Payments</Link>
                   </li>
 
+
+                  <li>
+                    <Link style={{ fontSize: 13 }} href="/socials">Socials</Link>
+                  </li>
 
 
                   <li>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import { SliderProvider } from '../context/SliderContext';
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
@@ -54,6 +55,7 @@ export default function App({ Component, pageProps }) {
 
       </Head>
 
+      <SliderProvider>
 
       <Layout>
         {loading && (
@@ -67,6 +69,7 @@ export default function App({ Component, pageProps }) {
 
         <Component {...pageProps} />
       </Layout>
+      </SliderProvider>
 
     </>
   );

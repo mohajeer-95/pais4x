@@ -12,7 +12,7 @@ const BlogSideBar = () => {
     <Header />
     <PageHeader withSocialComponent={0} title = "Courses" page = "Courses" />
     <Partner title='Instructor' page='Instructor' />
-    <Featured />
+    <Featured pageId={7}/>
 
     <BlogWithSideBar />
     <Footer />

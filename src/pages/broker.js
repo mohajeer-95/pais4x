@@ -20,7 +20,7 @@ const TeamDetails = () => {
       <Header />
       <PageHeader  brokerId={data.id} withSocialComponent={1} data={data} title={data.name + ' Broker'} page={data.name} />
       <Partner title={data.name} text={data.name} />
-      <Featured />
+      <Featured pageId={3}/>
       <Mentor title={data.name} />
       <Newsletter />
       <Footer />

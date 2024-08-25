@@ -48,7 +48,7 @@ const ResetPass = () => {
     };
 
     try {
-      const response = await fetch("http://lab.app2serve.com/public/api/forgot-password", requestOptions);
+      const response = await fetch("https://lab.app2serve.com/public/api/forgot-password", requestOptions);
          const result = await response.json();
 
       if (result.status) {

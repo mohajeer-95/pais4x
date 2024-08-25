@@ -471,7 +471,7 @@ function Header({ headerClass = null }) {
 
                 
 
-
+{/* 
                   <li className="menu-item-has-children">
                     <Link scroll={false} href="/#0" onClick={toggleActive}>Courses</Link>
                     <ul className="submenu">
@@ -483,7 +483,7 @@ function Header({ headerClass = null }) {
                       <li><Link href="/refund">Refund</Link></li>
                       <li><Link href="/payments">Payments</Link></li>
                     </ul>
-                  </li>
+                  </li> */}
                   {/* <li className="menu-item-has-children">
                     <Link scroll={false} href="/#0" onClick={toggleActive}>Pages</Link>
                     <ul className="submenu">

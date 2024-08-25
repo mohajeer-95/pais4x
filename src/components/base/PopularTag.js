@@ -391,7 +391,7 @@ const PopularTag = () => {
                         </tr>
                         <tr>
                           <td style={{ fontweight: 'bold' }}>My credit: </td>
-                          <td>{Number(totalPaymentsCashback?.total_cashback) + Number(totalPaymentsCashback?.total_cashback) + '$'}</td>
+                          <td>{Number(totalPaymentsCashback?.total_cashback) - Number(totalPaymentsCashback?.total_payment) + '$'}</td>
                         </tr>
                         <tr>
                           <td style={{ fontweight: 'bold' }}>total cashback: </td>
@@ -523,7 +523,6 @@ const PopularTag = () => {
                               </td>
                             }
                           </tr>))}
-
                         </MDBTableBody>
                       </MDBTable>
                     </MDBCard>
@@ -545,14 +544,6 @@ const PopularTag = () => {
 
 
             </div>
-
-
-
-
-
-
-
-
 
 
 

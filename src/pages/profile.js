@@ -17,7 +17,7 @@ const blogDetails = () => {
       <Header pageName={'profile'}/>
       <PageHeader withSocialComponent={0} title="My Account" page="My Account" />
       <Partner />
-      <Featured />
+      <Featured pageId={10}/>
       <PopularTag/>
       <Newsletter/>
       <Footer />

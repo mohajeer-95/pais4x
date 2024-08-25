@@ -14,7 +14,7 @@ const Price = () => {
       <Header />
       <PageHeader withSocialComponent={0} title={'Seminars'} page={'Seminars'}/> 
       <Partner title='Instructor' page='Instructor' />
-      <Featured />
+      <Featured pageId={12}/>
       <Pricing />
       <Testimonial />
       <Newsletter />

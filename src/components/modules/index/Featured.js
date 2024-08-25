@@ -1,37 +1,52 @@
 import React, { useState, useEffect } from 'react'
 import { callApiWithToken } from '../../../../public/api/api'
 import Spinner from 'react-bootstrap/Spinner';
+import { useSlider } from '../../../context/SliderContext';
 
 
-function Featured() {
+function Featured({pageId}) {
 
   const [sponserImg, setSponserImg] = useState('')
   const [url, setUrl] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loadingIs, setLoading] = useState(false)
 
-  useEffect(() => {
-    getSponserImg()
-  }, [])
+  const { sliderData, loadingSlider } = useSlider();
 
-  const getSponserImg = async () => {
-    const randomNumber = Math.floor(Math.random() * 10) + 1;
- 
-    setLoading(true)
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/slider', {}, 'GET');
-    // console.log('response getSponserImg', response);
-    setSponserImg('https://lab.app2serve.com/storage/app/public/' + response?.sliders[randomNumber]?.image)
-    setUrl(response?.sliders[randomNumber]?.link)
-    setLoading(false)
+  if (loadingSlider) {
+    return <div>Loading...</div>;
   }
+
+  if (!sliderData) {
+    return <div>No data available</div>;
+  }
+
+
+
+  // useEffect(() => {
+  //   if (sliderData) {
+  //     console.log('sliderData', sliderData)
+  //   }
+  // }, [])
+
+  // const getSponserImg = async () => {
+  //   const randomNumber = Math.floor(Math.random() * 10) + 1;
+
+  //   setLoading(true)
+  //   const response = await callApiWithToken('https://lab.app2serve.com/public/api/slider', {}, 'GET');
+  //   // console.log('response getSponserImg', response);
+  //   // setSponserImg('https://lab.app2serve.com/storage/app/public/' + response?.sliders[randomNumber]?.image)
+  //   setUrl(response?.sliders[randomNumber]?.link)
+  //   setLoading(false)
+  // }
 
   return (
     <section className="feature feature--style1 " style={{ paddingTop: 60, paddingBottom: 60 }}>
-    
-    
+
+
       <div className="container">
 
 
-        {sponserImg?.length ?<div className="feature__wrapper" style={{}}>
+        {sliderData?.length && pageId ? <div className="feature__wrapper" style={{}}>
           <div style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} className=" g-5 align-items-center justify-content-between">
             <div>
               <div
@@ -41,15 +56,16 @@ function Featured() {
               >
                 <div className="container" style={{ textAlign: 'center' }}>
                   <div className="feature__image floating-content">
-                    {!loading && sponserImg ?
+                    {sliderData ?
                       <a href={url} target="_blank" rel="noopener noreferrer">
 
-                        <img style={{ maxHeight: 130 }} src={sponserImg} alt="Feature image" />
-                      </a>
+{/* <img style={{ maxHeight: 130 }} src={'https://lab.app2serve.com/storage/app/public/' + sliderData[pageId].image} alt="Feature image" /> MOHAJBACK*/}
+<img style={{ maxHeight: 130 }} src={'https://lab.app2serve.com/storage/app/public/' + sliderData[pageId ? pageId : 0].image} alt="Feature image" />
+</a>
                       :
                       <div className="spinner-container">
-                      <Spinner animation="border" variant="info" />
-                    </div>                    }
+                        <Spinner animation="border" variant="info" />
+                      </div>}
                   </div>
                 </div>
               </div>
@@ -57,17 +73,17 @@ function Featured() {
 
           </div>
         </div>
-        
-        :
-        <div style={{height:150}} className="preloaderslider">
-        <img src="images/global/logo.png" alt="preloaderslider icon" />
-      </div>
+
+          :
+          <div style={{ height: 150 }} className="preloaderslider">
+            <img src="images/global/logo.png" alt="preloaderslider icon" />
+          </div>
         }
 
 
       </div>
-     
-      
+
+
     </section>
   );
 }

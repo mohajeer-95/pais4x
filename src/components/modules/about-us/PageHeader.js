@@ -6,15 +6,11 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId }) => {
   const [info, setinfo] = useState([])
 
   const openNewWindow = (link) => {
-
     window.open(link, "_blank");
-
   };
 
   useEffect(() => {
     if (withSocialComponent) {
-      console.log('brokerIdbrokerId888',brokerId);
-      
       setTimeout(() => {
         getBrokerInfo()
 
@@ -23,19 +19,13 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId }) => {
 
   }, []);
   const getBrokerInfo = async () => {
-    console.log('idddddiddddd',brokerId);
-    console.log('idddddidddddtitle',title);
-    
-    const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
 
-console.log('info RES',response);
-console.log('info.whatsapp_link',response?.broker?.info?.whatsapp_link);
-console.log('info.facebook_link',response?.broker?.info?.facebook_link);
-console.log('info.instagram_link',response?.broker?.info?.instagram_link);
-console.log('info.youtube_link',response?.broker?.info?.youtube_link);
-console.log('info.twitter_link',response?.broker?.info?.twitter_link);
 
-    setinfo(await response.broker.info)
+    // const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
+
+
+
+    // setinfo(await response.broker.info)
 
   }
 
@@ -43,7 +33,7 @@ console.log('info.twitter_link',response?.broker?.info?.twitter_link);
     <section className="page-header bg--cover" style={{ backgroundImage: `url(/images/header/1.png)` }}>
       <div className="container">
         <div className="page-header__content" data-aos="fade-right" data-aos-duration="1000">
-          {title&&<h2>{title}</h2>}
+          {title && <h2>{title}</h2>}
           <nav style={{
             '--bs-breadcrumb-divider': "'/'",
           }} aria-label="breadcrumb">

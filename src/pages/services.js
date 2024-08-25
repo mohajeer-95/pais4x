@@ -34,7 +34,7 @@ const ResetPass = () => {
     event.preventDefault();
     const newErrors = {};
 
-    // Validate passwords
+    // Validate passwordspasswords
     // if (!validatePassword(currentPassword)) {
     //   newErrors.currentPassword = "Current password must include at least one uppercase letter, one number, and one special character.";
     // }
@@ -85,7 +85,7 @@ const ResetPass = () => {
 
     try {
       // Call the API
-      const response = await fetch("http://lab.app2serve.com/public/api/update-password", requestOptions);
+      const response = await fetch("https://lab.app2serve.com/public/api/update-password", requestOptions);
       const result = await response.json();
       console.log('result',result);
       console.log('response',result);

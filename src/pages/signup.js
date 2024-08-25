@@ -5,17 +5,7 @@ import PageHeader from '@/components/modules/about-us/PageHeader';
 import Footer from "@/components/Footer";
 import Link from 'next/link';
 import Toast from 'react-bootstrap/Toast'
-import Dropdown from 'react-bootstrap/Dropdown';
-import Form from 'react-bootstrap/Form';
-import { createPortal } from 'react-dom';
 import {
-  MDBContainer,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBCardImage,
-  MDBIcon,
-  MDBRipple,
   MDBModal,
   MDBModalDialog,
   MDBModalContent,
@@ -33,12 +23,25 @@ import {
 
 import { callApiWithToken } from '../../public/api/api'
 import Spinner from 'react-bootstrap/Spinner';
-import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
+import { setCookie, getCookie } from 'cookies-next';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+
+
 
 const SignUp = () => {
   const [staticModal, setStaticModal] = useState(true);
 
   const toggleOpen = () => setStaticModal(!staticModal);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+
+  const toggleModal = (content) => {
+    setModalContent(content);
+    setModalOpen(!modalOpen);
+  };
 
   const [dataMethods, setDataMethods] = useState([])
   const [getMethod, setMethod] = useState(null)
@@ -59,6 +62,7 @@ const SignUp = () => {
   const [reference, setReference] = useState('');
 
   const [errors, setErrors] = useState({});
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
   const paymentMethodOptions = [
     'Paypal',
@@ -156,6 +160,12 @@ const SignUp = () => {
   const validateForm = () => {
     let valid = true;
     const errors = {};
+
+
+    if (!isTermsAccepted) {
+      errors.terms = 'You must accept the terms and conditions';
+      valid = false;
+    }
 
     if (!firstname) {
       errors.firstname = 'First name is required';
@@ -568,6 +578,31 @@ const SignUp = () => {
                         </div>
                       </div>
                     </div>
+                    <div style={{ marginTop: 15, display: 'flex' }}>
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={isTermsAccepted}
+                        onChange={(e) => setIsTermsAccepted(e.target.checked)}
+                      />
+                      <label style={{ paddingInline: 5, fontSize: 15 }}>
+                        By creating an account, you agree to{' '}
+                        <span
+                          onClick={() => toggleModal('terms')}
+                          style={{ fontWeight: 'bold', color: '#18e8ef', cursor: 'pointer', textDecoration: 'underline' }}
+                        >
+                          Terms of Service
+                        </span>{' '}
+                        and{' '}
+                        <span
+                          onClick={() => toggleModal('privacy')}
+                          style={{ fontWeight: 'bold', color: 'red', cursor: 'pointer', textDecoration: 'underline' }}
+                        >
+                          Privacy Policy
+                        </span>.
+                      </label>
+                    </div>
+                    {errors.terms && <p style={{ color: 'red', marginLeft: '8px' }}>{errors.terms}</p>}
 
                     {!isLoading && !successRegistration && <div>
                       <button
@@ -577,6 +612,8 @@ const SignUp = () => {
                       >
                         Sign Up
                       </button>
+
+
                       {errors.matchPassword && <p style={{ color: 'red' }}>{errors.matchPassword}</p>}
                       {errors.response && <p style={{ color: 'red' }}>{errors.response}</p>}
 
@@ -620,6 +657,25 @@ const SignUp = () => {
             <img src="/images/contact/4.png" alt="shape-icon" />
           </span>
         </div>
+
+        <Modal isOpen={modalOpen} toggle={() => setModalOpen(!modalOpen)}>
+          <ModalHeader toggle={() => setModalOpen(!modalOpen)}>
+            {modalContent === 'terms' ? 'Terms of Service' : 'Privacy Policy'}
+          </ModalHeader>
+          <ModalBody>
+            {modalContent === 'terms'
+              ? 'Here are the terms of service...'
+              : 'Here is the privacy policy...'}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={() => setModalOpen(!modalOpen)}>
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
+
+
+
       </section>
       <Footer />
     </>

@@ -11,7 +11,7 @@ const Contact = () => {
       <Header />
       <PageHeader withSocialComponent={0} title="Contact Us" page="Contact Us" />
       <Partner />
-      <Featured/>
+      <Featured pageId={6}/>
       <ContactCard />
       <Footer />
     </>

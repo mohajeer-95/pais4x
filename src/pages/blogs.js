@@ -200,7 +200,7 @@ const Blogs = () => {
     <Header/>
     <PageHeader withSocialComponent={0} title='Frequently' page= 'Faq' />
      <Partner/> 
-    <Featured /> 
+     <Featured pageId={2}/>
    
     <section className="faq padding-top padding-bottom of-hidden">
       <div className="section-header section-header--max65">

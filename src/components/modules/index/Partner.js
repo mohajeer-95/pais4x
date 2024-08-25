@@ -3,71 +3,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import Spinner from 'react-bootstrap/Spinner';
 import { callApiWithToken } from '../../../../public/api/api'
+import { useSlider } from '../../../context/SliderContext';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
-const partnerData = [
-  {
-    img: "/images/partner/light/1.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/2.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/3.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/4.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/5.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/1.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/2.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/3.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/4.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/5.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/1.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/2.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/3.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/4.png",
-    alt: "partner logo",
-  },
-  {
-    img: "/images/partner/light/5.png",
-    alt: "partner logo",
-  },
 
-];
 const Partner = () => {
 
   const breakpoints = {
@@ -87,13 +26,12 @@ const Partner = () => {
     },
   }
 
-
-  const spinnerCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  const { carouselData, loadingCarousel } = useSlider();
   const [carousel, setCarousel] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    getcarousel()
+    // getcarousel()
   }, [])
 
 
@@ -115,92 +53,92 @@ const Partner = () => {
     var rendomArr = []
     const response = await callApiWithToken('https://lab.app2serve.com/public/api/broker-carousel', {}, 'GET');
     response.broker_carousel.map((item, index) => {
-    
+
       arr.push(item)
       arr.push(item)
       arr.push(item)
       arr.push(item)
       arr.push(item)
-     
+
     })
     rendomArr = shuffleArray(arr)
     setCarousel(rendomArr)
-  setLoading(false)
-}
-  
+    setLoading(false)
+  }
+
 
 
   return (
     <div>
-    {!loading && carousel?.length ? <div className="partner partner--gradient">
-      <div className="container">
-        <div className="partner__wrapper">
-           <Swiper
-            className="partner__slider"
-            spaceBetween={20}
-            slidesPerView={2}
-            breakpoints={breakpoints}
-            speed={2000}
-            loop={true}
-            autoplay={{ delay: 1, disableOnInteraction: true }}
-            modules={[Navigation, Pagination, Autoplay]}
-          >
-            {carousel.map((item, index) => (
-              <SwiperSlide key={index}>
-                <div className="swiper-slide">
-                  <div className="partner__item">
-                    <div className="partner__item-inner" style={{ flexDirection: 'row', display: 'flex' }}>
+      { carouselData?.length ? <div className="partner partner--gradient">
+        <div className="container">
+          <div className="partner__wrapper">
+            <Swiper
+              className="partner__slider"
+              spaceBetween={20}
+              slidesPerView={2}
+              breakpoints={breakpoints}
+              speed={2000}
+              loop={true}
+              autoplay={{ delay: 1, disableOnInteraction: true }}
+              modules={[Navigation, Pagination, Autoplay]}
+            >
+              {carouselData.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <div className="swiper-slide">
+                    <div className="partner__item">
+                      <div className="partner__item-inner" style={{ flexDirection: 'row', display: 'flex' }}>
 
-                      <img
-                        src={'https://lab.app2serve.com/storage/app/public/' + item?.logo}
-                        alt="partner logo"
-                        className="dark"
-                        style={{ maxWidth: '68%' }}
-                      />
-                      {/* Add the icon next to the image */}
-                      <div style={{ marginInline: 5, maxWidth: '28%' }}>
-                        <div className="partner__rating">
-                          <img
-                            src={item?.currency == 'dollar' ? "images/icon/dollar.png" : "images/icon/gold-polkadot.png"}
-                            alt="rating icon"
-                            className="partner__rating-icon"
-                          />
-                          {/* <span className="partner__rating-value">
+                        <img
+                          src={'https://lab.app2serve.com/storage/app/public/' + item?.logo}
+                          alt="partner logo"
+                          className="dark"
+                          style={{ maxWidth: '68%' }}
+                        />
+                        {/* Add the icon next to the image */}
+                        <div style={{ marginInline: 5, maxWidth: '28%' }}>
+                          <div className="partner__rating">
+                            <img
+                              src={item?.currency == 'dollar' ? "images/icon/dollar.png" : "images/icon/gold-polkadot.png"}
+                              alt="rating icon"
+                              className="partner__rating-icon"
+                            />
+                            {/* <span className="partner__rating-value">
                             {'22'}
                           </span> */}
-                          <span style={{ fontWeight: 'bold', color: 'green' }}>{item?.cashback + '$'}</span>
+                            <span style={{ fontWeight: 'bold', color: 'green' }}>{item?.cashback}</span>
 
+                          </div>
+                          <div className="partner__rating">
+                            <img
+                              src="images/icon/star.png"// Replace with your icon path
+                              alt="rating icon"
+                              className="partner__rating-icon"
+                            />
+                            <span className="partner__rating-value">
+                              {item?.avg_rating}
+                            </span>
+                          </div>
                         </div>
-                        <div className="partner__rating">
-                          <img
-                            src="images/icon/star.png"// Replace with your icon path
-                            alt="rating icon"
-                            className="partner__rating-icon"
-                          />
-                          <span className="partner__rating-value">
-                            {item?.avg_rating}
-                          </span>
-                        </div>
+
+
                       </div>
-
-                     
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
- 
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+          </div>
         </div>
       </div>
-      </div>
-      :
-      <div className="spinner-container">
-      <Spinner animation="border" variant="info" />
-    </div>
+        :
+        <div className="spinner-container">
+          <Spinner animation="border" variant="info" />
+        </div>
       }
-      </div>
-    );
+    </div>
+  );
 };
 export default Partner;
 

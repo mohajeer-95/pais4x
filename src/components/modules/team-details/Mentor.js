@@ -37,8 +37,7 @@ import Typography from '@mui/material/Typography';
 const Mentor = ({ title }) => {
 
   const [value, setValue] = useState(0);
-  const [isLinked, setIsLinked] = useState(false);
-  const [brokerList, setListBroker] = useState([]);
+  const [isLinked, setIsLinked] = useState(0);
 
   const router = useRouter();
   const { id, name } = router.query;
@@ -48,14 +47,13 @@ const Mentor = ({ title }) => {
   const [varyingModal, setVaryingModal] = useState(false);
   const [linkEmail, setEmail] = useState('');
   const [varyingMessage, setVaryingMessage] = useState('');
-  const [autToken, setAutToken] = useState('');
   const [linkLoading, setLinkLoading] = useState(false);
   const [errors, setErrors] = useState(false);
   const [otpErrors, setOtpErrors] = useState(false);
   const [success, setSuccess] = useState(0);
   const [reference, setReference] = useState('');
   const [loadindAllData, setLoadindAllData] = useState(false);
-  
+
 
   const [broker_account, setbroker_account] = useState([])
   const [broker_cashback_info, setbroker_cashback_info] = useState([])
@@ -63,7 +61,7 @@ const Mentor = ({ title }) => {
   const [broker_type, setbroker_type] = useState([])
   const [info, setinfo] = useState([])
   const [description, setDescription] = useState('')
-  
+
   const [margin_leverage, setmargin_leverage] = useState([])
   const [platform, setplatform] = useState([])
   const [support, setsupport] = useState([])
@@ -78,104 +76,187 @@ const Mentor = ({ title }) => {
   const [starRateNumber, setStarRateNumber] = useState(['star']);
 
 
-  const [isValid, setIsValid] = useState(null);
   const [bottomModal, setBottomModal] = useState(false);
   const [token, setToken] = useState(null)
   const toggleOpen = () => setBottomModal(!bottomModal);
+
+
   useEffect(() => {
-    setToken(getCookie('token'))
-    console.log(getCookie('token'));
-    const getToken = (getCookie('token'))
+    const fetchData = async () => {
+      try {
+        const token = getCookie('token')
+        setToken(token)
+        let response;
+        if (token && id) {
+          // Call API with token if user is logged in
+          response = await getBrokerById(router.query.id, token);
+        } else {
+          // Call API without token if user is logged out
+          response = await getBrokerById(router.query.id);
+        }
+        setBrokerData(response); // Store the API response
+      } catch (err) {
 
-    if (router.isReady && getToken) {
+      } finally {
+        setLoadindAllData(true); // Stop the loading state
+      }
+    };
+    if (router.query.id) {
       setQuery(router.query);
-      getBrokerById(id, getToken)
       setBrokerId(router.query.id)
+      fetchData();
     }
-
-    if (id) {
-      setBrokerId(id)
-      getBrokerById(id)
-    } else if (brokerId) {
-      getBrokerById(brokerId)
-    } else {
-      console.log('GGGGGGGGGGGGGGGGGGGGGGGGG', router.isReady);
-      //to home mohaj just test
-      // window.location.href = '/brokers';
-
-    }
-    setAutToken(getToken)
   }, [router.isReady]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = getCookie('token'); // Retrieve the token
+        const id = router.query.id;
+
+        if (id) {
+          let response;
+          if (token) {
+            // Call API with token if user is logged in
+            response = await getBrokerById(id, token);
+          } else {
+            // Call API without token if user is logged out
+            response = await getBrokerById(id);
+          }
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+      } finally {
+      }
+    };
+
+
+    if (router.isReady) {
+      setQuery(router.query);
+      setBrokerId(router.query.id)
+      fetchData();
+    }
+  }, [router.isReady, router.query.id]);
+
 
 
   const getBrokerList = async (name) => {
     const authToken = getCookie('token')
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers-link-request', {}, 'GET', authToken);
-    console.log('response getBrokerList', response);
+    const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers-link-request', {}, 'GET', authToken ? authToken : null);
     response?.brokers_link?.map((item, index) => {
       if (item.name == name) {
-        // setValue(item.avg_rating)
-        setIsLinked(true)
+        if (item.status == 0) {
+          setIsLinked(2)
+        } else if (item.status == 1) {
+          setIsLinked(1)
+        }
       }
     })
   }
 
-  
-  const getBrokerById = async (brokerId, tokenA) => {
-    console.log('qqqqqqqqqqqqqqqqqqqqqqq');
-    console.log('qqqqqqqqqqqqqqqqqqqqqqqbrokerId',brokerId);
-    console.log('qqqqqqqqqqqqqqqqqqqqqqqtokenA',tokenA);
-    console.log('qqqqqqqqqqqqqqqqqqqqqqq  AUTHTOKEN',autToken);
-    
-    const token = tokenA ? tokenA : 'autToken'
-    const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET', token);
-    setBrokerData(response?.broker)
 
-    setbroker_account(response?.broker?.broker_account)
-    setbroker_cashback_info(response?.broker?.broker_cashback_info)
-    setbroker_funding(response?.broker?.broker_funding[0])
-    setbroker_type(response?.broker?.broker_type)
-    setinfo(response?.broker?.info)
-    setDescription(response?.broker?.info?.description.slice(0,400) + '...')
-    setValue(response?.broker?.info?.rating)
-    var starNumber = ['star']
 
-    for (let index = 1; index < response?.broker?.info?.avg_rating; index++) {
-      starNumber.push('star')
+
+
+  const getBrokerById = async (brokerId, token = null) => {
+    const headers = new Headers();
+    if (token) {
+      headers.append("X-Custom-Token", token);
     }
-    console.log('FFFFFFFFFFFFSSSSSSSSSSSSSSSSSSSSSSSSSS', starNumber);
 
-    setStarRateNumber(starNumber)
+    const requestOptions = {
+      method: "GET",
+      headers: headers,
+      redirect: "follow",
+    };
+
+
+    try {
+
+
+
+      const response = await fetch(`https://lab.app2serve.com/public/api/broker/${brokerId}`, requestOptions);
+      const result = await response.json(); // Use .json() if response is JSON
+      const broker = result.broker
+
+      if (broker) {
+        updateBrokerState(broker);
+        handleDescription(broker.info?.description);
+        handleStarRating(broker.info?.avg_rating);
+        handleOptionalBrokerList(broker.info?.name);
+
+        // Setting up additional states
+        setmargin_leverage(broker.margin_leverage);
+        setplatform(broker.platform);
+        setsupport(broker.support);
+        settrading_cost(broker.trading_cost);
+        setbroker(broker.broker);
+
+        // Simulate loading all data after a delay
+        setTimeout(() => {
+          setLoadindAllData(true);
+        }, 4000);
+      }
+    } catch (error) {
+      console.error('Failed to fetch broker data:', error);
+      // Handle error as needed
+    }
+  };
+
+  const updateBrokerState = (broker) => {
+    setBrokerData(broker);
+    setbroker_account(broker.broker_account);
+    setbroker_cashback_info(broker.broker_cashback_info);
+    setbroker_funding(broker.broker_funding[0]);
+    setbroker_type(broker.broker_type);
+    setinfo(broker.info);
+    setValue(broker.info?.rating);
+  };
+
+  const handleDescription = (description) => {
+    const shortDescription = description?.length > 108 ? description.substring(0, 110) + '...' : description;
+    setDescription(description?.slice(0, 400) + '...');
+    setpargraph(shortDescription);
+  };
+
+  const modifyArray = (arr) => {
+    const conditions = {
+      1: 4,
+      2: 3,
+      3: 2,
+      4: 1,
+    };
+    const starCount = arr.length;
+    const notStarCount = conditions[starCount] || 0;
+    const notStarArray = Array(notStarCount).fill("not star");
+    return [...arr, ...notStarArray];
+  };
+
+  const handleStarRating = (avgRating) => {
+    const starNumber = Array(Math.floor(avgRating)).fill('star');
+
+    console.log('starNumber', starNumber);
+
+    const modifiedArr = modifyArray(starNumber);
+
+    setStarRateNumber(modifiedArr);
+  };
+
+  const handleOptionalBrokerList = (brokerName) => {
     if (getCookie('token')) {
-      getBrokerList(response?.broker?.info?.name)
+      getBrokerList(brokerName);
     }
-    if (response?.broker?.info?.description?.length > 108) {
-      setpargraph(response?.broker?.info?.description.substring(0, 110) + '...')
-    } else {
-      setpargraph(response?.broker?.info?.description)
-    }
-console.log('response?.broker?.margin_leverage',response?.broker?.margin_leverage);
+  };
 
-    setmargin_leverage(response?.broker?.margin_leverage)
-    setplatform(response?.broker?.platform)
-    setsupport(response?.broker?.support)
-    settrading_cost(response?.broker?.trading_cost)
-    setbroker(response?.broker?.broker)
-setTimeout(() => {
-  setLoadindAllData(true)
-}, 4000);
-  }
 
   const handleRate = async (value) => {
     setValue(value)
-    console.log('value', value);
-    const responseRating = await callApiWithToken('https://lab.app2serve.com/public/api/add-rating', { value: value, broker_id: brokerId }, 'POST', autToken);
-    console.log('responseRating: ', responseRating);
+    const responseRating = await callApiWithToken('https://lab.app2serve.com/public/api/add-rating', { value: value, broker_id: brokerId }, 'POST', token);
   }
   const handleClick = () => {
-    console.log('router.query', router.query);
     if (statebuttonText) {
-      setDescription(info?.description.slice(0,400) + '...')
+      setDescription(info?.description.slice(0, 400) + '...')
       setStateButtonText(false);
     } else {
       setDescription(info?.description)
@@ -207,10 +288,7 @@ setTimeout(() => {
       return
     }
     setErrors('')
-    console.log('linkEmail: ', linkEmail);
-    console.log('autToken: ', autToken);
-    const responseEmailSent = await callApiWithToken('https://lab.app2serve.com/public/api/brokers_link', { broker_identifier: linkEmail, broker_id: brokerId }, 'POST', autToken);
-    console.log('responseEmailSent: ', responseEmailSent);
+    const responseEmailSent = await callApiWithToken('https://lab.app2serve.com/public/api/brokers_link', { broker_identifier: linkEmail, broker_id: brokerId }, 'POST', token);
     if (responseEmailSent.status == 1) {
       setReference(responseEmailSent.reference)
       setLinkLoading(false)
@@ -241,12 +319,7 @@ setTimeout(() => {
 
 
     setOtpErrors('')
-    console.log('email: ', linkEmail);
-    console.log('otp: ', varyingMessage);
-    console.log('reference: ', reference);
-    console.log('autToken: ', autToken);
-    const responseOTPSent = await callApiWithToken('https://lab.app2serve.com/public/api/verify-link-otp', { broker_identifier: linkEmail, reference: reference, otp: varyingMessage }, 'POST', autToken);
-    console.log('responseOTPSent: ', responseOTPSent);
+    const responseOTPSent = await callApiWithToken('https://lab.app2serve.com/public/api/verify-link-otp', { broker_identifier: linkEmail, reference: reference, otp: varyingMessage }, 'POST', token);
     if (responseOTPSent.status == 1) {
       setVaryingState(3)
       setLinkLoading(false)
@@ -275,7 +348,7 @@ setTimeout(() => {
 
   return (
     <div className="team team--details padding-bottom bg-color-3" style={{ paddingTop: 50 }}>
-      {loadindAllData ?<div className="container">
+      {loadindAllData ? <div className="container">
         <div className="team__wrapper">
           <div className="col-md-12 g-5 align-items-center" style={{ display: 'flex', justifyContent: 'center' }}>
             <>
@@ -381,17 +454,12 @@ setTimeout(() => {
                         className="bg-image rounded hover-zoom hover-overlay"
                       >
                         <MDBCardImage
-                          src={isValid ? imageUrl + info?.logo : 'images/global/logo2.png'}
+                          src={info?.logo ? imageUrl + info?.logo : 'images/global/logo2.png'}
                           fluid
                           className="w-100"
                           style={{ maxWidth: 150 }}
                         />
-                        <a href="#!">
-                          <div
-                            className="mask"
-                            style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
-                          ></div>
-                        </a>
+
                       </MDBRipple>
                     </MDBCol>
                     <MDBCol md="6">
@@ -400,12 +468,12 @@ setTimeout(() => {
 
                         <div className="text-danger mb-1 me-2">
 
-                          {starRateNumber.map((index, item) => (
-                            <MDBIcon key={index} fas style={{ color: '#18e8ef' }} icon="star" />
+                          {starRateNumber.map((item, index) => (
+                            <MDBIcon key={index} fas style={{ color: item === 'star' ? '#18e8ef' : '#ababab' }} icon="star" />
                           ))
                           }
+
                         </div>
-                        <span>{info?.avg_rating}</span>
                       </div>
                       <p className="">
                         {
@@ -426,7 +494,7 @@ setTimeout(() => {
                       <div className="d-flex flex-row align-items-center mb-1 justify-content-center" >
                         <h6 className="text-success">{info?.cashback}$</h6>
                       </div>
-                      {isLinked ?
+                      {isLinked == 1 ?
                         <div className="d-flex flex-column mt-4 align-items-center">
                           <Rating
                             name="simple-controlled"
@@ -436,19 +504,23 @@ setTimeout(() => {
                             }}
                           />
                         </div>
-                        : token ? <div className="d-flex flex-column mt-4">
-                          <MDBBtn style={{ maxHeight: 55 ,fontSize: 14 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
-                            Link With {info?.name}
-                          </MDBBtn>
-                        </div>
-
-
-                          :
-                          <div className="d-flex flex-column mt-4">
-                            <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" href='signin'>
-                              Login to Link
+                        : isLinked == 2 ?
+                          <div className="d-flex flex-column mt-4 align-items-center">
+                            <MDBBtn style={{ minWidth: 75, maxWidth: 100, fontSize: 13, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
+                              In Progress
                             </MDBBtn>
-                          </div>}
+                          </div>
+                          : token ? <div className="d-flex flex-column mt-4">
+                            <MDBBtn style={{ maxHeight: 55, fontSize: 13 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
+                              Link With {info?.name}
+                            </MDBBtn>
+                          </div>
+                            :
+                            <div className="d-flex flex-column mt-4">
+                              <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" href='signin'>
+                                Login to Link
+                              </MDBBtn>
+                            </div>}
 
                     </MDBCol>
                   </MDBRow>
@@ -460,7 +532,7 @@ setTimeout(() => {
 
 
           {info?.youtube_link && <div style={{ marginTop: 20 }}>
-            <Story youtubeLink={info?.youtube_link} /> 
+            <Story youtubeLink={info?.youtube_link} />
           </div>}
 
           <div className="row" style={{ marginTop: 70, maxWidth: '100%' }}>
@@ -474,13 +546,13 @@ setTimeout(() => {
                 </div>
                 {/* <p>Welcome to FXCentrum - the ultimate forex trading destination for a seamless, profitable trading experience. Our company was founded in 2019 by a team of experienced forex traders, customer service professionals, and risk managers, who prioritize customer satisfaction above all else. Our strongest point is our 5* personal care and easy-to-use platform, which includes fast deposits and withdrawals. We are a fully regulated forex broker, holding license number SD055 from the FSA Seychelles. At FXCentrum, we offer a wide range of local deposit and withdrawal methods, including wire transfers, card payments, and even cryptocurrencies, making account funding and withdrawal easy and hassle-free.</p> */}
                 {/* <p>{info?.description}</p> */}
-                     {description.length ? 
-                       <div>
-                        <TextWithNewLines statebuttonText={statebuttonText} text={description ? description : longText} />
-                       </div> :
-                      <div className="spinner-container">
-                      <Spinner animation="border" variant="info" />
-                    </div>
+                {description.length ?
+                  <div>
+                    <TextWithNewLines statebuttonText={statebuttonText} text={description ? description : longText} />
+                  </div> :
+                  <div className="spinner-container">
+                    <Spinner animation="border" variant="info" />
+                  </div>
                 }
 
 
@@ -646,7 +718,7 @@ setTimeout(() => {
                     </Accordion.Item>
                   </div>
 
-                
+
 
                   <div key={3} className="col-12">
                     <Accordion.Item className="accordion__item" eventKey={3}>
@@ -944,12 +1016,12 @@ setTimeout(() => {
           </div>
         </div>
       </div>
-      
-      :
-      
-    <div className="preloader">
-    <img src="images/global/logo.png" alt="preloader icon" />
-  </div>
+
+        :
+
+        <div className="preloader">
+          <img src="images/global/logo.png" alt="preloader icon" />
+        </div>
 
       }
     </div>

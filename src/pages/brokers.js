@@ -14,7 +14,7 @@ const Team = () => {
       <Header />
       <PageHeader withSocialComponent={0} title="Brokers List" page="Brokers" />
       <Partner title="Paid4x" text="Brokers" />
-      <Featured />
+      <Featured pageId={4}/>
       <Advisor />
       <Newsletter />
       <Footer />

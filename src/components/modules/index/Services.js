@@ -3,14 +3,16 @@ import React, { useState, useEffect } from 'react'
 import Link from "next/link";
 import { callApiWithToken } from '../../../../public/api/api'
 import Spinner from 'react-bootstrap/Spinner';
+import { useSlider } from '../../../context/SliderContext';
 
 function Services() {
+  const { brokersData, loadingBrokers } = useSlider();
 
   const [brokersList, setBrokersList] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    getBrokers()
+    // getBrokers()
   }, [])
 
   const getBrokers = async () => {
@@ -46,7 +48,7 @@ function Services() {
 
 
             <div className="grid-container" style={{ width: '100%' }}>
-              {brokersList?.map((item, index) => (
+              {brokersData?.slice(0, 10).map((item, index) => 
                 <div key={index} className="card cardb">
                   <Link href={{
                     pathname: '/broker',
@@ -56,10 +58,10 @@ function Services() {
                   </Link>
                 </div>
 
-              ))}
+              )}
 
             </div>
-            {!brokersList.length && <div style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>Data not found</div>}
+            {!brokersData?.length && <div style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>Data not found</div>}
           </div>
             :
             <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
