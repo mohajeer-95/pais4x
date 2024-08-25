@@ -84,7 +84,7 @@ const SignIn = () => {
     setSuccessLogin(true)
 
     setTimeout(() => {
-      // window.location.href = '/';
+      window.location.href = '/';
     }, 1000);
   }
   return (
