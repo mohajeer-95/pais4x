@@ -14,7 +14,7 @@ const Price = () => {
     return (
         <>
             <Header />
-            <PageHeader withSocialComponent={0} title={'Seminars'} page={'Seminars'} />
+            <PageHeader withSocialComponent={0} title={'Enroll'} page={'Enroll'} />
             <Partner title='Instructor' page='Instructor' />
             <Featured pageId={1} />
             <Container style={{ marginBottom: 90 }}>
