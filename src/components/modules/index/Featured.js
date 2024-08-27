@@ -57,7 +57,7 @@ function Featured({pageId}) {
                 <div className="container" style={{ textAlign: 'center' }}>
                   <div className="feature__image floating-content">
                     {sliderData ?
-                      <a href={url} target="_blank" rel="noopener noreferrer">
+                      <a href={sliderData[pageId].link} target="_blank" rel="noopener noreferrer">
 
 {/* <img style={{ maxHeight: 130 }} src={'https://lab.app2serve.com/storage/app/public/' + sliderData[pageId].image} alt="Feature image" /> MOHAJBACK*/}
 <img style={{ maxHeight: 130 }} src={'https://lab.app2serve.com/storage/app/public/' + sliderData[pageId ? pageId : 0].image} alt="Feature image" />

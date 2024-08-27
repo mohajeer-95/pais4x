@@ -63,7 +63,7 @@ const AboutUs = () => {
     return (
         <>
             <Header />
-            <PageHeader withSocialComponent={0} title='Refund' page='Refund' />
+            <PageHeader withSocialComponent={0} title='Socials' page='' />
             <Partner />
             <Featured pageId={16} />
 
