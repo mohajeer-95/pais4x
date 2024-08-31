@@ -1,15 +1,16 @@
-import React from "react";
-import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 import FsLightbox from "fslightbox-react";
-const Story = (youtubeLink) => {
+import Link from "next/link";
+
+const Story = ({ youtubeLink, coverImage }) => {
   const [toggler, setToggler] = useState(false);
+
   return (
     <>
       <FsLightbox
         toggler={toggler}
         sources={[
-          youtubeLink.youtubeLink,
+          youtubeLink,
         ]}
       />
       <div className="story padding-top bg-color-3">
@@ -21,12 +22,29 @@ const Story = (youtubeLink) => {
                 data-aos="fade-up"
                 data-aos-duration="800"
               >
-                <img src="https://bitrader-next.thetork.com/images/about/4.png" alt="story-image" />
-                <div className="story__thumb-playbtn">
-                  <Link  href="" onClick={() => setToggler(!toggler)}>
+                <img
+                  src={
+                    coverImage
+                      ? 'https://lab.app2serve.com/storage/app/public/' + coverImage
+                      : "https://bitrader-next.thetork.com/images/about/4.png"
+                  }
+                  alt="story-image"
+                />
+                {/* <div className="story__thumb-playbtn">
+                  <button onClick={() => setToggler(!toggler)} className="play-button">
                     <i className="fa-solid fa-circle-play"></i>
-                  </Link>
+                  </button>
+                </div> */}
+
+
+                <div className="story__thumb-playbtn">
+                  <button style={{borderRadius: 11}} onClick={() => setToggler(!toggler)}>
+                    <i className="fa-solid fa-circle-play"></i>
+                  </button>
                 </div>
+
+
+
               </div>
             </div>
           </div>
@@ -42,7 +60,6 @@ const Story = (youtubeLink) => {
 };
 
 export default Story;
-
 
 
 

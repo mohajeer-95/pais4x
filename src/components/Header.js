@@ -231,74 +231,66 @@ function Header({ headerClass = null, pageName }) {
 
               <div className="menu-area">
 
-                <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
+              <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
 
-                  <li >
-                    <Link style={{ fontSize: 13 }} href="about">About</Link>
-                  </li>
+<li >
+  <Link style={{ fontSize: 13 }} href="about">About</Link>
+</li>
 
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="cashback">Cashback</Link>
-                  </li>
+<li>
+  <Link style={{ fontSize: 13 }} href="cashback">Cashback</Link>
+</li>
+<li>
+  <Link style={{ fontSize: 13 }} href="enroll">Enroll</Link>
+</li>                  
 
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="brokers">Brokers</Link>
-                  </li>
-                  
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="enroll">Enroll</Link>
-                  </li>                  
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="training">VIP</Link>
-                  </li>
+<li>
+  <Link style={{ fontSize: 13 }} href="brokers">Brokers</Link>
+</li>
 
-                  
-                  <li>
-                    <Link style={{fontSize: 13}} href="/promotions">Promotions</Link>
-                  </li>
+<li>
+  <Link style={{fontSize: 13}} href="/promotions">Promotions</Link>
+</li>
+<li>
+  <Link style={{ fontSize: 13 }} href="blogs">FAQs</Link>
+</li>
+<li>
+  <Link style={{ fontSize: 13 }} href="/payments">Payments</Link>
+</li>
+<li>
+  <Link style={{ fontSize: 13 }} href="/socials">Socials</Link>
+</li>
 
+<li>
+  <Link style={{ fontSize: 13 }} href="contact">Contact Us</Link>
 
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="blogs">FAQs</Link>
-                  </li>
+</li>
 
+<li>
+  <Link style={{ fontSize: 13 }} href="/courses">Courses</Link>
+</li>
 
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="/payments">Payments</Link>
-                  </li>
+<li>
+  <Link style={{ fontSize: 13 }} href="/instructor">Instructor</Link>
+</li>
 
+<li>
+  <Link style={{ fontSize: 13 }} href="training">VIP</Link>
+</li>
 
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="/socials">Socials</Link>
-                  </li>
+<li>
+  <Link style={{ fontSize: 13 }} href="/refund">Refund</Link>
+</li>
 
+<li>
+  <Link style={{ fontSize: 13 }} href="/seminars">Seminars</Link>
+</li>
 
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="/courses">Courses</Link>
-                  </li>
+<li>
+  <Link style={{ fontSize: 13 }} href="/webinars">Webinars</Link>
+</li>
+</ul>
 
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="/instructor">Instructor</Link>
-                  </li>
-
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="/refund">Refund</Link>
-                  </li>
-
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="/seminars">Seminars</Link>
-                  </li>
-
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="/webinars">Webinars</Link>
-                  </li>
-
-                  <li>
-                    <Link style={{ fontSize: 13 }} href="contact">Contact Us</Link>
-
-                  </li>
-
-                </ul>
               </div>
               <div className="header-action">
                 <div className="menu-area">

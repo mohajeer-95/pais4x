@@ -532,7 +532,7 @@ const Mentor = ({ title }) => {
 
 
           {info?.youtube_link && <div style={{ marginTop: 20 }}>
-            <Story youtubeLink={info?.youtube_link} />
+            <Story youtubeLink={info?.youtube_link} coverImage={info?.video_image}/>
           </div>}
 
           <div className="row" style={{ marginTop: 70, maxWidth: '100%' }}>
@@ -574,11 +574,11 @@ const Mentor = ({ title }) => {
                   At FXCentrum, we strive to offer a trading experience that is not only seamless but also profitable. With our easy-to-use platform, competitive pricing, and top-notch customer service, you can trust us to deliver the best possible forex trading experience. Open an account with us today and see for yourself why we are the go-to forex broker for traders around the world.
                 </p> : null} */}
 
-
+                {info.description.length > 109 && 
                 <button onClick={() => handleClick()}
                   style={styles.btn}>
                   {!statebuttonText ? 'See more' : 'Show less'}
-                </button>
+                </button>}
               </div>
 
 

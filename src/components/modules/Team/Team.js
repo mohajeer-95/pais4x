@@ -46,17 +46,19 @@ const Team = () => {
             {brokersData?.map((item,index)=>(
 
       <div key={index}className="card">
-      <div className="card-image">
-        <img style={{height: 190}} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt={item.name} />
-      </div>
-      <div className="card-content">
-      <Link 
+    <Link 
                            href={{
                             pathname: '/broker',
                             query: { name: item.name, id: item.broker_id } // the data
                           }}>
+      <div className="card-image">
+      
+        <img style={{height: 190}} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt={item.name} />
+      </div>
+      <div className="card-content">
+
         <h3 className="card-title">{item.name}</h3>
-        </Link>
+      
         <div className="card-info">
           <span className="label">Cashback:</span>
           <span className="value">{item.cashback}</span>
@@ -66,6 +68,7 @@ const Team = () => {
           <span className="value">{item.avg_rating}</span>
         </div>
       </div>
+      </Link>
     </div>
                          ))}
     </div>

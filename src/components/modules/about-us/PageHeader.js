@@ -2,32 +2,25 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { callApiWithToken } from '../../../../public/api/api'
 
-const PageHeader = ({ title, page, withSocialComponent, brokerId }) => {
-  const [info, setinfo] = useState([])
+const PageHeader = ({ title, page, withSocialComponent, brokerId, info }) => {
 
   const openNewWindow = (link) => {
     window.open(link, "_blank");
   };
 
-  useEffect(() => {
-    if (withSocialComponent) {
-      setTimeout(() => {
-        getBrokerInfo()
+//   useEffect(() => {
+//     if (withSocialComponent) {
+//          getBrokerInfo()
 
-      }, 2000);
-    }
+       
+//     }
 
-  }, []);
-  const getBrokerInfo = async () => {
-
-
-    // const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
-
-
-
-    // setinfo(await response.broker.info)
-
-  }
+//   }, []);
+//   const getBrokerInfo = async () => {
+//     const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
+// // console.log('RRRRRRREEEESSSSSPPPPOOOONNNNSSSS', response.broker.info);
+//     setinfo(response.broker.info)
+//   }
 
   return (
     <section className="page-header bg--cover" style={{ backgroundImage: `url(/images/header/1.png)` }}>
@@ -42,22 +35,22 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId }) => {
               <li className="breadcrumb-item active" aria-current="page">{page}</li>
             </ol>
 
-            {withSocialComponent && brokerId == 1 ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 25 }}>
+            {withSocialComponent ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 25 }}>
               <ul className="social">
                 {info?.facebook_link && <li className="social__item">
-                  <button scroll={false} onClick={() => openNewWindow(info.youtube_link)} className="social__link social__link--style22"><i className="fab fa-facebook-f"></i></button>
+                  <button scroll={false} onClick={() => openNewWindow(info?.facebook_link)} className="social__link social__link--style22"><i className="fab fa-facebook-f"></i></button>
                 </li>}
                 {info?.instagram_link && <li className="social__item">
-                  <button scroll={false} onClick={() => openNewWindow()} className="social__link social__link--style22 "><i className="fab fa-instagram"></i></button>
+                  <button scroll={false} onClick={() => openNewWindow(info?.instagram_link)} className="social__link social__link--style22 "><i className="fab fa-instagram"></i></button>
                 </li>}
                 {info?.whatsapp_link && <li className="social__item">
-                  <button scroll={false} onClick={() => openNewWindow()} className="social__link social__link--style22"><i className="fa-brands fa-linkedin-in"></i></button>
+                  <button scroll={false} onClick={() => openNewWindow(info?.linkedin_link)} className="social__link social__link--style22"><i className="fa-brands fa-linkedin-in"></i></button>
                 </li>}
                 {info?.youtube_link && <li className="social__item">
-                  <button scroll={false} onClick={() => openNewWindow()} className="social__link social__link--style22"><i className="fab fa-youtube"></i></button>
+                  <button scroll={false} onClick={() => openNewWindow(info?.youtube_link)} className="social__link social__link--style22"><i className="fab fa-youtube"></i></button>
                 </li>}
                 {info?.twitter_link && <li className="social__item">
-                  <button scroll={false} onClick={() => openNewWindow()} className="social__link social__link--style22 "><i className="fab fa-x"></i></button>
+                  <button scroll={false} onClick={() => openNewWindow(info?.twitter_link )} className="social__link social__link--style22 "><i className="fab fa-x"></i></button>
                 </li>}
               </ul>
             </div> : null}

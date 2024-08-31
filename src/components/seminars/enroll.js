@@ -191,6 +191,7 @@ const SignUp = () => {
 
 
     const submit = async (e) => {
+        return null;
         setLoading(true);
         e.preventDefault();
         if (!validateForm()) {
