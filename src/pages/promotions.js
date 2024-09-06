@@ -15,7 +15,7 @@ const AboutUs = () => {
   return (
     <>
     <Header/>
-    <PageHeader withSocialComponent={0} title='Refund' page= 'Refund'/>
+    <PageHeader withSocialComponent={0} title='Promotions' page= 'Promotions'/>
     <Partner/>
     <Featured pageId={14}/>
     {/* <Story/> */}
