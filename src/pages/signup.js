@@ -87,6 +87,80 @@ const SignUp = () => {
   ///////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////
+  const termsContent = `
+    <h2>PAID4X Terms & Conditions</h2>
+    <p>By merely continuing to browse and use Paid4X.com, you legally agree to comply with, and be bound by the below Terms & Conditions of use, which in their latest version, always govern Paid4X's relationship with you in relation to the services provided by our website, and used by you.</p>
+    
+    <p>These Terms & Conditions may be updated at any time, and you are required to regularly check for updates, if any, by checking the date at the end of these terms & conditions.</p>
+    
+    <p>Wherever the term "site" or "Paid4X.com" is used, it refers to the site, its owners, managers, employees, agents, associates, or any individual or business entity related to the site in any way. Wherever the term "user" is used, it refers to the any person who browses the website published on the domain Paid4X.com, and gets any kind of information from the site, promotional or otherwise, with or without registering for a membership on the site.</p>
+    
+    <p>You are kindly requested to carefully read, review & assess these Terms and Conditions, before agreeing to them. By merely viewing any part of Paid4X.com, you agree to all of the Terms and Conditions without objecting to any of them.</p>
+    
+    <h3>User & General Terms</h3>
+    <ul>
+      <li>You must be 18 years of age or older to use the website. You warrant that you are indeed 18 years, or older at time of registering for a membership on Paid4X.com, and that you are fully able and competent to enter into, and abide by, the contract created by these Terms and Conditions, and any future additions or updates that they may have.</li>
+      <li>Membership is free, Paid4X.com does not charge membership fees. You can register & use the offers advertised on the site with your free membership, and we will never charge membership fees. Ergo, the user acknowledges that there is no refund policy or fees claim that they can present to the site in order to get a refund.</li>
+      <li>Membership is open to any individual or entity, from any country or territory, who can open, verify & successfully fund, at least one trading account with at least one of the brokers promoted on the site at the time of registration. However, Paid4X.com reserves the right to temporarily suspend, or permanently cancel the membership of any user at its sole discretion, with no legal or financial liability assumed, in case there is reason to believe that the user has violated the terms & conditions, or that they are causing harm to the site or the Paid4X business.</li>
+      <li>Paid4X.com will cancel memberships not used for 365 calendar days, and will keep the wallet balance of the user for 90 days beyond that, and will try every attempt possible to contact, and transfer the balance to the user. After the end of the 90-day period, the balance may no longer be available for a withdrawal.</li>
+    </ul>
+
+
+        <h3>Financial Relationship & Liability</h3>
+    <ul>
+      <li>The user acknowledges their understanding that Paid4X.com does not provide any trading services, and that this site is only a promotional site for brokers who provide trading services themselves, and that the financial relationship that includes the transfer of the trading capital whether in the form of deposits, withdrawals, profit, loss, or other, is established only between the user and the broker or brokers chosen, and that Paid4X is not in any way a part of this business relationship.</li>
+      <li>The user also admits that they have not transferred any amount of the trading capital to Paid4X.com, its owners, managers, employees, agents, associates, or any individual or business entity related to the site in any way, and that on this legal basis, the user cannot hold the site, its owners, managers, employees, agents, associates, or any individual or business entity related to the site in any way, liable for loss of capital due to any reason, trading related, or otherwise.</li>
+      <li>It is the duty of the user & only the user, to perform due diligence, and evaluate the risks which are associated with trading by nature, when they open an account or several accounts with one or more of the brokers promoted on Paid4X.com.</li>
+      <li>Any kind of trading, financial or otherwise, comes with a significant possibility of resulting in financial loss. The user acknowledges that they completely understand the risks associated with trading a leveraged CFD account, FX account, and other types of accounts which can be opened with any of the brokers promoted on the site.</li>
+      <li>The user fully understands & acknowledges that the only financial obligation & liability that Paid4X.com has towards the user, is in paying them the advertised cashback per unit of volume traded on the account(s) of the user.</li>
+      <li>The user understands that the cashback is limited to a certain percentage of some of promotional fees the site receives from promoted brokers, and acknowledges that this percentage is decided on the sole discretion of Paid4X.com, and can be changed by the site at any time, with or without prior notice.</li>
+      <li>The user acknowledges that the cashback is paid only for qualified accounts, which must be opened using the specified links on the site, not using links on the broker site, or any other website aside from Paid4X.com. The user acknowledges that if the account is not opened through Paid4X.com, the user cannot claim cashback to be paid in any way.</li>
+      <li>The user acknowledges that the cashback is paid only for qualified instruments, which the broker pays promotional/marketing incentive for trading. According to the promotional & partnership policy of the broker, some instruments may be paid less than others, or none at all. The user acknowledges that if the broker does not pay Paid4X.com promotional fees for trading these instruments, the user cannot claim cashback to be paid in any way.</li>
+      <li>The user acknowledges that Paid4X.com has the right to remove a broker from the site, and stop paying cashback for users who have accounts with this broker at any time, and for any reason deemed appropriate by Paid4X.com on its sole discretion. The user acknowledges that once a broker is removed by Paid4X.com, the site liability to pay the user cashback on trading in their account(s) opened with this broker is immediately ceased.</li>
+      <li>In any case & with no exception whatsoever, the user acknowledges that if the broker does not pay Paid4X.com incentive for the trades closed on the user’s account(s), the user cannot request to be paid for these trades.</li>
+      <li>The user acknowledges full understanding that the only financial liability Paid4X.com has towards the user, is to pay them a certain percentage of the promotional fees that Paid4X.com receives from the promoted brokers, and only for trades on the user account(s) & qualified instruments, not extending to other fees, or to accounts of other users in any way.</li>
+      <li>The user acknowledges that if for any kind of reason, the broker they have their account with, refuses to pay the due promotional fees on trades that the user has closed, then Paid4X.com is completely freed, from any financial or legal liability towards the user. The reason for such an incident may be: conflict between Paid4X.com & the broker, dispute over trading volumes on the user account(s), temporary or permanent failure of the broker in transferring the fees to Paid4X.com, bankruptcy of the broker, or any other reason whatsoever.</li>
+      <li>The user acknowledges their approval of Paid4X.com deducting the cashback transaction fees, in part or in full, from the cashback withdrawal amount, or the user wallet balance on the site, if necessary.</li>
+    </ul>
+    
+    <h3>INFORMATION & DATA ON THE SITE</h3>
+    <ul>
+      <li>The information published on the site, for informational purposes only. Paid4X.com, its owners, managers, employees, agents, associates, or any individual or business entity related to the site in any way, are not, and do not claim to be, financial advisors.</li>
+      <li>Paid4X.com does not intend to provide, nor should it be considered as providing, any investment or financial advice of any kind, directly, indirectly, or by proxy, in any part of site, which includes any kind of information or media. The user acknowledges full understanding that no content on the site should be considered as a substitute for professional financial advice.</li>
+      <li>The information published in the site is provided by the promoted brokers themselves and is checked for accuracy at the time of publishing both by Paid4X.com & by the broker. Paid4X.com makes every effort possible to assure that all information on the site is accurate & correct as far as our knowledge extends, but we do not provide any assurance that the information is 100% accurate, updated & error-free. The user agrees not to hold Paid4X.com liable for any inaccuracy, errors, or outdates information found on the site.</li>
+      <li>All investment decisions made in reliance on information, data, media & advertisement available on Paid4X.com, or as a result of opening trading accounts using the site or the offers it promotes, are completely & exclusively at your own risk.</li>
+      <li>Paid4X.com, its owners, managers, employees, agents, associates, or any individual or business entity related to the site in any way, will not be liable for any losses that the user may sustain, as a result of opening one account or more, with one or more of the brokers promoted on the site.</li>
+      <li>The user acknowledges that they are solely and exclusively responsible for determining whether any product or service promoted on the site with no exception, is appropriate for their financial investments & the objectives they seek from such investments.</li>
+      <li>Some brokers offer social trading features, including copying the trades of service providers. A user who decides to use such services, do so on their own sole & exclusive responsibility. No other party can be held liable for the losses realized, not the copy trading service provider, not the broker the user has the account with, and certainly not Paid4X.com, its owners, managers, employees, agents, associates, or any individual or business entity related to the site in any way.</li>
+      <li>The accuracy of the information mentioned in the advertisements that other sites companies, brokers, or service providers of any sort, buy on Paid4X.com cannot be confirmed by us. In case an offer, a banner, a video, a link, a document, an article, or the text of any advertisement by other parties includes inaccurate information or falsified data, Paid4x.com does not assume any financial or legal liability. It is solely the responsibility of the user to evaluate & assess the accuracy of the information & data presented in all advertisement before buying any products or subscribing to any services advertised on our site.</li>
+      <li>All content published on the site, including but not limited to offers, cashback amounts, bonuses, and all other content & information & data, is subject to change without prior notice.</li>
+      <li>Paid4X.com promotes links to other websites, be that through advertisement of 3rd party service providers, or direct links to the sites of our partners. In all cases, Paid4X.com have no responsibility to verify the accuracy of the content on the sites that these links lead to.</li>
+      <li>To the maximum extent permitted by applicable law, and with no exception, Paid4X.com, its owners, managers, employees, agents, associates, or any individual or business entity related to the site in any way, will not be held legally or financially liable for any losses, direct or indirect damages, expenses or any form of cost, nor for other financial mishap, which may arise, directly or indirectly, from using any sort of content published on the site or through communications with the user.</li>
+    </ul>
+
+
+     <h3>PRIVACY</h3>
+    <ul>
+      <li>By registering for a free membership, the user acknowledges their consent of Paid4X.com sharing their submitted information, including but not limited to, their full name, email, phone number & country of residence with brokers who are advertised or promoted on the site, or other partners that Paid4X.com does business with, or any other third party, including government agencies & law enforcement officials, if asked.</li>
+      <li>Paid4X.com does not have any obligation to conserve the confidentiality of the user, regarding personal or other information submitted on the site. The user acknowledges that Paid4X.com are not obligated to conserve the user’s data, and that the user approves with the current applicable privacy policy, under which Paid4X.com cannot be held liable, or asked to cease, sharing the information of members with business partners or government officials.</li>
+      <li>The user acknowledges & understands that they are responsible for maintaining the confidentiality of the combination of their membership password & username.</li>
+      <li>The user acknowledges & agrees that the provided email address will be used by Paid4X.com to send correspondence when needed, and that it constitutes the main method of communication with the user. The user also claims the responsibility of updating that address, when a change is made.</li>
+    </ul>
+
+    <h3>Legal & Dispute</h3>
+    <ul>
+      <li>In the event that any article or part of these Terms and Conditions is deemed unenforceable, the validity or enforceability of the remaining parts of the terms & conditions will not be affected.</li>
+      <li>When using the site, you testify that you will comply with all applicable laws, that apply to your investment & usage of our services.</li>
+      <li>You are responsible for all taxes (if any) associated with the service. All payments to you in relation to the service will be treated as inclusive of tax (if applicable) and will not be adjusted.</li>
+      <li>In the case of a dispute arising, both parties agree to try to solve the conflict in good faith, and in consistence with the general business practices of the field in specific.</li>
+      <li>If the conflict persists, and Paid4X.com chooses to take legal action, the user irrevocably agrees that:</li>
+        <ul>
+          <li>a. The courts of The Hashemite Kingdom of Jordan shall have exclusive jurisdiction to determine any proceedings.</li>
+          <li>b. Waives any objection which the user may have at any time to the bringing of any proceedings in any such court.</li>
+          <li>c. Agrees not to claim that such proceedings have been brought in an inconvenient forum or that such court does not have jurisdiction over the user.</li>
+        </ul>
+    </ul>
+  `;
 
 
 
@@ -591,15 +665,9 @@ const SignUp = () => {
                           onClick={() => toggleModal('terms')}
                           style={{ fontWeight: 'bold', color: '#18e8ef', cursor: 'pointer', textDecoration: 'underline' }}
                         >
-                          Terms of Service
+                          Terms & Conditions
                         </span>{' '}
-                        and{' '}
-                        <span
-                          onClick={() => toggleModal('privacy')}
-                          style={{ fontWeight: 'bold', color: 'red', cursor: 'pointer', textDecoration: 'underline' }}
-                        >
-                          Privacy Policy
-                        </span>.
+                       
                       </label>
                     </div>
                     {errors.terms && <p style={{ color: 'red', marginLeft: '8px' }}>{errors.terms}</p>}
@@ -658,7 +726,7 @@ const SignUp = () => {
           </span>
         </div>
 
-        <Modal isOpen={modalOpen} toggle={() => setModalOpen(!modalOpen)}>
+        {/* <Modal isOpen={modalOpen} toggle={() => setModalOpen(!modalOpen)}>
           <ModalHeader toggle={() => setModalOpen(!modalOpen)}>
             {modalContent === 'terms' ? 'Terms of Service' : 'Privacy Policy'}
           </ModalHeader>
@@ -672,8 +740,31 @@ const SignUp = () => {
               Close
             </Button>
           </ModalFooter>
-        </Modal>
+        </Modal> */}
 
+
+<Modal isOpen={modalOpen} toggle={() => setModalOpen(!modalOpen)}>
+      <ModalHeader toggle={() => setModalOpen(!modalOpen)}>
+        Terms & Conditions
+      </ModalHeader>
+      <ModalBody>
+        <div
+          dangerouslySetInnerHTML={{ __html: termsContent }}
+          style={{
+            maxHeight: '400px',
+            overflowY: 'scroll',
+            padding: '15px',
+            fontFamily: "'Arial', sans-serif",
+            lineHeight: '1.5',
+          }}
+        />
+      </ModalBody>
+      <ModalFooter>
+        <Button color="secondary" onClick={() => setModalOpen(!modalOpen)}>
+          Close
+        </Button>
+      </ModalFooter>
+    </Modal>
 
 
       </section>

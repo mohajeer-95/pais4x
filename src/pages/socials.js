@@ -67,7 +67,17 @@ const AboutUs = () => {
             <Partner />
             <Featured pageId={16} />
 
-            <div style={{display: 'flex', justifyContent: 'center',}}>
+            <div className="section-header section-header--max50">
+                <h2 className="mb-15 mt-minus-5">Soc <span>iaLs</span></h2>
+                <p>
+                    {'Connecting with us through social media is a great way to stay up-to-date with our promotions & the promotions of our brokers. It is also a great way to get support & ask us anything you want.'}
+                </p>
+                <p>
+                    {'You can find us on these social platforms:'}
+                </p>
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'center', }}>
                 <div className={styles.grid}>
                     {data.map((item, index) => (
                         <Link href={'item.ref'} key={index}>

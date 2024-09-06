@@ -21,28 +21,28 @@ const Pricing = () => {
 
             </p>
             <h5>
-              Here are the withdrawal methods that are currently available:
+              Here are the cashback withdrawal methods that are currently available:
             </h5>
 
 
             <Row>
               <Col>
                 <p>
-                  - Skrill
+                  - Finest
                 </p>
                 <p>
-                  - Paypal
+                  - Volet
                 </p>
                 <p>
-                  - MoneyGram
+                  - PayPal
                 </p>
               </Col>
               <Col>
                 <p>
-                  - Bank Transfers
+                  - MoneyGram
                 </p>
                 <p>
-                  - Western Union
+                  - Bank Transfers
                 </p>
               </Col>
             </Row>
@@ -55,14 +55,24 @@ const Pricing = () => {
               If you prefer another method, please contact us, and if possible, we would be happy to cooperate and send you the money using your preferred method.
             </p>
             <h4>
-              Transaction costs:
+              Transfer Fees:
             </h4>
 
             <p>
+              -	Finest: Currently, Finest does not charge fees for wallet-to-wallet transfers (you need to have a wallet with Finest).
+            </p>
+            <p>
+              -	Volet: Currently, Volet does not charge fees for wallet-to-wallet transfers (you need to have a wallet with Volet).
+            </p>
 
-              -	For transfers up to $99.99 the transfer cost will be deducted from the client’s cashback amount.
 
-              -	For transfers of $100 or more, Paid4X.com covers the costs.
+
+            <p>
+              Other payment methods:            </p>
+            <p>
+              - For transfers up to $99.99 the transfer cost will be deducted from the client’s cashback amount.            </p>
+            <p>
+              -For transfers of $100 or more, Paid4X will cover the costs.
             </p>
           </Col>
         </Row>

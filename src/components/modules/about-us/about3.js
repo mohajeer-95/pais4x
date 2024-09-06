@@ -23,7 +23,7 @@ function About() {
                                     <div className="about__thumb-image floating-content">
                                         <img
                                             className="dark"
-                                            src="/images/global/Instructor.jpg" 
+                                            src="/images/global/Instructor.jpg"
                                             alt="about-image"
                                         />
 
@@ -41,26 +41,38 @@ function About() {
                             >
                                 <div className="about__content-inner">
                                     <h2>
-                                        Who is <span>teaching</span> these courses?
+                                        Who is <span>lecturing</span> in these courses?
                                     </h2>
-
                                     <h5 className="mb-0" style={{ paddingBottom: 20 }}>
-                                        Hello, my name is Munther Marji & I am the founder of Paid4X.com.
+                                        Hello, my name is Munther Marji & I am the founder of Paid4X.
                                     </h5>
                                     <p className="mb-0" style={{ paddingBottom: 20 }}>
                                         All of our training courses are completely prepared by me. No one else is involved.
                                     </p>
                                     <p className="mb-0" style={{ paddingBottom: 20 }}>
-                                        I have a bachelor’s degree in economics (1996), a master’s degree in finance (1999) & in 2015 I became the first Jordanian to receive the prestigious CMT designation (Chartered Market Technician). I am also a previous full member of the MTA (Market Technicians Association) in NY, USA, currently known as CMT Association.
-                                    </p>
-
+                                        I have a bachelor’s degree in economics (1996), a master’s degree in finance (1999) & in 2015 I became the first Jordanian to receive the prestigious CMT designation (Chartered Market Technician), and also the first Jordanian full member of the MTA (Market Technicians Association) in NY, USA, currently known as the CMT Association.                                   
+                                         </p>
                                     <p className="mb-0" style={{ paddingBottom: 20, }}>
-                                        I entered this business as a junior broker in December 2000. From there, a wonderful & exciting journey that lasted 23 years has been giving me fulfillment, and a purpose for my life.
+                                        I entered this business as a junior broker in December 2000. From there, a wonderful & exciting journey that lasted 23 years has been giving me fulfillment, and a purpose for my life.                                    </p>
+
+                                        <p className="mb-0" style={{ paddingBottom: 20 }}>
+                                        When I was only 13 years old, I started collecting the local stock market data sheet from the daily newspaper, and I used to imagine myself buying & selling stocks. I even came up with a formula, be it a very primitive one as you would expect from a 13-year old boy, to pick stocks based on their 52-week high & low, at that age, and I used to check on the prices of these stocks later to see what happened to them.
                                     </p>
-
                                     <p className="mb-0" style={{ paddingBottom: 20 }}>
-                                        When I was only 13 years old, I started collecting the local stock market data from the daily newspaper, and I used to imagine myself buying & selling stocks. I even came up with a formula, be it a very primitive one, at that age, to pick stocks based on recent price behavior, and I used to check on the prices of these stocks later to see what happened to them.                     </p>
-
+                                        When I was only 13 years old, I started collecting the local stock market data sheet from the daily newspaper, and I used to imagine myself buying & selling stocks. I even came up with a formula, be it a very primitive one as you would expect from a 13-year old boy, to pick stocks based on their 52-week high & low, at that age, and I used to check on the prices of these stocks later to see what happened to them.
+                                    </p>
+                                    <p className="mb-0" style={{ paddingBottom: 20 }}>
+                                        When I was only 13 years old, I started collecting the local stock market data sheet from the daily newspaper, and I used to imagine myself buying & selling stocks. I even came up with a formula, be it a very primitive one as you would expect from a 13-year old boy, to pick stocks based on their 52-week high & low, at that age, and I used to check on the prices of these stocks later to see what happened to them.
+                                    </p>
+                                    <p className="mb-0" style={{ paddingBottom: 20 }}>
+                                        When I was only 13 years old, I started collecting the local stock market data sheet from the daily newspaper, and I used to imagine myself buying & selling stocks. I even came up with a formula, be it a very primitive one as you would expect from a 13-year old boy, to pick stocks based on their 52-week high & low, at that age, and I used to check on the prices of these stocks later to see what happened to them.
+                                    </p>
+                                    <p className="mb-0" style={{ paddingBottom: 20 }}>
+                                        When I was only 13 years old, I started collecting the local stock market data sheet from the daily newspaper, and I used to imagine myself buying & selling stocks. I even came up with a formula, be it a very primitive one as you would expect from a 13-year old boy, to pick stocks based on their 52-week high & low, at that age, and I used to check on the prices of these stocks later to see what happened to them.
+                                    </p>
+                                    <p className="mb-0" style={{ paddingBottom: 20 }}>
+                                        When I was only 13 years old, I started collecting the local stock market data sheet from the daily newspaper, and I used to imagine myself buying & selling stocks. I even came up with a formula, be it a very primitive one as you would expect from a 13-year old boy, to pick stocks based on their 52-week high & low, at that age, and I used to check on the prices of these stocks later to see what happened to them.
+                                    </p>
                                 </div>
                             </div>
                         </div>

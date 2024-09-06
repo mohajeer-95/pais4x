@@ -128,9 +128,25 @@ function ContactCard() {
     <div className="contact padding-top padding-bottom">
       <div className="container">
         <div className="contact__wrapper">
+
+          <div className="section-header section-header--max50">
+            <h2 className="mb-15 mt-minus-5">Contact <span>Us</span></h2>
+            <p>
+              {'You can reach us by email at this address at any time! We will try our absolute best to get back to you within 24 on working days. Click below to copy email.'}
+            </p>
+
+            <h6>
+              {'Our support working hours are Monday to Friday from 5:00 a.m. to 5:00 p.m. GMT.'}
+            </h6>
+            <p>
+              {'For questions about the brokers please refer to the dedicated page of the broker on our site & if you still cannot find the info you are looking for there, please use the support links to contact the broker directly.'}
+            </p>
+          </div>
+
           <div className="row g-5">
             <div className="col-md-5">
               <div className="contact__info" data-aos="fade-right" data-aos-duration="1000">
+
                 <div className="contact__social">
                   <h3>let’s <span>{`get in touch `}</span>
                     with us</h3>

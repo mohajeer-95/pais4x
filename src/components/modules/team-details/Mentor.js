@@ -491,9 +491,30 @@ const Mentor = ({ title }) => {
                         <span className="text-danger">
                         </span>
                       </div>
-                      <div className="d-flex flex-row align-items-center mb-1 justify-content-center" >
+                      {/* <div className="d-flex flex-row align-items-center mb-1 justify-content-center" >
                         <h6 className="text-success">{info?.cashback}$</h6>
-                      </div>
+                      </div> */}
+
+<div className="d-flex flex-row align-items-center mb-1 justify-content-center" >
+  <h6 className="text-success" style={{ position: 'relative' }}>
+    {info?.cashback}
+    <img 
+      // src="/path-to-your-icon.png" 
+      src={info?.currency == 'dollar' ? "images/icon/dollar.png" : "images/icon/gold-polkadot.png"}
+
+      alt="dollar icon" 
+      style={{
+        position: 'absolute',
+        right: '-20px', // Adjust this value based on your layout
+        top: '35%',
+        transform: 'translateY(-50%)',
+        width: '16px', // Adjust size as necessary
+        height: '16px'
+      }} 
+    />
+  </h6>
+</div>
+
                       {isLinked == 1 ?
                         <div className="d-flex flex-column mt-4 align-items-center">
                           <Rating

@@ -32,8 +32,15 @@ const Team = () => {
     <section className="team padding-top padding-bottom bg-color">
       <div className="section-header section-header--max50">
         <h2 className="mb-15 mt-minus-5">Brokers <span>List</span></h2>
-        <p>Hey everyone, meet our amazing advisers! They're here to help and guide us through anything.</p>
+        <p>
+          {'On this page, you will find the exciting promos that we at PAID4X provide you with in cooperation with our partners, whether brokers, or providers of services that are relevant to traders. You will also find the latest about your favorite brokers. '}
+        </p>
+        <div>
+          {'Make sure to visit this page regularly, so you will be up-to-date, and ready to benefit from the perks of being a member of the PAID4X community.'}
       </div>
+      
+        </div>
+       
       <div className="container">
         <div className="team__wrapper">
           <div className="row g-4 align-items-center">
