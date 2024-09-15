@@ -46,7 +46,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>
           {
-            "Pais4x"
+            "Paid4x"
           }
         </title>
 

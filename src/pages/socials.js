@@ -68,7 +68,7 @@ const AboutUs = () => {
             <Featured pageId={16} />
 
             <div className="section-header section-header--max50">
-                <h2 className="mb-15 mt-minus-5">Soc <span>iaLs</span></h2>
+                <h2 className="mb-15 mt-minus-5">Soc<span>iaLs</span></h2>
                 <p>
                     {'Connecting with us through social media is a great way to stay up-to-date with our promotions & the promotions of our brokers. It is also a great way to get support & ask us anything you want.'}
                 </p>

@@ -16,9 +16,8 @@ const Pricing = () => {
         <Row>
           <Col xs={12} lg={6} md={6} style={{ paddingInline: 50 }}>
             <p>
-
-              If you are the kind who prefers the live interaction with your coach, and could be asking several questions during the teaching process, then the VIP training is the one for you.
-              However, there is a caveat: the cost of the VIP training is extremely different from what you will pay for the recorded courses. Currently, the rate is $50 per hour of personal one-on-one coaching & training. Moreover, the VIP course takes more time than the recorded one, because of the questions & other forms of interaction.
+              If you are the kind of investor who prefers the live interaction with your coach, and could be asking several questions during the teaching process, then the VIP training is the one for you.
+However, there is a caveat: the cost of the VIP training is completely different from what you will pay for the recorded courses. Currently, the rate is $70 per hour of personal one-on-one coaching & training, whether face-to-face, or through live video. In addition to that, VIP courses take more time than the recorded ones, because of the questions & other forms of interaction.
 
             </p>
             {/*             
@@ -51,8 +50,8 @@ const Pricing = () => {
           </Col>
           <Col xs={12} lg={6} md={6} style={{ paddingInline: 50 }}>
             <h4>
-              That is why we always advise our student to go for the recorded courses:
-            </h4>
+            We always advise our student to go for the recorded courses, because: 
+                        </h4>
 
             <p>
               -	They are much cheaper

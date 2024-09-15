@@ -34,9 +34,9 @@ function Services() {
 
   return (
     <section className="service padding-top padding-bottom">
-      <div className="section-header section-header--max50">
-        <h2 className="mb-15 mt-minus-5"><span>here </span>brokers</h2>
-        <p>Supported Forex Cashback Rebate brokers</p>
+      <div className="section-header section-header--max65">
+        <h2 className="mb-15 mt-minus-5"><span>PICK YO</span>UR BROKER</h2>
+        <p>We are very proud that we have gained the trust of these regulated & trusted brokers. Browse the cashback offers that we have for you with each of our partners, pick the one(s) you like most, and start earning cashback today!</p>
       </div>
       <div className="container">
         <div className="service__wrapper">

@@ -13,16 +13,24 @@ const Pricing = () => {
       </div>
 
       <Container>
-      
-          <Col>
-            <p>
-              Mr. Marji has given many webinars since 2009, and he still does. If you are a broker interested in having him as your webinar host, for just once, or more, we will be glad to discuss how we can arrange that.
-              Webinars can be given in English, or Arabic, and can cover a lot of subjects, with many of them falling under the umbrellas of technical analysis & risk management.
-              Please contact us with the details of your request or offer, using this form.
 
-            </p>
-          </Col>
-          
+        <Col>
+          <p>
+            Mr. Marji has given many webinars since September 2009, and he still does.
+          </p>
+          <p>
+            If you are a brokerage company, a trading academy, or a similar institution, interested in having him as your webinar host, for once, or for several events, we will be glad to discuss how we can arrange that.
+          </p>
+          <p>
+            Webinars can be given in English, or Arabic, and can cover a lot of market-related subjects, from different technical analysis topics, to trading strategies, market psychology, risk management, or monetary policy.
+          </p>
+          <p>
+            Kindly provide these details in your email:
+          </p>
+
+
+        </Col>
+
       </Container>
 
     </section>

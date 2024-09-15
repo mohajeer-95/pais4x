@@ -17,30 +17,30 @@ export default function Document() {
 
         <meta
           name="application-name"
-          content="Pais4x"
+          content="Paid4x"
           />
         <meta name="author" content="thetork" />
         <meta
           name="keywords"
-          content="Pais4x"
+          content="Paid4x"
         />
         <meta
           name="description"
-          content="Pais4x"
+          content="Paid4x"
         />
 
         <meta
           property="og:title"
-          content="Pais4x"
+          content="Paid4x"
         />
-        <meta property="og:site_name" content="Pais4x" />
+        <meta property="og:site_name" content="Paid4x" />
         {/* <meta
           property="og:url"
           content="https://bitrader-next.thetork.com"
         /> */}
         <meta
           property="og:description"
-          content="Pais4x"
+          content="Paid4x"
         />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="/images/og.jpg" />

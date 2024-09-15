@@ -129,7 +129,7 @@ function ContactCard() {
       <div className="container">
         <div className="contact__wrapper">
 
-          <div className="section-header section-header--max50">
+          <div className="section-header section-header--max65">
             <h2 className="mb-15 mt-minus-5">Contact <span>Us</span></h2>
             <p>
               {'You can reach us by email at this address at any time! We will try our absolute best to get back to you within 24 on working days. Click below to copy email.'}

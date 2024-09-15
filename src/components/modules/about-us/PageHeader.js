@@ -32,7 +32,7 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId, info }) => {
           }} aria-label="breadcrumb">
             <ol className="breadcrumb mb-0">
               <li className="breadcrumb-item "><Link href="/">Home</Link></li>
-              <li className="breadcrumb-item active" aria-current="page">{page}</li>
+              <li className="breadcrumb-item active" aria-current="page">{title}</li>
             </ol>
 
             {withSocialComponent ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 25 }}>

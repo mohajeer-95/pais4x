@@ -54,6 +54,11 @@ const Newsletter = () => {
   return (
     <section className="cta padding-top padding-bottom bg-color">
       <div className="container">
+      <div className="section-header section-header--max65" style={{marginTop: 22}}>
+        <p>
+        Subscribe to our newsletter & be the first to know about new promotions & exciting offers from your favorite brokers. Be ready to take advantage of the next big bonus, or to enroll in that exciting competition, subscribe today.
+        </p>
+      </div>
         <div className="cta__wrapper">
           <div className="cta__newsletter justify-content-center">
             <div

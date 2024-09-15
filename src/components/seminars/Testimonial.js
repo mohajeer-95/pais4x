@@ -264,7 +264,7 @@ const SignUp = () => {
                   <div className="account__header">
                     <h2>Suggest Seminars</h2>
                     <p>
-                      Please contact us with the details of your request or offer, including arrangements, using this form.                     </p>
+                      Please contact us with the details of your request or offer.</p>
                   </div>
 
                   <form

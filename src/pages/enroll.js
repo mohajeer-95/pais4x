@@ -17,7 +17,7 @@ const Price = () => {
             <PageHeader withSocialComponent={0} title={'Enroll'} page={'Enroll'} />
             <Partner title='Instructor' page='Instructor' />
             <Featured pageId={1} />
-            <Container style={{ marginBottom: 90 }}>
+            <Container style={{ marginBottom: 90, maxInlineSize: '65ch' }}>
                 <div className="section-header section-header--max50">
                     <h2 className="mb-15 mt-minus-5">Enr<span>oll </span></h2>
                 </div>

@@ -174,14 +174,14 @@ function Header({ headerClass = null, pageName }) {
       <header className={`header-section ${headerClass ? headerClass : 'bg-color-3'}`} onScroll={isSticky}>
         <div className="header-bottom">
           <div className="container">
-            <div style={{}} className="header-wrapper">
+            <div className="header-wrapper">
 
 
 
 
               <div className="logo" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
                 <Link href="/">
-                  <img style={{ maxHeight: 45, }} className="dark" src="/images/global/logo.png" alt="logo" />
+                  <img style={{ maxHeight: 40, }} className="dark" src="/images/global/logo.png" alt="logo" />
                 </Link>
 
                 <div style={{ display: 'flex', flexDirection: 'column', bottom: 0 }}>
@@ -196,7 +196,7 @@ function Header({ headerClass = null, pageName }) {
 
               <div className="logo" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
                 <Link href="courses">
-                  <img style={{ maxHeight: 45, marginRight: '10px' }} className="dark" src="/images/global/el.png" alt="logo" />
+                  <img style={{ maxHeight: 40, marginRight: '10px' }} className="dark" src="/images/global/el.png" alt="logo" />
                 </Link>
 
                 <div style={{ display: 'flex', flexDirection: 'column', bottom: 0 }}>
@@ -218,7 +218,7 @@ function Header({ headerClass = null, pageName }) {
 
             </div>
 
-            <div style={{ backgroundColor: '#F8FFFD', borderTopStyle: 'ridge', paddingBlock: pageName == 'profile' ? 15 : 5}} className="header-wrapper-menue">
+            <div style={{ backgroundColor: '#F8FFFD', borderTopStyle: 'ridge', paddingBlock: pageName == 'profile' ? 15 : 5 }} className="header-wrapper-menue">
 
 
               {token ? <Link style={{ display: pageName == 'profile' ? 'none' : 'block' }} href="profile" className="hidden-pc get-started-btn">
@@ -231,65 +231,71 @@ function Header({ headerClass = null, pageName }) {
 
               <div className="menu-area">
 
-              <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
+                <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
 
-<li >
-  <Link style={{ fontSize: 13 }} href="about">About</Link>
-</li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="about">ABOUT</Link>
+                  </li>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="cashback">Cashback</Link>
-</li>
-<li>
-  <Link style={{ fontSize: 13 }} href="enroll">Enroll</Link>
-</li>                  
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="cashback">CASHBACK</Link>
+                  </li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="enroll">ENROLL</Link>
+                  </li>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="brokers">Brokers</Link>
-</li>
 
-<li>
-  <Link style={{fontSize: 13}} href="/promotions">Promotions</Link>
-</li>
-<li>
-  <Link style={{ fontSize: 13 }} href="blogs">FAQs</Link>
-</li>
-<li>
-  <Link style={{ fontSize: 13 }} href="/payments">Payments</Link>
-</li>
-<li>
-  <Link style={{ fontSize: 13 }} href="/socials">Socials</Link>
-</li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="brokers">BROKERS</Link>
+                  </li>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="contact">Contact Us</Link>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/promotions">PROMOTIONS</Link>
+                  </li>
 
-</li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="blogs">FAQS</Link>
+                  </li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/payments">PAYMENTS</Link>
+                  </li>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="/courses">Courses</Link>
-</li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/socials">SOCIALS</Link>
+                  </li>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="/instructor">Instructor</Link>
-</li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="contact">CONTACT US</Link>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="training">VIP</Link>
-</li>
+                  </li>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="/refund">Refund</Link>
-</li>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="/seminars">Seminars</Link>
-</li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/courses">COURSES</Link>
+                  </li>
 
-<li>
-  <Link style={{ fontSize: 13 }} href="/webinars">Webinars</Link>
-</li>
-</ul>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/instructor">INSTRUCTOR</Link>
+                  </li>
+
+
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="training">VIP</Link>
+                  </li>
+
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/refund">REFUND</Link>
+                  </li>
+
+
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/seminars">SEMINARS</Link>
+                  </li>
+
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/webinars">WEBINARS</Link>
+                  </li>
+                </ul>
 
               </div>
               <div className="header-action">
