@@ -2,7 +2,6 @@
 const path = require('path')
 
 const nextConfig = {
-  output: 'export',
 
   webpack: (config, options) => {
     if (options.isServer) {
@@ -14,6 +13,11 @@ const nextConfig = {
     return config;
   },
 
+  images: {
+    domains: ['paid4x.com'],
+  },
+
+  optimizeFonts: false,
   reactStrictMode: true,
   optimizeFonts: false,
   sassOptions: {
@@ -21,6 +25,7 @@ const nextConfig = {
   },
   
   images: {
+    domains: ['paid4x.com'],
     unoptimized: true
   },
   env: {

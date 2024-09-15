@@ -15,7 +15,7 @@ import {
 const openNewWindow = (link) => {
   window.open(link, "_blank");
 };
-const BlogCard = ({ data }) => {
+const BlogCard = ({ data ,withoutDescription}) => {
   return (
 
     // <div className="course-card">
@@ -54,7 +54,7 @@ const BlogCard = ({ data }) => {
                 </a>
               </MDBRipple>
             </MDBCol>
-            <MDBCol md="6">
+          <MDBCol md="6">
               <h5>{data.course_name}</h5>
               {/* <div className="d-flex flex-row">
                 <div className="text-danger mb-1 me-2">
@@ -65,10 +65,12 @@ const BlogCard = ({ data }) => {
                 </div>
                 <span>145</span>
               </div> */}
+               {withoutDescription ? 
+
               <p className="">
                 {data.description}
-              </p>
-            </MDBCol>
+              </p>: null}
+            </MDBCol> 
             <MDBCol
               md="6"
               lg="3"
@@ -82,8 +84,9 @@ const BlogCard = ({ data }) => {
               </div>
               <h6 className="text-success"></h6>
               <div className="d-flex flex-column mt-4" style={{ paddingTop: 50, }}>
+
                 <MDBBtn onClick={() => openNewWindow(data.link)} style={{ maxHeight: 35 }} color="primary" size="sm" >
-                  Detailss
+                  { withoutDescription ? 'Details' : '->' } 
                 </MDBBtn>
 
                 {/* <MDBBtn outline color="primary" size="sm" className="mt-2">
