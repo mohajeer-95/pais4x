@@ -17,7 +17,7 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId, info }) => {
 
 //   }, []);
 //   const getBrokerInfo = async () => {
-//     const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${brokerId}`, {}, 'GET');
+//     const response = await callApiWithToken(`https://paid4x.com/broker/public/api/broker/${brokerId}`, {}, 'GET');
 // // console.log('RRRRRRREEEESSSSSPPPPOOOONNNNSSSS', response.broker.info);
 //     setinfo(response.broker.info)
 //   }
@@ -43,7 +43,7 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId, info }) => {
                 {info?.instagram_link && <li className="social__item">
                   <button scroll={false} onClick={() => openNewWindow(info?.instagram_link)} className="social__link social__link--style22 "><i className="fab fa-instagram"></i></button>
                 </li>}
-                {info?.whatsapp_link && <li className="social__item">
+                {info?.linkedin_link && <li className="social__item">
                   <button scroll={false} onClick={() => openNewWindow(info?.linkedin_link)} className="social__link social__link--style22"><i className="fa-brands fa-linkedin-in"></i></button>
                 </li>}
                 {info?.youtube_link && <li className="social__item">

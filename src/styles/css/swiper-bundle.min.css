@@ -1008,17 +1008,23 @@ code {
 
 .partner__rating-icon,
 .partner__coin-icon {
-  width       : 16px;
+  width       : 22px;
   /* Adjust size as needed */
-  height      : 16px;
+  height      : 21px;
   margin-right: 4px;
 }
 
-.partner__rating-value,
 .partner__price-value {
   font-size  : 14px;
   /* Adjust font size as needed */
   color      : #CBA80B;
+  /* Adjust color as needed */
+  font-weight: bold;
+}
+.partner__rating-value {
+  font-size  : 14px;
+  /* Adjust font size as needed */
+  color      : #0056b3;
   /* Adjust color as needed */
   font-weight: bold;
 }

@@ -24,7 +24,7 @@ const TeamDetails = () => {
     try {
       console.log('111111111111111111111',id);
       
-      const response = await callApiWithToken(`https://lab.app2serve.com/public/api/broker/${id}`, {}, 'GET');
+      const response = await callApiWithToken(`https://paid4x.com/broker/public/api/broker/${id}`, {}, 'GET');
       console.log('22222222222222222222');
       
       setInfo(response.broker.info);

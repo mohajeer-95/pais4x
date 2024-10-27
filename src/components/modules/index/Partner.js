@@ -51,7 +51,7 @@ const Partner = () => {
     setLoading(true)
     const arr = []
     var rendomArr = []
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/broker-carousel', {}, 'GET');
+    const response = await callApiWithToken('https://paid4x.com/broker/public/api/broker-carousel', {}, 'GET');
     response.broker_carousel.map((item, index) => {
 
       arr.push(item)
@@ -90,7 +90,7 @@ const Partner = () => {
                       <div className="partner__item-inner" style={{ flexDirection: 'row', display: 'flex' }}>
 
                         <img
-                          src={'https://lab.app2serve.com/storage/app/public/' + item?.logo}
+                          src={'https://paid4x.com/broker/public/' + item?.logo}
                           alt="partner logo"
                           className="dark"
                           style={{ maxWidth: '68%' }}
@@ -111,7 +111,7 @@ const Partner = () => {
                           </div>
                           <div className="partner__rating">
                             <img
-                              src="images/icon/star.png"// Replace with your icon path
+                              src="images/icon/star_blue.png"// Replace with your icon path
                               alt="rating icon"
                               className="partner__rating-icon"
                             />

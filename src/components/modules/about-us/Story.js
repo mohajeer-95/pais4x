@@ -22,10 +22,10 @@ const Story = ({ youtubeLink, coverImage }) => {
                 data-aos="fade-up"
                 data-aos-duration="800"
               >
-                <img
+                <img style={{maxHeight: 333, width: '100%'}}
                   src={
                     coverImage
-                      ? 'https://lab.app2serve.com/storage/app/public/' + coverImage
+                      ? 'https://paid4x.com/broker/public/' + coverImage
                       : "https://bitrader-next.thetork.com/images/about/4.png"
                   }
                   alt="story-image"

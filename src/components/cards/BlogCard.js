@@ -19,7 +19,7 @@ const BlogCard = ({ data ,withoutDescription}) => {
   return (
 
     // <div className="course-card">
-    //   <img src={'https://lab.app2serve.com/storage/app/public/' + data.image} alt={data.course_name} className="course-image" />
+    //   <img src={'https://paid4x.com/broker/public/' + data.image} alt={data.course_name} className="course-image" />
     //   <div className="course-content">
     //     <h3>{data.course_name}</h3>
     //     <p>{data.description}</p>
@@ -43,7 +43,7 @@ const BlogCard = ({ data ,withoutDescription}) => {
                 <MDBCardImage
                   className='course-image'
                   style={{}}
-                  src={'https://lab.app2serve.com/storage/app/public/' + data.image}
+                  src={'https://paid4x.com/broker/public/' + data.image}
                   fluid
                 />
                 <a href="#!">

@@ -26,7 +26,7 @@ export const SliderProvider = ({ children }) => {
     useEffect(() => {
         const fetchSliderData = async () => {
             try {
-                const response = await fetch("https://lab.app2serve.com/public/api/slider");
+                const response = await fetch("https://paid4x.com/broker/public/api/slider");
                 const result = await response.json();
                 if (result.status === 1) {
                     setSliderData(result.sliders);
@@ -42,7 +42,7 @@ export const SliderProvider = ({ children }) => {
         const fetchCarouselData = async () => {
             var carousleDublecated = []
             try {
-                const response = await fetch("https://lab.app2serve.com/public/api/broker-carousel");
+                const response = await fetch("https://paid4x.com/broker/public/api/broker-carousel");
                 const result = await response.json();
                 if (result.status === 1) {
                     result.broker_carousel.map((item, index) => {
@@ -74,7 +74,7 @@ export const SliderProvider = ({ children }) => {
 
         const fetchBrokersData = async () => {
             try {
-                const response = await fetch("https://lab.app2serve.com/public/api/brokers");
+                const response = await fetch("https://paid4x.com/broker/public/api/brokers");
                 const result = await response.json();
                 if (result.status === 1) {
                     console.log('result.brokers =============>> ', result.brokers);

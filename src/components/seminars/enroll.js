@@ -201,7 +201,7 @@ const SignUp = () => {
 
         const resErrors = {};
 
-        const response = await callApiWithToken('https://lab.app2serve.com/public/api/seminars', { //MOHAJBACK CHeck end point
+        const response = await callApiWithToken('https://paid4x.com/broker/public/api/seminars', { //MOHAJBACK CHeck end point
             company_name: companyName,
             country: getcountry,
             city: selectedState,

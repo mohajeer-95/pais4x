@@ -85,7 +85,7 @@ const ResetPass = () => {
 
     try {
       // Call the API
-      const response = await fetch("https://lab.app2serve.com/public/api/update-password", requestOptions);
+      const response = await fetch("https://paid4x.com/broker/public/api/update-password", requestOptions);
       const result = await response.json();
       console.log('result',result);
       console.log('response',result);

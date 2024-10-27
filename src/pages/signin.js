@@ -54,7 +54,7 @@ const SignIn = () => {
 
     const resErrors = {};
 
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/login', {
+    const response = await callApiWithToken('https://paid4x.com/broker/public/api/login', {
       email: email,
       password: password,
     }, 'POST');

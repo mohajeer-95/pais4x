@@ -18,7 +18,7 @@ function Services() {
   const getBrokers = async () => {
     var newArr = []
     setLoading(true)
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers', {}, 'GET');
+    const response = await callApiWithToken('https://paid4x.com/broker/public/api/brokers', {}, 'GET');
     // setBrokersList(response.brokers)
     response.brokers.map((item, index) => {
       if (index < 12) {
@@ -54,7 +54,7 @@ function Services() {
                     pathname: '/broker',
                     query: { name: item.name, id: item.broker_id } // the data
                   }}>
-                    <img key={index} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt="Card" />
+                    <img key={index} src={"https://paid4x.com/broker/public/" + item.logo} alt="Card" />
                   </Link>
                 </div>
 

@@ -32,9 +32,9 @@ function Featured({pageId}) {
   //   const randomNumber = Math.floor(Math.random() * 10) + 1;
 
   //   setLoading(true)
-  //   const response = await callApiWithToken('https://lab.app2serve.com/public/api/slider', {}, 'GET');
+  //   const response = await callApiWithToken('https://paid4x.com/broker/public/api/slider', {}, 'GET');
   //   // console.log('response getSponserImg', response);
-  //   // setSponserImg('https://lab.app2serve.com/storage/app/public/' + response?.sliders[randomNumber]?.image)
+  //   // setSponserImg('https://paid4x.com/broker/public/' + response?.sliders[randomNumber]?.image)
   //   setUrl(response?.sliders[randomNumber]?.link)
   //   setLoading(false)
   // }
@@ -59,8 +59,8 @@ function Featured({pageId}) {
                     {sliderData ?
                       <a href={sliderData[pageId].link} target="_blank" rel="noopener noreferrer">
 
-{/* <img style={{ maxHeight: 130 }} src={'https://lab.app2serve.com/storage/app/public/' + sliderData[pageId].image} alt="Feature image" /> MOHAJBACK*/}
-<img style={{ maxHeight: 130 }} src={'https://lab.app2serve.com/storage/app/public/' + sliderData[pageId ? pageId : 0].image} alt="Feature image" />
+{/* <img style={{ maxHeight: 130 }} src={'https://paid4x.com/broker/public/' + sliderData[pageId].image} alt="Feature image" /> MOHAJBACK*/}
+<img style={{ maxHeight: 130 }} src={'https://paid4x.com/broker/public/' + sliderData[pageId ? pageId : 0].image} alt="Feature image" />
 </a>
                       :
                       <div className="spinner-container">

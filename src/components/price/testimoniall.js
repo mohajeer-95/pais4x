@@ -279,7 +279,7 @@ const SignUp = () => {
 
     const resErrors = {};
 
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/suggest-payments', {
+    const response = await callApiWithToken('https://paid4x.com/broker/public/api/suggest-payments', {
       first_name: firstname,
       last_name: lastName,
       email: email,

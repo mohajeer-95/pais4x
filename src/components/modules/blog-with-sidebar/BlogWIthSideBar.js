@@ -20,7 +20,7 @@ const BlogWIthSideBar = () => {
   }, [])
 
   const getCourses = async () => {
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/courses', {}, 'GET');
+    const response = await callApiWithToken('https://paid4x.com/broker/public/api/courses', {}, 'GET');
     console.log('response ', response);
     if (response.status == 1) {
       console.log('KKKKKKK', response);

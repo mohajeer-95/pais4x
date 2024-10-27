@@ -21,7 +21,7 @@ const Newsletter = () => {
     }
     setError('')
 
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/newsletter', {
+    const response = await callApiWithToken('https://paid4x.com/broker/public/api/newsletter', {
       email: email,
     }, 'POST');
 

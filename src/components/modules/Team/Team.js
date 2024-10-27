@@ -20,7 +20,7 @@ const Team = () => {
 
   // const getBrokers = async () => {
   //   setLoading(true)
-  //   const response = await callApiWithToken('https://lab.app2serve.com/public/api/brokers', {}, 'GET');
+  //   const response = await callApiWithToken('https://paid4x.com/broker/public/api/brokers', {}, 'GET');
   //   setBrokersList(response.brokers)
   //   setresponseCash(response.brokers)
   //   console.log('BROKER LIST', response.brokers);
@@ -60,7 +60,7 @@ const Team = () => {
                           }}>
       <div className="card-image">
       
-        <img style={{height: 190}} src={"https://lab.app2serve.com/storage/app/public/" + item.logo} alt={item.name} />
+        <img style={{height: 190}} src={"https://paid4x.com/broker/public/" + item.logo} alt={item.name} />
       </div>
       <div className="card-content">
 

@@ -58,7 +58,17 @@ const SignUp = () => {
   const [varyingModal, setVaryingModal] = useState(false);
   const [otpLoading, setOtpLoading] = useState(false);
   const [otpSuccess, setOtpSuccess] = useState(false);
-  const [authOtp, setAuthOtp] = useState('');
+
+  const [age, setAge] = useState(null);
+  const [vipTraining, setVipTraining] = useState(null);
+  const [trainingBuy, setTrainingBuy] = useState(null);
+  const [numExp, setNumExp] = useState(null);
+  const [membership, setMembership] = useState(null);
+  const [favoriteInstruments, setFavoriteInstruments] = useState(null);
+  const [favoriteBroker, setFavoriteBroker] = useState('');
+  const [telegramUsername, setTelegramUsername] = useState('');
+
+
   const [reference, setReference] = useState('');
 
   const [errors, setErrors] = useState({});
@@ -72,18 +82,86 @@ const SignUp = () => {
     'MoneyGram',
   ]
 
-  let handlePaymentMethod = (e) => {
-    setMethod(e.target.value)
-    let states = dataMethods.filter((states) => {
-      return states.country === e.target.value
-    })
+  const AgeOptions = [
+    '18 - 29',
+    '30 - 39',
+    '40 - 49',
+    '+50',
+  ]
 
-    states = [...new Set(states.map((item) => {
-      return item.subcountry
-    }))]
-    states.sort()
+  const numExpOptions = [
+    '1 - 3 years',
+    '3 - 5 years',
+    '5 - 10 years',
+    '10+ years',
+  ]
+
+  const trainingBuyOptions = [
+    'Yes & I loved it',
+    'Yes & it was not as good as I thought',
+    'No',
+    "No & I do not need training",
+    'No but I plan to in the future No & I do not need training',
+  ]
+
+  const vipTrainingOptions = [
+    'Yes & I loved it',
+    'Yes & it was not as good as I thought',
+    'No',
+    "No & I do not need training",
+    'No but I plan to in the future No & I do not need training',
+  ]
+
+  const membershipOptions = [
+    '  The cashback',
+    'The training courses',
+    'Both',
+    "It's free what's the harm?",
+    'I was bored',
+    'Other (please specify)',
+  ]
+
+  const favoriteInstrumentsOptions = [
+    "FX",
+    "Commodities",
+    "Stocks Indices",
+    "ETFs",
+    "Cryptos"]
+  let handleNumExp = (e) => {
+    console.log('AAA', e.target.value);
+    
+    setNumExp(e.target.value)
   }
 
+  let handleVipTraining = (e) => {
+    console.log('AAA', e.target.value);
+
+    setVipTraining(e.target.value)
+  }
+
+  let handleFavoriteInstruments = (e) => {
+    console.log('AAA', e.target.value);
+    setFavoriteInstruments(e.target.value)
+  }
+
+  let handleTrainingBuy = (e) => {
+    console.log('AAA', e.target.value);
+    setTrainingBuy(e.target.value)
+  }
+  let handleAge = (e) => {
+    console.log('AAA', e.target.value);
+    setAge(e.target.value)
+  }
+
+  let handleMembership = (e) => {
+    console.log('AAA', e.target.value);
+    setMembership(e.target.value)
+  }
+
+  let handlePaymentMethod = (e) => {
+    console.log('AAA', e.target.value);
+    setMethod(e.target.value)
+  }
   ///////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////
@@ -234,8 +312,41 @@ const SignUp = () => {
   const validateForm = () => {
     let valid = true;
     const errors = {};
+    console.log('AGE',age);
+    console.log('vipTraining',vipTraining);
+    console.log('trainingBuy',trainingBuy);
+    console.log('numExp',numExp);
+    console.log('membership',membership);
 
+    if (!age) {
+      errors.age = 'Please select your age';
+      valid = false;
+    }
 
+    if (!vipTraining) {
+      errors.vipTraining = 'Please select';
+      valid = false;
+    }
+    if (!trainingBuy) {
+      errors.trainingBuy = 'Please select';
+      valid = false;
+    }
+    if (!numExp) {
+      errors.numExp = 'Please select';
+      valid = false;
+    }
+    if (!membership) {
+      errors.membership = 'Please select';
+      valid = false;
+    }
+    if (!favoriteInstruments) {
+      errors.favoriteInstruments = 'Please select';
+      valid = false;
+    }
+    if (!favoriteBroker) {
+      errors.favoriteBroker = 'Favorite broker is required';
+      valid = false;
+    }
     if (!isTermsAccepted) {
       errors.terms = 'You must accept the terms and conditions';
       valid = false;
@@ -298,7 +409,7 @@ const SignUp = () => {
 
     const resErrors = {};
 
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/register', {
+    const response = await callApiWithToken('https://paid4x.com/broker/public/api/register', {
       name: firstname,
       email: email,
       password: password,
@@ -306,7 +417,15 @@ const SignUp = () => {
       phone: phone,
       last_name: lastName,
       city: selectedCountry,
-      country: selectedState
+      country: selectedState,
+      age: age,
+      did_you_receive_vip_training: vipTraining,
+      did_you_buy_training_courses: trainingBuy,
+      trading_experience: numExp,
+      what_made_you_get_a_paid4x: membership,
+      favorite_instruments: favoriteInstruments,
+      favorite_broker: favoriteBroker,
+      citizenship: telegramUsername,
     }, 'POST');
 
     if (response.status == 1) {
@@ -314,7 +433,7 @@ const SignUp = () => {
 
       await setToken(response.access_token.token)
       await setReference(response.reference)
-      await setAuthOtp(response.otp)
+      // await setAuthOtp(response.otp)
       await loginSuccess(response.access_token)
 
 
@@ -334,7 +453,6 @@ const SignUp = () => {
 
   const loginSuccess = async (token) => {
     console.log('111111111111111111otp', otp);
-    console.log('222222222222222222Authotp', authOtp);
     console.log('3333333333333333333referance', reference);
 
 
@@ -349,7 +467,6 @@ const SignUp = () => {
 
   const sendOtp = async () => {
     console.log('otp', otp);
-    console.log('authOtp', authOtp);
     console.log('reference', reference);
     console.log('token', token);
     setOtpError('')
@@ -359,14 +476,10 @@ const SignUp = () => {
       setOtpError('verification code is requerd')
       return;
     }
-    if (Number(otp) !== Number(authOtp)) {
-      setOtpLoading(false);
-      setOtpError('verification code is not correct')
-      return;
-    }
+
     setOtpLoading(true);
 
-    const response = await callApiWithToken('https://lab.app2serve.com/public/api/verify-otp', {
+    const response = await callApiWithToken('https://paid4x.com/broker/public/api/verify-otp', {
       otp: otp,
       reference: reference
     }, 'POST', token);
@@ -555,6 +668,8 @@ const SignUp = () => {
                           {errors.phone && <p style={{ color: 'red' }}>{errors.phone}</p>}
                         </div>
                       </div>
+
+
                       <div className="col-12">
                         <div className="form-pass">
                           <label htmlFor="account-pass" className="form-label">
@@ -572,6 +687,142 @@ const SignUp = () => {
                         </div>
                       </div>
 
+                      <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            Age
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleAge(e)} >
+                            <option>Select your Age ...</option>
+                            {AgeOptions.map((item, index) => {
+                              return < option value={age} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.age && <p style={{ color: 'red' }}>{errors.age}</p>}
+
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            Did you buy any of our training courses on Udemy?
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleTrainingBuy(e)} >
+                            <option>Select Please ...</option>
+                            {trainingBuyOptions.map((item, index) => {
+                              return < option value={trainingBuy} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.trainingBuy && <p style={{ color: 'red' }}>{errors.trainingBuy}</p>}
+
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            Did you receive VIP training from us?
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleVipTraining(e)} >
+                            <option>Select Please ...</option>
+                            {vipTrainingOptions.map((item, index) => {
+                              return < option value={vipTraining} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.vipTraining && <p style={{ color: 'red' }}>{errors.vipTraining}</p>}
+
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            Trading Experience?
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleNumExp(e)} >
+                            <option>Select Please ...</option>
+                            {numExpOptions.map((item, index) => {
+                              return < option value={numExp} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.numExp && <p style={{ color: 'red' }}>{errors.numExp}</p>}
+
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            What made you get a PAID4X membership?
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleMembership(e)} >
+                            <option>Select Please ...</option>
+                            {membershipOptions.map((item, index) => {
+                              return < option value={membership} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.membership && <p style={{ color: 'red' }}>{errors.membership}</p>}
+
+                        </div>
+                      </div>
+
+
+
+                      <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            Favorite Instruments
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleFavoriteInstruments(e)} >
+                            <option>Select Please ...</option>
+                            {favoriteInstrumentsOptions.map((item, index) => {
+                              return < option value={favoriteInstruments} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.favoriteInstruments && <p style={{ color: 'red' }}>{errors.favoriteInstruments}</p>}
+
+                        </div>
+                      </div>
+
+
+                      <div className="col-12">
+                        <div>
+                          <label htmlFor="favorite-broker" className="form-label">
+                            Favorite Broker
+                          </label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            id="favorite-broker"
+                            placeholder="Favorite Broker"
+                            onChange={(res) => setFavoriteBroker(res.target.value)}
+                          />
+                          {errors.favoriteBroker && <p style={{ color: 'red' }}>{errors.favoriteBroker}</p>}
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div>
+                          <label htmlFor="telegram-sername" className="form-label">
+                            Telegram Username
+                          </label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            id="telegram-username"
+                            placeholder="Telegram Username"
+                            onChange={(res) => setTelegramUsername(res.target.value)}
+                          />
+                          {errors.telegramUsername && <p style={{ color: 'red' }}>{errors.telegramUsername}</p>}
+                        </div>
+                      </div>
 
                       <div className="col-12 col-md-6">
                         <div>
@@ -667,7 +918,7 @@ const SignUp = () => {
                         >
                           Terms & Conditions
                         </span>{' '}
-                       
+
                       </label>
                     </div>
                     {errors.terms && <p style={{ color: 'red', marginLeft: '8px' }}>{errors.terms}</p>}
@@ -743,28 +994,28 @@ const SignUp = () => {
         </Modal> */}
 
 
-<Modal isOpen={modalOpen} toggle={() => setModalOpen(!modalOpen)}>
-      <ModalHeader toggle={() => setModalOpen(!modalOpen)}>
-        Terms & Conditions
-      </ModalHeader>
-      <ModalBody>
-        <div
-          dangerouslySetInnerHTML={{ __html: termsContent }}
-          style={{
-            maxHeight: '400px',
-            overflowY: 'scroll',
-            padding: '15px',
-            fontFamily: "'Arial', sans-serif",
-            lineHeight: '1.5',
-          }}
-        />
-      </ModalBody>
-      <ModalFooter>
-        <Button color="secondary" onClick={() => setModalOpen(!modalOpen)}>
-          Close
-        </Button>
-      </ModalFooter>
-    </Modal>
+        <Modal isOpen={modalOpen} toggle={() => setModalOpen(!modalOpen)}>
+          <ModalHeader toggle={() => setModalOpen(!modalOpen)}>
+            Terms & Conditions
+          </ModalHeader>
+          <ModalBody>
+            <div
+              dangerouslySetInnerHTML={{ __html: termsContent }}
+              style={{
+                maxHeight: '400px',
+                overflowY: 'scroll',
+                padding: '15px',
+                fontFamily: "'Arial', sans-serif",
+                lineHeight: '1.5',
+              }}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={() => setModalOpen(!modalOpen)}>
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
 
 
       </section>
