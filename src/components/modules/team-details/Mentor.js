@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useRouter } from 'next/router';
-import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
+import { getCookie } from 'cookies-next';
 import Spinner from 'react-bootstrap/Spinner';
 import TextWithNewLines from '../../../components/handleTextLong'
 import {
-  MDBContainer,
   MDBCol,
   MDBCard,
   MDBCardBody,
@@ -20,18 +19,13 @@ import {
   MDBModalFooter,
   MDBInput,
   MDBRow,
-  MDBTable,
-  MDBTableBody,
-  MDBTableHead,
   MDBBtn,
 } from "mdb-react-ui-kit";
 import Table from 'react-bootstrap/Table';
 import Accordion from "react-bootstrap/Accordion";
 import Story from '@/components/modules/about-us/Story'
 import { callApiWithToken } from '../../../../public/api/api'
-import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
 
 
 const Mentor = ({ title }) => {
@@ -40,7 +34,8 @@ const Mentor = ({ title }) => {
   const [isLinked, setIsLinked] = useState(0);
 
   const router = useRouter();
-  const { id, name } = router.query;
+  const { id } = router.query;  // Get the dynamic ID from the route
+
   const imageUrl = 'https://paid4x.com/broker/public/'
   const [statebuttonText, setStateButtonText] = useState(false);
   const [varyingState, setVaryingState] = useState(1);
@@ -55,7 +50,6 @@ const Mentor = ({ title }) => {
   const [loadindAllData, setLoadindAllData] = useState(false);
 
   const [broker_account, setbroker_account] = useState([])
-  const [broker_cashback_info, setbroker_cashback_info] = useState([])
   const [broker_funding, setbroker_funding] = useState([])
   const [broker_type, setbroker_type] = useState([])
   const [info, setinfo] = useState([])
@@ -88,10 +82,10 @@ const Mentor = ({ title }) => {
         let response;
         if (token && id) {
           // Call API with token if user is logged in
-          response = await getBrokerById(router.query.id, token);
+          response = await getBrokerById(id, token);
         } else {
           // Call API without token if user is logged out
-          response = await getBrokerById(router.query.id);
+          response = await getBrokerById(id);
         }
         setBrokerData(response); // Store the API response
       } catch (err) {
@@ -100,9 +94,9 @@ const Mentor = ({ title }) => {
         setLoadindAllData(true); // Stop the loading state
       }
     };
-    if (router.query.id) {
-      setQuery(router.query);
-      setBrokerId(router.query.id)
+    if (id) {
+      setQuery(id);
+      setBrokerId(id)
       fetchData();
     }
   }, [router.isReady]);
@@ -112,8 +106,6 @@ const Mentor = ({ title }) => {
     const fetchData = async () => {
       try {
         const token = getCookie('token'); // Retrieve the token
-        const id = router.query.id;
-
         if (id) {
           let response;
           if (token) {
@@ -170,53 +162,57 @@ const Mentor = ({ title }) => {
       redirect: "follow",
     };
 
-
     try {
-
-
-
       const response = await fetch(`https://paid4x.com/broker/public/api/broker/${brokerId}`, requestOptions);
-      const result = await response.json(); // Use .json() if response is JSON
-      const broker = result.broker
+      const result = await response.json();
+      const broker = result?.broker;
 
       if (broker) {
+        console.log("Broker Data:", broker);
+
         updateBrokerState(broker);
-        handleDescription(broker.info?.description);
-        handleStarRating(broker.info?.avg_rating);
-        handleOptionalBrokerList(broker.info?.name);
+        handleDescription(broker.info?.description ?? "No description available");
+        handleStarRating(broker.info?.avg_rating ?? 0);
+        handleOptionalBrokerList(broker.info?.name ?? "Unknown");
 
-        // Setting up additional states
-        setmargin_leverage(broker.margin_leverage);
-        setplatform(broker.platform);
-        setsupport(broker.support);
-        settrading_cost(broker.trading_cost);
-        setbroker(broker.broker);
+        // Setting additional states with safe access
+        setmargin_leverage(broker?.margin_leverage ?? "Not specified");
+        setplatform(broker?.platform ?? "Unknown platform");
+        setsupport(broker?.support ?? "Support info unavailable");
+        settrading_cost(broker?.trading_cost ?? "Cost data not available");
+        setbroker(broker?.broker ?? "No broker data");
 
-        // Simulate loading all data after a delay
         setTimeout(() => {
-          setLoadindAllData(true);
+          // setLoadingAllData(true);
         }, 4000);
+      } else {
+        console.warn("Broker data is undefined or not available.");
       }
     } catch (error) {
-      console.error('Failed to fetch broker data:', error);
-      // Handle error as needed
+      console.error("Failed to fetch broker data:", error);
     }
   };
 
+
   const updateBrokerState = (broker) => {
+    console.log('BEEEEEESSS$%456546456546546456', broker);
+
     setBrokerData(broker);
     setbroker_account(broker.broker_account);
-    setbroker_cashback_info(broker.broker_cashback_info);
-    setbroker_funding(broker.broker_funding[0]);
+    setbroker_funding(broker?.broker_funding[0]);
     setbroker_type(broker.broker_type);
-    setinstrumentKeys(Object.keys(broker?.broker_type[0])?.filter(
-      (key) => !['broker_account_type_id', 'broker_id', 'type_name'].includes(key)
-    ))
+    if (broker?.broker_type.length) {
+      setinstrumentKeys(Object.keys(broker?.broker_type[0])?.filter(
+        (key) => !['broker_account_type_id', 'broker_id', 'type_name'].includes(key)
+      ))
+    }
     setinfo(broker.info);
     setValue(broker.info?.rating);
   };
 
   const handleDescription = (description) => {
+    console.log('DDDDDDDDD', description);
+
     const shortDescription = description?.length > 108 ? description.substring(0, 110) + '...' : description;
     setDescription(description?.slice(0, 400) + '...');
     setpargraph(shortDescription);
@@ -498,11 +494,11 @@ const Mentor = ({ title }) => {
                       </div> */}
 
                       <div className="d-flex flex-row align-items-center mb-1 justify-content-center" >
-                        <h6 className="text-success" style={{ position: 'relative' }}>
+                        <h6 className="" style={{fontWeight: 'bold', color: 'gold', position: 'relative' }}>
                           {info?.cashback}
-                          <img
+                          <img 
                             // src="/path-to-your-icon.png" 
-                            src={info?.currency == 'dollar' ? "images/icon/dollar.png" : "images/icon/gold-polkadot.png"}
+                            src={info?.currency == 'dollar' ? "/images/icon/dollar.png" : "/images/icon/gold-polkadot.png"}
 
                             alt="dollar icon"
                             style={{
@@ -544,7 +540,6 @@ const Mentor = ({ title }) => {
                                 Login to Link
                               </MDBBtn>
                             </div>}
-
                     </MDBCol>
                   </MDBRow>
                 </MDBCardBody>
@@ -562,14 +557,45 @@ const Mentor = ({ title }) => {
             <div className="col-sm-8 col-md-8 col-lg-6" style={{ marginTop: 20, paddingInline: 20 }}>
               <div>
 
+                <div className="col-12" style={{ marginTop: 1 }}>
+                  <h3>Your Cashback</h3>
 
 
-                <div className="roadmap__item-header">
-                  <h3>Get to Know ({info?.name})</h3>
+                  {instrumentKeys && <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+                    <thead>
+                      <tr>
+                        <th style={{ border: '1px solid black', padding: '8px' }}>Instrument Account</th>
+                        {broker_type.map((item, index) => (
+                          <th key={index} style={{ border: '1px solid black', padding: '8px' }}>
+                            {item.type_name}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {instrumentKeys && instrumentKeys?.map((instrument, index) => (
+                        <tr key={index}>
+                          <td style={{ border: '1px solid black', padding: '8px', textTransform: 'capitalize' }}>
+                            {instrument}
+                          </td>
+                          {broker_type.map((item, idx) => (
+                            <td key={idx} style={{ border: '1px solid black', padding: '8px' }}>
+                              {item[instrument]}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>}
                 </div>
-                {/* <p>Welcome to FXCentrum - the ultimate forex trading destination for a seamless, profitable trading experience. Our company was founded in 2019 by a team of experienced forex traders, customer service professionals, and risk managers, who prioritize customer satisfaction above all else. Our strongest point is our 5* personal care and easy-to-use platform, which includes fast deposits and withdrawals. We are a fully regulated forex broker, holding license number SD055 from the FSA Seychelles. At FXCentrum, we offer a wide range of local deposit and withdrawal methods, including wire transfers, card payments, and even cryptocurrencies, making account funding and withdrawal easy and hassle-free.</p> */}
-                {/* <p>{info?.description}</p> */}
-                {description.length ?
+
+
+
+                <div className="roadmap__item-header" style={{marginTop: 50}}>
+                  <h3>Get to Know {info?.name}</h3>
+                </div>
+
+                {description?.length ?
                   <div>
                     <TextWithNewLines statebuttonText={statebuttonText} text={description ? description : longText} />
                   </div> :
@@ -577,73 +603,13 @@ const Mentor = ({ title }) => {
                     <Spinner animation="border" variant="info" />
                   </div>
                 }
-
-
-                {/* <span>P2</span> */}
-                {/* <p>
-                  Our platform is designed to cater to both beginners and professionals in the forex trading world, with leverages of up to 1:1000 and various account types to choose from. Whether youre looking to start with a demo account or jump straight into a real one, we have got you covered.
-                </p>
-                {statebuttonText ? <p>
-                  With our award-winning platform, the FXC Trader, you can trade more than 500 instruments, including forex, metals, commodities, indices, crypto, CFD, stocks, and ETFs. Copy trading is available on both our platform and the Zulutrade social trading system, making it easy for you to follow the most successful traders in the industry. Our platform is also available in 24 languages, and we offer a wealth of educational videos on www.fxcentrum.com, helping you master simple systems like take profit or stop loss, as well as advanced ones like trading indicators, trailing stop or market news.
-                  https://www.fxcentrum.com/
-                </p> : null}
-                {statebuttonText ? <p>
-                  At FXCentrum, we always offer zero commissions and tight spreads from 0.3 pips for EURUSD, USDJPY or GBPUSD. Most of our clients trade not only forex and indices but also commodities like Gold, Silver, Natural Gas or Coffee, thanks to our FXC Trading Signals on Telegram.
-                </p> : null}
-                {statebuttonText ? <p>
-                  We take social media seriously, and our highly advanced channels provide you with a wealth of information on promotions, economic news, and everything you need for the best trading experience. And if you dont speak English, thats not a problem - you can communicate with us via email, web chat, or your favorite social media platform in over 50 languages.
-                </p> : null}
-                {statebuttonText ? <p>
-                  At FXCentrum, we strive to offer a trading experience that is not only seamless but also profitable. With our easy-to-use platform, competitive pricing, and top-notch customer service, you can trust us to deliver the best possible forex trading experience. Open an account with us today and see for yourself why we are the go-to forex broker for traders around the world.
-                </p> : null} */}
-
-                {info.description.length > 109 &&
+                {info?.description?.length > 109 &&
                   <button onClick={() => handleClick()}
                     style={styles.btn}>
                     {!statebuttonText ? 'See more' : 'Show less'}
                   </button>}
               </div>
-
-
-
-
-              {/* {!statebuttonText ? <div key={8} className="col-12" style={{ marginTop: 50 }}>
-                <h3>Account Type</h3>
-                <Table striped bordered hover>
-                  <thead>
-                    <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                      <td style={{ textAlign: 'center' }} colSpan={2}></td>
-                      <td style={{ textAlign: 'center' }} >Minimum Trading Size </td>
-                      <td style={{ textAlign: 'center' }} >Maximum Trading Size </td>
-                    </tr>
-
-                    {broker_type?.map((item, index) => (
-                      <tr key={index} style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                        <td style={{ textAlign: 'center' }} >Acount {index + 1} </td>
-                        <td style={{ textAlign: 'center' }} >{item.account_type}</td>
-                        <td style={{ textAlign: 'center' }} >{item.account_type_minimum_trading_size}</td>
-                        <td style={{ textAlign: 'center' }} >{item.account_type_maximum_trading_size}</td>
-                      </tr>))}
-                  </thead>
-                </Table>
-                {!broker_type?.length &&
-                  <div className="text-center"
-                    style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
-                    Types data not found now
-                  </div>}
-              </div> : null} */}
-
             </div>
-
-
-
-
-
-
-
-
-
-
             <div className="col-sm-8 col-md-8 col-lg-6" style={{ paddingInline: 20 }}>
               <Accordion defaultActiveKey="0" flush className="accordion--style1">
                 <div className="row">
@@ -844,29 +810,6 @@ const Mentor = ({ title }) => {
                           </thead>
 
                         </Table>
-
-
-
-
-
-                        {/* <Table striped>
-                          <thead>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td style={{ fontWeight: 'bold' }}>Account Currency: </td>
-                              <td>USD / EUR</td>
-                            </tr>
-                            <tr>
-                              <td style={{ fontWeight: 'bold' }}>Minimum Deposit: </td>
-                              <td>hajeerBack</td>
-                            </tr>
-                            <tr>
-                              <td style={{ fontWeight: 'bold' }}>Payment Methods : </td>
-                              <td>All Local Deposit Types, Crypto, Wire Transfer, Match2Pay, AstroPay etc.</td>
-                            </tr>
-                          </tbody>
-                        </Table> */}
                       </Accordion.Body>
                     </Accordion.Item>
                   </div>
@@ -883,8 +826,6 @@ const Mentor = ({ title }) => {
                       </div>
                       <Accordion.Body className="accordion__body">
                         <Table striped>
-
-
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>PC Platforms: </td>
@@ -907,8 +848,6 @@ const Mentor = ({ title }) => {
                       </Accordion.Body>
                     </Accordion.Item>
                   </div>
-
-
                   <div key={7} className="col-12">
                     <Accordion.Item className="accordion__item" eventKey={7}>
                       <div className="accordion__header">
@@ -920,8 +859,6 @@ const Mentor = ({ title }) => {
                       </div>
                       <Accordion.Body className="accordion__body">
                         <Table striped>
-
-
                           <tbody>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>Channels: </td>
@@ -940,81 +877,9 @@ const Mentor = ({ title }) => {
                       </Accordion.Body>
                     </Accordion.Item>
                   </div>
-
-
-
                 </div>
               </Accordion>
-
-
-
-
-              <div className="col-12" style={{ marginTop: 100 }}>
-                <h3>Your Cashback</h3>
-
-
-                {instrumentKeys && <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-                  <thead>
-                    <tr>
-                      <th style={{ border: '1px solid black', padding: '8px' }}>Instrument Account</th>
-                      {broker_type.map((item, index) => (
-                        <th key={index} style={{ border: '1px solid black', padding: '8px' }}>
-                          {item.type_name}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {instrumentKeys.map((instrument, index) => (
-                      <tr key={index}>
-                        <td style={{ border: '1px solid black', padding: '8px', textTransform: 'capitalize' }}>
-                          {instrument}
-                        </td>
-                        {broker_type.map((item, idx) => (
-                          <td key={idx} style={{ border: '1px solid black', padding: '8px' }}>
-                            {item[instrument]}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>}
-
-
-
-{/* 
-                <div className="col-12" style={{ marginTop: 50 }}>
-                   <h3>Account Type</h3>
-                   <Table striped bordered hover>
-                    <thead>
-                      <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                        <td style={{ textAlign: 'center' }} colSpan={2}></td>
-                        <td style={{ textAlign: 'center' }} >Minimum Trading Size </td>
-                        <td style={{ textAlign: 'center' }} >Maximum Trading Size </td>
-                      </tr>
-
-                      {broker_type?.map((item, index) => (
-                        <tr key={index} style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                          <td style={{ textAlign: 'center' }} >Acount {item.id} </td>
-                          <td style={{ textAlign: 'center' }} >ss{item.account_type}</td>
-                          <td style={{ textAlign: 'center' }} >{item.account_type_minimum_trading_size}</td>
-                          <td style={{ textAlign: 'center' }} >{item.account_type_maximum_trading_size}</td>
-                        </tr>))}
-                    </thead>
-                   </Table>
-                   {!broker_type?.length &&
-                    <div className="text-center"
-                      style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
-                      Types data not found now
-                    </div>}
-                 </div> */}
-
-              </div>
-
-
             </div>
-
-
           </div>
         </div>
       </div>
@@ -1022,7 +887,7 @@ const Mentor = ({ title }) => {
         :
 
         <div className="preloader">
-          <img src="images/global/logo.png" alt="preloader icon" />
+          <img src="/images/global/logo.png" alt="preloader icon" />
         </div>
 
       }

@@ -76,7 +76,7 @@ function Featured({pageId}) {
 
           :
           <div style={{ height: 150 }} className="preloaderslider">
-            <img src="images/global/logo.png" alt="preloaderslider icon" />
+            <img src="/images/global/logo.png" alt="preloaderslider icon" />
           </div>
         }
 
@@ -96,25 +96,25 @@ export default Featured;
 // const featureData = [
 //   {
 //     Benefit: "Lending Money For Investment Of Your New Projects",
-//     rating: "images/feature/5.png",
+//     rating: "/images/feature/5.png",
 //     availableForLoan: 10,
 //     img: "/images/feature/1.png",
 //   },
 //   {
 //     Benefit: "More Security And Control Over Money From The Rest",
-//     rating: "images/feature/6.png",
+//     rating: "/images/feature/6.png",
 //     availableForLoan: 18,
 //     img: "/images/feature/2.png",
 //   },
 //   {
 //     Benefit: "Mobile Payment Is More Flexible And Easy For All Investors",
-//     rating: "images/feature/7.png",
+//     rating: "/images/feature/7.png",
 //     availableForLoan: 30,
 //     img: "/images/feature/1.png",
 //   },
 //   {
 //     Benefit: "All Transaction Is Kept Free For The Member Of Pro Traders",
-//     rating: "images/feature/8.png",
+//     rating: "/images/feature/8.png",
 //     availableForLoan: 28,
 //     img: "/images/feature/2.png",
 //   },

@@ -114,7 +114,7 @@ function switchThemeByUrl() {
                 id="btnSwitch"
               >
                   <Image
-                    src="images/icon/moon.svg"
+                    src="/images/icon/moon.svg"
                     alt="light-dark-switchbtn"
                     className="swtich-icon"
                     width={20}

@@ -4,8 +4,16 @@ import Link from 'next/link'
 import { callApiWithToken } from '../../../../public/api/api'
 import Spinner from 'react-bootstrap/Spinner';
 import { useSlider } from '../../../context/SliderContext';
+import { useRouter } from 'next/router';
 
 const Team = () => {
+
+  const router = useRouter();
+
+  const goToProfile = (userId) => {
+    router.push(`/broker/${userId}`);
+  };
+
 
   const { brokersData, loadingBrokers } = useSlider();
 
@@ -52,12 +60,10 @@ const Team = () => {
 
             {brokersData?.map((item,index)=>(
 
-      <div key={index}className="card">
-    <Link 
-                           href={{
-                            pathname: '/broker',
-                            query: { name: item.name, id: item.broker_id } // the data
-                          }}>
+      <div key={index}className="card" onClick={() => goToProfile(item.broker_id)}>
+             
+
+    
       <div className="card-image">
       
         <img style={{height: 190}} src={"https://paid4x.com/broker/public/" + item.logo} alt={item.name} />
@@ -75,8 +81,7 @@ const Team = () => {
           <span className="value">{item.avg_rating}</span>
         </div>
       </div>
-      </Link>
-    </div>
+     </div>
                          ))}
     </div>
 

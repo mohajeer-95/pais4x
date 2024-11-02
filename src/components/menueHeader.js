@@ -179,7 +179,7 @@ function Header({ headerClass = null }) {
           id="btnSwitch"
         >
           <Image width={0} height={0} sizes="100vw" style={{ width: '100%', height: 'auto' }}
-            src="images/icon/moon.svg"
+            src="/images/icon/moon.svg"
             alt="light-dark-switchbtn"
             className="swtich-icon"
 
@@ -225,7 +225,7 @@ function Header({ headerClass = null }) {
                           <div className="col order-first">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                <img src="images/demo/1.png" alt="home-showcase" />
+                                <img src="/images/demo/1.png" alt="home-showcase" />
                                 <div className="home-showcase__buttons">
 
                                   <Link href={{
@@ -246,7 +246,7 @@ function Header({ headerClass = null }) {
                           <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                  <img src="images/demo/1-dark.png" alt="home-showcase" />
+                                  <img src="/images/demo/1-dark.png" alt="home-showcase" />
                                 <div className="home-showcase__buttons">
 
                                 <Link href={{
@@ -266,7 +266,7 @@ function Header({ headerClass = null }) {
                           <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                <img src="images/demo/2.png" alt="home-showcase" />
+                                <img src="/images/demo/2.png" alt="home-showcase" />
                                 <div className="home-showcase__buttons">
                                   <Link href={{
                           pathname: '/index-2',
@@ -285,7 +285,7 @@ function Header({ headerClass = null }) {
                           <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                  <img src="images/demo/2-dark.png" alt="home-showcase" />
+                                  <img src="/images/demo/2-dark.png" alt="home-showcase" />
                                 <div className="home-showcase__buttons">
                                   <Link href={{
                           pathname: '/index-2',
@@ -304,7 +304,7 @@ function Header({ headerClass = null }) {
                           <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                <img src="images/demo/3.png" alt="home-showcase" />
+                                <img src="/images/demo/3.png" alt="home-showcase" />
                                 <div className="home-showcase__buttons">
                                   <Link href={{
                           pathname: '/index-3',
@@ -323,7 +323,7 @@ function Header({ headerClass = null }) {
                           <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                  <img src="images/demo/3-dark.png" alt="home-showcase" />
+                                  <img src="/images/demo/3-dark.png" alt="home-showcase" />
                                 <div className="home-showcase__buttons">
                                   <Link href={{
                           pathname: '/index-3',
@@ -342,7 +342,7 @@ function Header({ headerClass = null }) {
                   {/* <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                <img src="images/demo/4.png" alt="home-showcase" />
+                                <img src="/images/demo/4.png" alt="home-showcase" />
                                 <div className="home-showcase__badge">
                                   <span>New</span>
                                 </div>
@@ -364,7 +364,7 @@ function Header({ headerClass = null }) {
                           <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                <img src="images/demo/9.png" alt="home-showcase" />
+                                <img src="/images/demo/9.png" alt="home-showcase" />
                                 <div className="home-showcase__badge">
                                   <span>New</span>
                                 </div>
@@ -386,7 +386,7 @@ function Header({ headerClass = null }) {
                           <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                <img src="images/demo/5.png" alt="home-showcase" />
+                                <img src="/images/demo/5.png" alt="home-showcase" />
                                 <div className="home-showcase__badge">
                                   <span>New</span>
                                 </div>
@@ -408,7 +408,7 @@ function Header({ headerClass = null }) {
                           <div className="col">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                <img src="images/demo/10.png" alt="home-showcase" />
+                                <img src="/images/demo/10.png" alt="home-showcase" />
                                 <div className="home-showcase__badge">
                                   <span>New</span>
                                 </div>
@@ -430,7 +430,7 @@ function Header({ headerClass = null }) {
                   {/* <div className="col order-last">
                             <div className="home-showcase__item">
                               <div className="home-showcase__image">
-                                <img src="images/demo/new.png" alt="home-showcase" />
+                                <img src="/images/demo/new.png" alt="home-showcase" />
                               </div>
                               <h3 className="home-showcase__title"> <Link scroll={false} href="/#0">New Demos</Link>
                               </h3>
@@ -501,7 +501,7 @@ function Header({ headerClass = null }) {
 
                   </li> */}
                   <li>
-                    <Link href="contact">Contact Us</Link>
+                    <Link href="contact">Contact</Link>
                   </li>
                 </ul>
               </div>

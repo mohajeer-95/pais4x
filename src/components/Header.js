@@ -281,6 +281,14 @@ function Header({ headerClass = null, pageName }) {
                   <li style={{ backgroundColor: '#eaeaea' }}>
                     <Link style={{ fontSize: 13 }} href="/webinars">WEBINARS</Link>
                   </li>
+                  
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/socials">SOCIALS</Link>
+                    </li>
+
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/contact">CONTACT</Link>
+                    </li>
                 </ul>
               </div>
                 :
@@ -320,8 +328,7 @@ function Header({ headerClass = null, pageName }) {
                     </li>
 
                     <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/contact">CONTACT US</Link>
-
+                      <Link style={{ fontSize: 13 }} href="/contact">CONTACT</Link>
                     </li>
                   </ul>
                 </div>}

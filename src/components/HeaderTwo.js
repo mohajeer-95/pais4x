@@ -175,7 +175,7 @@ function HeaderTwo({ isDarkLogoSame = false }) {
           id="btnSwitch"
         >
           <Image
-            src="images/icon/moon.svg"
+            src="/images/icon/moon.svg"
             alt="light-dark-switchbtn"
             className="swtich-icon"
             width={20}
@@ -214,7 +214,7 @@ function HeaderTwo({ isDarkLogoSame = false }) {
                               <div className="col order-first">
                                 <div className="home-showcase__item">
                                   <div className="home-showcase__image">
-                                    <img src="images/demo/1.png" alt="home-showcase" />
+                                    <img src="/images/demo/1.png" alt="home-showcase" />
                                     <div className="home-showcase__buttons">
 
                                       <Link href={{
@@ -235,7 +235,7 @@ function HeaderTwo({ isDarkLogoSame = false }) {
                               <div className="col">
                                 <div className="home-showcase__item">
                                   <div className="home-showcase__image">
-                                    <img src="images/demo/1-dark.png" alt="home-showcase" />
+                                    <img src="/images/demo/1-dark.png" alt="home-showcase" />
                                     <div className="home-showcase__buttons">
 
                                       <Link href={{
@@ -255,7 +255,7 @@ function HeaderTwo({ isDarkLogoSame = false }) {
                               <div className="col">
                                 <div className="home-showcase__item">
                                   <div className="home-showcase__image">
-                                    <img src="images/demo/2.png" alt="home-showcase" />
+                                    <img src="/images/demo/2.png" alt="home-showcase" />
                                     <div className="home-showcase__buttons">
                                       <Link href={{
                                         pathname: '/index-2',
@@ -274,7 +274,7 @@ function HeaderTwo({ isDarkLogoSame = false }) {
                               <div className="col">
                                 <div className="home-showcase__item">
                                   <div className="home-showcase__image">
-                                    <img src="images/demo/2-dark.png" alt="home-showcase" />
+                                    <img src="/images/demo/2-dark.png" alt="home-showcase" />
                                     <div className="home-showcase__buttons">
                                       <Link href={{
                                         pathname: '/index-2',
@@ -293,7 +293,7 @@ function HeaderTwo({ isDarkLogoSame = false }) {
                               <div className="col">
                                 <div className="home-showcase__item">
                                   <div className="home-showcase__image">
-                                    <img src="images/demo/3.png" alt="home-showcase" />
+                                    <img src="/images/demo/3.png" alt="home-showcase" />
                                     <div className="home-showcase__buttons">
                                       <Link href={{
                                         pathname: '/index-3',
@@ -312,7 +312,7 @@ function HeaderTwo({ isDarkLogoSame = false }) {
                               <div className="col">
                                 <div className="home-showcase__item">
                                   <div className="home-showcase__image">
-                                    <img src="images/demo/3-dark.png" alt="home-showcase" />
+                                    <img src="/images/demo/3-dark.png" alt="home-showcase" />
                                     <div className="home-showcase__buttons">
                                       <Link href={{
                                         pathname: '/index-3',
@@ -332,7 +332,7 @@ function HeaderTwo({ isDarkLogoSame = false }) {
                               <div className="col order-last">
                                 <div className="home-showcase__item">
                                   <div className="home-showcase__image">
-                                    <img src="images/demo/new.png" alt="home-showcase" />
+                                    <img src="/images/demo/new.png" alt="home-showcase" />
                                   </div>
                                   <h3 className="home-showcase__title"> <Link scroll={false} href="/#0">New Demos</Link>
                                   </h3>

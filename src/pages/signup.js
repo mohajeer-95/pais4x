@@ -129,7 +129,7 @@ const SignUp = () => {
     "Cryptos"]
   let handleNumExp = (e) => {
     console.log('AAA', e.target.value);
-    
+
     setNumExp(e.target.value)
   }
 
@@ -312,11 +312,11 @@ const SignUp = () => {
   const validateForm = () => {
     let valid = true;
     const errors = {};
-    console.log('AGE',age);
-    console.log('vipTraining',vipTraining);
-    console.log('trainingBuy',trainingBuy);
-    console.log('numExp',numExp);
-    console.log('membership',membership);
+    console.log('AGE', age);
+    console.log('vipTraining', vipTraining);
+    console.log('trainingBuy', trainingBuy);
+    console.log('numExp', numExp);
+    console.log('membership', membership);
 
     if (!age) {
       errors.age = 'Please select your age';
@@ -377,7 +377,7 @@ const SignUp = () => {
       valid = false;
     }
     if (!getMethod) {
-      errors.getMethod = 'Payment method is required';
+      errors.getMethod = 'Citizenship is required';
       valid = false;
     }
     if (!selectedState) {
@@ -413,7 +413,7 @@ const SignUp = () => {
       name: firstname,
       email: email,
       password: password,
-      payment_type: getMethod,
+      payment_type: telegramUsername,
       phone: phone,
       last_name: lastName,
       city: selectedCountry,
@@ -425,7 +425,7 @@ const SignUp = () => {
       what_made_you_get_a_paid4x: membership,
       favorite_instruments: favoriteInstruments,
       favorite_broker: favoriteBroker,
-      citizenship: telegramUsername,
+      citizenship: getMethod
     }, 'POST');
 
     if (response.status == 1) {
@@ -637,6 +637,22 @@ const SignUp = () => {
                         </div>
                       </div>
                       <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            Age
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleAge(e)} >
+                            <option>Select your Age ...</option>
+                            {AgeOptions.map((item, index) => {
+                              return < option value={age} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.age && <p style={{ color: 'red' }}>{errors.age}</p>}
+
+                        </div>
+                      </div>
+                      <div className="col-12">
                         <div>
                           <label htmlFor="account-email" className="form-label">
                             Email
@@ -671,69 +687,69 @@ const SignUp = () => {
 
 
                       <div className="col-12">
+                        <div>
+                          <label htmlFor="telegram-sername" className="form-label">
+                            Telegram Username
+                          </label>
+                          <input
+                            className="form-control"
+                            type="text"
+                            id="telegram-username"
+                            placeholder="Telegram Username"
+                            onChange={(res) => setTelegramUsername(res.target.value)}
+                          />
+                          {errors.telegramUsername && <p style={{ color: 'red' }}>{errors.telegramUsername}</p>}
+                        </div>
+                      </div>
+
+                      <div className="col-12 col-md-6">
+                        <div>
+                          <label htmlFor="first-name" className="form-label">
+                            Country
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleCountry(e)} >
+                            <option>Select country ...</option>
+                            {country.map((item, index) => {
+                              return < option value={getcountry} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.selectedState && <p style={{ color: 'red' }}>{errors.selectedState}</p>}
+
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-6">
+                        <div>
+                          <label htmlFor="last-name" className="form-label">
+                            City/Town
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleState(e)} >
+                            <option>Select City ...</option>
+                            {getstates.map((item, index) => {
+                              return <option value={selectedState} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.selectedCountry && <p style={{ color: 'red' }}>{errors.selectedCountry}</p>}
+                        </div>
+                      </div>
+
+
+                      <div className="col-12">
                         <div className="form-pass">
                           <label htmlFor="account-pass" className="form-label">
-                            Payment method
+                            Citizenship
                           </label>
 
                           <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
-                            <option>Select payment method ...</option>
-                            {paymentMethodOptions.map((item, index) => {
-                              return < option value={getMethod} key={index}>{item}</option>
+                            <option>Select Citizenship ...</option>
+                            {country.map((item, index) => {
+                              return < option value={getcountry} key={index}>{item}</option>
                             })}
                           </select>
-                          {errors.getMethod && <p style={{ color: 'red' }}>{errors.getMethod}</p>}
 
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Age
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleAge(e)} >
-                            <option>Select your Age ...</option>
-                            {AgeOptions.map((item, index) => {
-                              return < option value={age} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.age && <p style={{ color: 'red' }}>{errors.age}</p>}
-
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Did you buy any of our training courses on Udemy?
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleTrainingBuy(e)} >
-                            <option>Select Please ...</option>
-                            {trainingBuyOptions.map((item, index) => {
-                              return < option value={trainingBuy} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.trainingBuy && <p style={{ color: 'red' }}>{errors.trainingBuy}</p>}
-
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Did you receive VIP training from us?
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleVipTraining(e)} >
-                            <option>Select Please ...</option>
-                            {vipTrainingOptions.map((item, index) => {
-                              return < option value={vipTraining} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.vipTraining && <p style={{ color: 'red' }}>{errors.vipTraining}</p>}
+                         
+                           {errors.getMethod && <p style={{ color: 'red' }}>{errors.getMethod}</p>}
 
                         </div>
                       </div>
@@ -754,24 +770,6 @@ const SignUp = () => {
 
                         </div>
                       </div>
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            What made you get a PAID4X membership?
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleMembership(e)} >
-                            <option>Select Please ...</option>
-                            {membershipOptions.map((item, index) => {
-                              return < option value={membership} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.membership && <p style={{ color: 'red' }}>{errors.membership}</p>}
-
-                        </div>
-                      </div>
-
 
 
                       <div className="col-12">
@@ -809,52 +807,66 @@ const SignUp = () => {
                       </div>
 
                       <div className="col-12">
-                        <div>
-                          <label htmlFor="telegram-sername" className="form-label">
-                            Telegram Username
-                          </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            id="telegram-username"
-                            placeholder="Telegram Username"
-                            onChange={(res) => setTelegramUsername(res.target.value)}
-                          />
-                          {errors.telegramUsername && <p style={{ color: 'red' }}>{errors.telegramUsername}</p>}
-                        </div>
-                      </div>
-
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="first-name" className="form-label">
-                            Country
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            Did you buy any of our training courses on Udemy?
                           </label>
 
-                          <select className="form-control" onChange={(e) => handleCountry(e)} >
-                            <option>Select country ...</option>
-                            {country.map((item, index) => {
-                              return < option value={getcountry} key={index}>{item}</option>
+                          <select className="form-control" onChange={(e) => handleTrainingBuy(e)} >
+                            <option>Select Please ...</option>
+                            {trainingBuyOptions.map((item, index) => {
+                              return < option value={trainingBuy} key={index}>{item}</option>
                             })}
                           </select>
-                          {errors.selectedState && <p style={{ color: 'red' }}>{errors.selectedState}</p>}
+                          {errors.trainingBuy && <p style={{ color: 'red' }}>{errors.trainingBuy}</p>}
 
                         </div>
                       </div>
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="last-name" className="form-label">
-                            City/Towo
+
+                      <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            Did you receive VIP training from us?
                           </label>
 
-                          <select className="form-control" onChange={(e) => handleState(e)} >
-                            <option>Select City ...</option>
-                            {getstates.map((item, index) => {
-                              return <option value={selectedState} key={index}>{item}</option>
+                          <select className="form-control" onChange={(e) => handleVipTraining(e)} >
+                            <option>Select Please ...</option>
+                            {vipTrainingOptions.map((item, index) => {
+                              return < option value={vipTraining} key={index}>{item}</option>
                             })}
                           </select>
-                          {errors.selectedCountry && <p style={{ color: 'red' }}>{errors.selectedCountry}</p>}
+                          {errors.vipTraining && <p style={{ color: 'red' }}>{errors.vipTraining}</p>}
+
                         </div>
                       </div>
+
+
+
+                      <div className="col-12">
+                        <div className="form-pass">
+                          <label htmlFor="account-pass" className="form-label">
+                            What made you get a PAID4X membership?
+                          </label>
+
+                          <select className="form-control" onChange={(e) => handleMembership(e)} >
+                            <option>Select Please ...</option>
+                            {membershipOptions.map((item, index) => {
+                              return < option value={membership} key={index}>{item}</option>
+                            })}
+                          </select>
+                          {errors.membership && <p style={{ color: 'red' }}>{errors.membership}</p>}
+
+                        </div>
+                      </div>
+
+
+
+
+
+
+
+
+ 
                       <div className="col-12">
                         <div className="form-pass">
                           <label htmlFor="account-pass" className="form-label">

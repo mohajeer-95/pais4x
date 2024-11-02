@@ -9,7 +9,7 @@ const Contact = () => {
   return (
     <>
       <Header />
-      <PageHeader withSocialComponent={0} title="Contact Us" page="Contact Us" />
+      <PageHeader withSocialComponent={0} title="Contact" page="Contact" />
       <Partner />
       <Featured pageId={6}/>
       <ContactCard />

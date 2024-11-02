@@ -4,6 +4,7 @@ import Link from "next/link";
 import { callApiWithToken } from '../../../../public/api/api'
 import Spinner from 'react-bootstrap/Spinner';
 import { useSlider } from '../../../context/SliderContext';
+import { useRouter } from 'next/router';
 
 function Services() {
   const { brokersData, loadingBrokers } = useSlider();
@@ -15,6 +16,7 @@ function Services() {
     // getBrokers()
   }, [])
 
+  const router = useRouter();
   const getBrokers = async () => {
     var newArr = []
     setLoading(true)
@@ -32,6 +34,10 @@ function Services() {
     setLoading(false)
   }
 
+  const goToProfile = (userId) => {
+    router.push(`/broker/${userId}`);
+  };
+
   return (
     <section className="service padding-top padding-bottom">
       <div className="section-header section-header--max65">
@@ -41,7 +47,7 @@ function Services() {
       <div className="container">
         <div className="service__wrapper">
 
-          {!loading ? <div className="row g-4 align-items-center" style={{}}>
+          {!loading ? <div className="row g-4 align-items-center" >
 
 
 
@@ -50,12 +56,9 @@ function Services() {
             <div className="grid-container" style={{ width: '100%' }}>
               {brokersData?.slice(0, 10).map((item, index) => 
                 <div key={index} className="card cardb">
-                  <Link href={{
-                    pathname: '/broker',
-                    query: { name: item.name, id: item.broker_id } // the data
-                  }}>
+                  <div onClick={() => goToProfile(item.broker_id)}>
                     <img key={index} src={"https://paid4x.com/broker/public/" + item.logo} alt="Card" />
-                  </Link>
+                  </div>
                 </div>
 
               )}

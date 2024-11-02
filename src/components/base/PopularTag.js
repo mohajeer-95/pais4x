@@ -278,7 +278,7 @@ const PopularTag = () => {
         <div className="banner__bg">
           <div className="banner__bg-element">
             <Image width={0} height={0} sizes="100vw" style={{ width: '100%', height: 'auto' }}
-              src="images/banner/home1/bg.png"
+              src="/images/banner/home1/bg.png"
               alt="section-bg-element"
               className="dark d-none d-lg-block"
             />
@@ -553,7 +553,7 @@ const PopularTag = () => {
         </div>
         <div className="banner__shape">
           <span className="banner__shape-item banner__shape-item--1">
-            <img src="images/banner/home1/4.png" alt="shape icon" />
+            <img src="/images/banner/home1/4.png" alt="shape icon" />
           </span>
         </div>
 

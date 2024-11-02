@@ -61,7 +61,7 @@ export default function App({ Component, pageProps }) {
         {loading && (
           /* <!-- ===============>> Preloader start here <<================= --> */
           <div className="preloader">
-            <img src="images/global/logo.png" alt="preloader icon" />
+            <img src="/images/global/logo.png" alt="preloader icon" />
           </div>
           /* <!-- ===============>> Preloader end here <<================= --> */
         )}

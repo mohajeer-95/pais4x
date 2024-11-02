@@ -1,12 +1,10 @@
 import Link from "next/link";
-import Image from 'next/image';
 import ScrollToTop from "react-scroll-to-top";
 
 // #18e8ef color logo hajeer see
 function Footer() {
   return (
     <>
-
       <footer className="footer brand-1">
         <div className="container">
           <div className="footer__wrapper">
@@ -14,7 +12,7 @@ function Footer() {
               <div className="row gy-5 gx-4">
                 <div className="col-md-6">
                   <div className="footer__about">
-                    <Link href="/" className="footer__about-logo"><img style={{maxHeight: 44}} src="images/global/logo.png"
+                    <Link href="/" className="footer__about-logo"><img style={{maxHeight: 44}} src="/images/global/logo.png"
                       alt="Logo" /></Link>
                     <p className="footer__about-moto ">Paid4x is an intermediate between the Forex investor and the broker, when you open an account on the Forex platform through Paid4X or Link your account after that, the Forex platform will pay Paid4X an amount of money on every trade the investor did</p>
                     {/* <div className="footer__app">
@@ -22,7 +20,7 @@ function Footer() {
                         <div className="footer__app-inner">
                           <div className="footer__app-thumb">
                             <Link href="https://www.apple.com/app-store/" target="_blank" className="stretched-link">
-                              <img src="images/footer/apple.png" alt="apple-icon" />
+                              <img src="/images/footer/apple.png" alt="apple-icon" />
                             </Link>
                           </div>
                           <div className="footer__app-content">
@@ -35,7 +33,7 @@ function Footer() {
                         <div className="footer__app-inner">
                           <div className="footer__app-thumb">
                             <Link href="https://play.google.com/store" target="_blank" className="stretched-link">
-                              <img src="images/footer/play.png" alt="playstore-icon" />
+                              <img src="/images/footer/play.png" alt="playstore-icon" />
                             </Link>
                           </div>
                           <div className="footer__app-content">
@@ -78,7 +76,7 @@ function Footer() {
                         <li className="footer__linklist-item"> <Link scroll={false} href="training">VIP training</Link>
                         </li>
                         <li className="footer__linklist-item"> <Link scroll={false} href="cashback">Cashback</Link></li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="contact">Contact Us</Link> </li>
+                        <li className="footer__linklist-item"> <Link scroll={false} href="contact">Contact</Link> </li>
                       </ul>
                     </div>
                   </div>
@@ -138,7 +136,7 @@ function Footer() {
           </div>
         </div>
         <div className="footer__shape">
-          <span className="footer__shape-item footer__shape-item--1"><img src="images/footer/1.png"
+          <span className="footer__shape-item footer__shape-item--1"><img src="/images/footer/1.png"
             alt="shape icon" /></span>
           <span className="footer__shape-item footer__shape-item--2"> <span></span> </span>
         </div>

@@ -512,7 +512,7 @@ const SignUp = () => {
                       <div className="col-12 col-md-6">
                         <div>
                           <label htmlFor="last-name" className="form-label">
-                            City/Towo
+                            City/Town
                           </label>
 
 

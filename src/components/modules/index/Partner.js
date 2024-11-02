@@ -4,10 +4,19 @@ import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import Spinner from 'react-bootstrap/Spinner';
 import { callApiWithToken } from '../../../../public/api/api'
 import { useSlider } from '../../../context/SliderContext';
+import { useRouter } from 'next/router';
+
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
 const Partner = () => {
+
+  const router = useRouter();
+
+const goToProfile = (userId) => {  
+  router.push(`/broker/${userId}`);
+};
+
 
   const breakpoints = {
     576: {
@@ -66,8 +75,6 @@ const Partner = () => {
     setLoading(false)
   }
 
-
-
   return (
     <div>
       { carouselData?.length ? <div className="partner partner--gradient">
@@ -86,7 +93,7 @@ const Partner = () => {
               {carouselData.map((item, index) => (
                 <SwiperSlide key={index}>
                   <div className="swiper-slide">
-                    <div className="partner__item">
+                    <div onClick={() => goToProfile(item.broker_id)} className="partner__item">
                       <div className="partner__item-inner" style={{ flexDirection: 'row', display: 'flex' }}>
 
                         <img
@@ -99,19 +106,19 @@ const Partner = () => {
                         <div style={{ marginInline: 5, maxWidth: '28%' }}>
                           <div className="partner__rating">
                             <img
-                              src={item?.currency == 'dollar' ? "images/icon/dollar.png" : "images/icon/gold-polkadot.png"}
+                              src={item?.currency == 'dollar' ? "/images/icon/dollar.png" : "/images/icon/gold-polkadot.png"}
                               alt="rating icon"
                               className="partner__rating-icon"
                             />
                             {/* <span className="partner__rating-value">
                             {'22'}
                           </span> */}
-                            <span style={{ fontWeight: 'bold', color: 'green' }}>{item?.cashback}</span>
+                            <span style={{ fontWeight: 'bold', color: '#ceb02f' }}>{item?.cashback}</span>
 
                           </div>
                           <div className="partner__rating">
                             <img
-                              src="images/icon/star_blue.png"// Replace with your icon path
+                              src="/images/icon/star_blue.png"// Replace with your icon path
                               alt="rating icon"
                               className="partner__rating-icon"
                             />
