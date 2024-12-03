@@ -1,19 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
-import Header from '@/components/Header'
-import PageHeader from '@/components/modules/about-us/PageHeader';
-import Footer from "@/components/Footer";
-import Link from 'next/link';
-import Dropdown from 'react-bootstrap/Dropdown';
-import Form from 'react-bootstrap/Form';
-import { components } from "react-select";
-import { default as ReactSelect } from "react-select";
-import DatePicker from "react-datepicker";
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
+
 import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast'
 import { callApiWithToken } from '../../../public/api/api'
 
 const SignUp = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
 
   const [dataMethods, setDataMethods] = useState([])
   const [getMethod, setMethod] = useState(null)
@@ -161,37 +159,38 @@ const SignUp = () => {
     const errors = {};
 
     if (!companyName) {
-      errors.companyName = 'Company name is required';
+      errors.companyName = t.companyNameRequired;
       valid = false;
     }
     if (!getMethod) {
-      errors.companyType = 'Company type is required';
+      errors.companyType = t.companyTypeRequired;
       valid = false;
     }
     if (!getcountry) {
-      errors.country = 'Your country is required';
+      errors.country = t.countryRequired;
       valid = false;
     }
     if (!selectedState) {
-      errors.city = 'Your city is required';
+      errors.city = t.cityRequired;
       valid = false;
     }
     if (!date) {
-      errors.date = 'Please select date';
+      errors.date = t.dateRequired;
       valid = false;
     }
     if (!getConference) {
-      errors.language = 'Language is required';
+      errors.language = t.languageRequired;
       valid = false;
     }
     if (!seminarsNumber) {
-      errors.seminarsNumber = 'Please enter the seminars number';
+      errors.seminarsNumber = t.seminarsNumberRequired;
       valid = false;
     }
     if (!offer) {
-      errors.offer = 'Your Offer is required';
+      errors.offer = t.offerRequired;
       valid = false;
     }
+     
     setErrors(errors);
     return valid;
   };
@@ -262,9 +261,9 @@ const SignUp = () => {
               <div className="col-12">
                 <div className="account__content account__content--style1">
                   <div className="account__header">
-                    <h2>Suggest Seminars</h2>
+                    <h2>{t.suggestSeminars}</h2>
                     <p>
-                      Please contact us with the details of your request or offer.</p>
+                     {t.contactDetails}</p>
                   </div>
 
                   <form
@@ -274,176 +273,161 @@ const SignUp = () => {
                     <div className="row g-4">
 
 
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Company Name
-                          </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            id="Company-Name"
-                            onChange={(res) => setCompanyName(res.target.value)}
-                          />
-                          {errors.companyName && <p style={{ color: 'red' }}>{errors.companyName}</p>}
+                    <div className="col-12">
+        <div>
+          <label htmlFor="account-email" className="form-label">
+            {t.companyNameRequired}
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            id="Company-Name"
+            onChange={(res) => setCompanyName(res.target.value)}
+          />
+          {errors.companyName && <p style={{ color: 'red' }}>{errors.companyName}</p>}
+        </div>
+      </div>
 
-                        </div>
-                      </div>
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="account-pass" className="form-label">
+            {t.companyTypeRequired}
+          </label>
 
+          <select className="form-control" onChange={(e) => handlePaymentMethod(e)}>
+            <option>{t.companyTypeRequired}...</option>
+            {paymentMethodOptions.map((item, index) => {
+              return <option value={getMethod} key={index}>{item}</option>;
+            })}
+          </select>
+          {errors.companyType && <p style={{ color: 'red' }}>{errors.companyType}</p>}
+        </div>
+      </div>
 
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Type of company
-                          </label>
+      <div className="col-12 col-md-6">
+        <div>
+          <label htmlFor="first-name" className="form-label">
+            {t.countryRequired}
+          </label>
 
-                          <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
-                            <option>Select company type ...</option>
-                            {paymentMethodOptions.map((item, index) => {
-                              return < option value={getMethod} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.companyType && <p style={{ color: 'red' }}>{errors.companyType}</p>}
-                        </div>
-                      </div>
+          <select className="form-control" onChange={(e) => handleCountry(e)}>
+            <option>{t.countryRequired}...</option>
+            {country.map((item, index) => {
+              return <option value={getcountry} key={index}>{item}</option>;
+            })}
+          </select>
+          {errors.country && <p style={{ color: 'red' }}>{errors.country}</p>}
+        </div>
+      </div>
 
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="first-name" className="form-label">
-                            Country
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleCountry(e)} >
-                            <option>Select country ...</option>
-                            {country.map((item, index) => {
-                              return < option value={getcountry} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.country && <p style={{ color: 'red' }}>{errors.country}</p>}
-
-
-                        </div>
-                      </div>
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="last-name" className="form-label">
-                            City/Town
-                          </label>
-
-
-
-                          <select className="form-control" onChange={(e) => handleState(e)} >
-                            <option>Select City ...</option>
-                            {getstates.map((item, index) => {
-                              return <option value={selectedState} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.city && <p style={{ color: 'red' }}>{errors.city}</p>}
+      <div className="col-12 col-md-6">
+        <div>
+          <label htmlFor="last-name" className="form-label">
+            {t.cityRequired}
+          </label>
+          <select className="form-control" onChange={(e) => handleState(e)}>
+            <option>{t.cityRequired}...</option>
+            {getstates.map((item, index) => {
+              return <option value={selectedState} key={index}>{item}</option>;
+            })}
+          </select>
+          {errors.city && <p style={{ color: 'red' }}>{errors.city}</p>}
+        </div>
+      </div>
 
 
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="account-pass" className="form-label">
+            {t.plannedDate}
+          </label>
+          <input
+            onChange={() => changeDatePicker(date)}
+            className="form-control"
+            type="date"
+            data-date-format="YYYY-MM-DD"
+            name="party"
+            min="2024-04-01"
+            max="2026-04-20"
+            required
+          />
+          {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
+        </div>
+      </div>
 
-                        </div>
-                      </div>
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="account-pass" className="form-label">
+            {t.languages}
+          </label>
 
+          <select className="form-control" onChange={(e) => handleCommunicationMethod(e)}>
+            <option>{t.languages}...</option>
+            {CommunicationOptions.map((item, index) => {
+              return <option value={getConference} key={index}>{item}</option>;
+            })}
+          </select>
+          {errors.language && <p style={{ color: 'red' }}>{errors.language}</p>}
+        </div>
+      </div>
 
+      <div className="col-12">
+        <div>
+          <label htmlFor="account-email" className="form-label">
+            {t.numberOfSeminars}
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="account-email"
+            placeholder={t.numberOfSeminars}
+            required
+            onChange={(e) => setSeminarsNumber(e.target.value)}
+          />
+          {errors.seminarsNumber && <p style={{ color: 'red' }}>{errors.seminarsNumber}</p>}
+        </div>
+      </div>
 
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Planned date
-                          </label>
-                          <input
-                            onChange={() => changeDatePicker(date)}
-                            className="form-control"
-                            type="date"
-                            data-date-format="YYYY-MM-DD"
-                            name="party"
-                            min="2024-04-01"
-                            max="2026-04-20"
-                            required />
-                          {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
+      <div className="col-12">
+        <div>
+          <label htmlFor="account-email" className="form-label">
+            {t.yourOffer}
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="account-email"
+            placeholder={t.yourOffer}
+            required
+            onChange={(e) => setOffer(e.target.value)}
+          />
+          {errors.offer && <p style={{ color: 'red' }}>{errors.offer}</p>}
+        </div>
+      </div>
 
-                        </div>
-                      </div>
-
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Languages
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleCommunicationMethod(e)} >
-                            <option>Select languages ...</option>
-                            {CommunicationOptions.map((item, index) => {
-                              return < option value={getConference} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.language && <p style={{ color: 'red' }}>{errors.language}</p>}
-
-                        </div>
-                      </div>
-
-
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Number of seminars
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="account-email"
-                            placeholder="Enter number of seminars ..."
-                            required
-                            onChange={(e) => setSeminarsNumber(e.target.value)}
-                          />
-                          {errors.seminarsNumber && <p style={{ color: 'red' }}>{errors.seminarsNumber}</p>}
-
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Your offer (in USD)
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="account-email"
-                            placeholder="Enter Your offer (in USD) ..."
-                            required
-                            onChange={(e) => setOffer(e.target.value)}
-                          />
-                          {errors.offer && <p style={{ color: 'red' }}>{errors.offer}</p>}
-
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Subjects
-                          </label>
-                          <textarea
-                            className="form-control"
-                            type="text"
-                            id="Company-Name"
-                            placeholder="technical analysis, trading techniques, risk management, other "
-                            onChange={(e) => setSubject(e.target.value)}
-                          />
-                          {errors.subject && <p style={{ color: 'red' }}>{errors.subject}</p>}
-
-                        </div>
-                      </div>
+      <div className="col-12">
+        <div>
+          <label htmlFor="account-email" className="form-label">
+            {t.subjects}
+          </label>
+          <textarea
+            className="form-control"
+            type="text"
+            id="Company-Name"
+            placeholder={t.subjects}
+            onChange={(e) => setSubject(e.target.value)}
+          />
+          {errors.subject && <p style={{ color: 'red' }}>{errors.subject}</p>}
+        </div>
+      </div>
 
                     </div>
 
-                    {!isLoading && !successSubmited &&
-                      <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">
-                        Submit Now
-                      </button>}
+                    {!isLoading && !successSubmited && (
+        <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">
+          {t.submitNow}
+        </button>
+      )}
                     {errors.response && <p style={{ color: 'red' }}>{errors.response}</p>}
 
                     {isLoading && !successSubmited &&
@@ -463,11 +447,11 @@ const SignUp = () => {
                             className="rounded me-2"
                             alt=""
                           />
-                          <strong className="me-auto">Success</strong>
-                        </Toast.Header>
+      <strong className="me-auto">{t.success}</strong>
+      </Toast.Header>
                         <Toast.Body className={'text-white'}>
-                          Hello, your message is sent.
-                        </Toast.Body>
+        {t.messageSent}
+      </Toast.Body>
                       </Toast>
                     </>}
                   </form>

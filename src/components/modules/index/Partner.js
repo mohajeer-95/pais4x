@@ -5,17 +5,21 @@ import Spinner from 'react-bootstrap/Spinner';
 import { callApiWithToken } from '../../../../public/api/api'
 import { useSlider } from '../../../context/SliderContext';
 import { useRouter } from 'next/router';
+import { useBroker } from '@/context/BrokerContext';
 
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
 const Partner = () => {
+  const { updateBrokerData } = useBroker();
 
   const router = useRouter();
 
-const goToProfile = (userId) => {  
-  router.push(`/broker/${userId}`);
-};
+  const goToProfile = (broker) => {
+    updateBrokerData(broker); // Save broker data in context and localStorage
+    router.push('/broker-profile'); // Navigate without the ID in the URL
+  };
+
 
 
   const breakpoints = {

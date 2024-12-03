@@ -2,11 +2,15 @@
 import React, { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import PageHeader from '@/components/modules/about-us/PageHeader';
-import Link from "next/link";
+import translations from '@/translations';
+import { useRtl } from '@/context/RtlContext';
 import Footer from "@/components/Footer";
 import { getCookie } from 'cookies-next';
 
 const ResetPass = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -106,7 +110,7 @@ const ResetPass = () => {
   return (
     <>
       <Header />
-      <PageHeader withSocialComponent={0} title="Change Password" page="Change Password" />
+      <PageHeader withSocialComponent={0} title={t.changePassword} page={t.changePassword}/>
       <section className="account padding-top padding-bottom sec-bg-color2">
         <div className="container">
           <div
@@ -117,12 +121,11 @@ const ResetPass = () => {
             <div className="row g-4">
               <div className="col-lg-12">
                 <div className="account__content account__content--style1">
-                  <div className="account__header">
-                    <h2>Change Your Password</h2>
-                    <p>
-                      Hey there! Here you can change your password
-                    </p>
-                  </div>
+                <div className="account__header">
+      <h2>{t.changePasswordTitle}</h2>
+      <p>{t.changePasswordDescription}</p>
+    </div>
+
 
                   <form
                     className="account__form needs-validation"

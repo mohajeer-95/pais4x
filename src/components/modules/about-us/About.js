@@ -1,9 +1,11 @@
-/* eslint-disable react/no-unescaped-entities */
-// hajeer About content
-import Link from "next/link";
-import CountUp from "react-countup";
+
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 
 function About() {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
   return (
     <section className="about about--style1 ">
       <div className="container">
@@ -40,10 +42,10 @@ function About() {
                 data-aos-duration="800"
               >
                 <div className="about__content-inner">
-                  <h2>
-                    Meet <span>our company</span> unless miss the opportunity{" "}
-                  </h2>
-
+                <h2>
+      {t.meetOurCompany}
+    </h2>
+{/* translateBack  */}
                   <p className="mb-0" style={{ paddingBottom: 20 }}>
                     {'  Paid4X is a brand created by veteran analyst, coach & trader Munther Marji in 2023, after spending almost 23 years in the business. Mr. Marji started working in the FX/CFD business as a junior broker in Dec 2000, and filled almost every position possible from junior broker up to a general manager of a brokerage company. He worked with brokers & financial market educational establishments from Switzerland, Cyprus, Turkey, South Korea, Saudi Arabia, Bahrain, Egypt, Syria & his homeland Jordan.'}
                   </p>

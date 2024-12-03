@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
+import { useRtl } from '@/context/RtlContext';
+import translations from '../translations'; 
 import Header from '@/components/Header'
 import PageHeader from '@/components/modules/about-us/PageHeader';
 import Footer from "@/components/Footer";
@@ -14,13 +16,8 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBInput,
-  MDBRow,
-  MDBTable,
-  MDBTableBody,
-  MDBTableHead,
   MDBBtn,
 } from "mdb-react-ui-kit";
-
 import { callApiWithToken } from '../../public/api/api'
 import Spinner from 'react-bootstrap/Spinner';
 import { setCookie, getCookie } from 'cookies-next';
@@ -29,6 +26,9 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 
 
 const SignUp = () => {
+  const { language, toggleDirection } = useRtl();
+  const t = translations[language];
+
   const [staticModal, setStaticModal] = useState(true);
 
   const toggleOpen = () => setStaticModal(!staticModal);
@@ -128,38 +128,30 @@ const SignUp = () => {
     "ETFs",
     "Cryptos"]
   let handleNumExp = (e) => {
-    console.log('AAA', e.target.value);
-
     setNumExp(e.target.value)
   }
 
   let handleVipTraining = (e) => {
-    console.log('AAA', e.target.value);
 
     setVipTraining(e.target.value)
   }
 
   let handleFavoriteInstruments = (e) => {
-    console.log('AAA', e.target.value);
     setFavoriteInstruments(e.target.value)
   }
 
   let handleTrainingBuy = (e) => {
-    console.log('AAA', e.target.value);
     setTrainingBuy(e.target.value)
   }
   let handleAge = (e) => {
-    console.log('AAA', e.target.value);
     setAge(e.target.value)
   }
 
   let handleMembership = (e) => {
-    console.log('AAA', e.target.value);
     setMembership(e.target.value)
   }
 
   let handlePaymentMethod = (e) => {
-    console.log('AAA', e.target.value);
     setMethod(e.target.value)
   }
   ///////////////////////////////////////////////////////////////////////////////////////////
@@ -240,6 +232,80 @@ const SignUp = () => {
     </ul>
   `;
 
+  const termsContentAr = `
+  <h2>شروط وأحكام PAID4X</h2>
+  <p>بمجرد الاستمرار في التصفح واستخدام Paid4X.com، أنت توافق قانونياً على الالتزام بشروط وأحكام الاستخدام التي يتم تحديثها دائماً لتنظم علاقتك مع موقع Paid4X وخدماته.</p>
+  
+  <p>يمكن تحديث هذه الشروط في أي وقت، ويجب عليك التأكد من التحديثات بشكل منتظم عن طريق الاطلاع على تاريخ آخر تحديث.</p>
+  
+  <p>حيثما تُستخدم كلمة "الموقع" أو "Paid4X.com" فهي تشير إلى الموقع ومالكيه، مديريه، موظفيه، وكافة المرتبطين به، وأي كيان آخر مرتبط بالموقع بأي شكل من الأشكال.
+  </p>
+
+  <p>الرجاء منك قراءة واستعاب هذه الشروط والأحكام بعناية، والموافقة عليها قبل استخدام الموقع.</p>
+  
+  <h3>الأحكام العامة للمستخدم</h3>
+  <ul>
+    <li>يجب أن تكون بلغت العمر القانوني 18 عاما أو أكثر لاستخدام الموقع. أنت تضمن أنك بالفعل تبلغ من العمر 18 عامًا أو أكثر وقت التسجيل لعضوية على Paid4X.com، وأنك قادر بشكل كامل على الالتزام بشروط وأحكام هذا العقد، وأي إضافات أو تحديثات مستقبلية قد تكون.</li>
+    <li>العضوية مجانية، ولا يفرض موقع Paid4X.com أي رسوم عضوية. يمكنك التسجيل واستخدام العروض المعلن عنها على الموقع بعضويتك المجانية، ولن نفرض أي رسوم عضوية. وبالتالي، يقر المستخدم بأنه لا توجد سياسة لاسترداد الرسوم يمكنه تقديمها للموقع لاسترداد الأموال.</li>
+    <li>العضوية متاحة لأي فرد أو كيان من أي بلد أو إقليم يمكنه فتح، والتحقق من، وتمويل حساب تداول واحد على الأقل بنجاح مع واحد من الوسطاء المروجين على الموقع وقت التسجيل. ومع ذلك، يحتفظ موقع Paid4X.com بالحق في تعليق أو إلغاء عضوية أي مستخدم بشكل مؤقت أو دائم وفقًا لتقديره الخاص، دون تحمل أي مسؤولية قانونية أو مالية، في حالة وجود سبب للاعتقاد بأن المستخدم قد انتهك الشروط والأحكام، أو أنه يسبب ضررًا للموقع أو لأعمال Paid4X.</li>
+    <li>سيتم إلغاء العضويات التي لم تُستخدم لمدة 365 يومًا تقويميًا، وسيتم الاحتفاظ برصيد المحفظة الخاص بالمستخدم لمدة 90 يومًا إضافيًا، وسيتم بذل كل الجهود الممكنة للاتصال بالمستخدم وتحويل الرصيد له. بعد انتهاء فترة الـ 90 يومًا، قد لا يكون الرصيد متاحًا للسحب.</li>
+  </ul>
+
+  <h3>العلاقة المالية والمسؤولية</h3>
+  <ul>
+    <li>يقر المستخدم بفهمه أن موقع Paid4X.com لا يقدم أي خدمات تداول، وأن هذا الموقع هو موقع ترويجي فقط للوسطاء الذين يقدمون خدمات التداول بأنفسهم، وأن العلاقة المالية التي تشمل تحويل رأس المال التجاري سواء في شكل ودائع أو سحوبات أو أرباح أو خسائر، تُنشأ فقط بين المستخدم والوسيط أو الوسطاء المختارين، وأن Paid4X ليست بأي حال من الأحوال جزءًا من هذه العلاقة التجارية.</li>
+    <li>يقر المستخدم أيضًا بأنه لم يقم بتحويل أي مبلغ من رأس المال التجاري إلى Paid4X.com، أو مالكيه، أو مديريه، أو موظفيه، أو أي كيان أو فرد مرتبط بالموقع بأي شكل من الأشكال، وعلى هذا الأساس القانوني، لا يمكن للمستخدم تحميل الموقع أو أي من مالكيه أو مديريه أو موظفيه أو أي كيان أو فرد مرتبط بالموقع بأي شكل من الأشكال، المسؤولية عن خسارة رأس المال لأي سبب كان، سواء كان ذلك متعلقًا بالتداول أو غيره.</li>
+    <li>من واجب المستخدم وحده أن يقوم بالعناية الواجبة وتقييم المخاطر المرتبطة بالتداول بطبيعتها عند فتح حساب أو عدة حسابات مع واحد أو أكثر من الوسطاء المروجين على Paid4X.com.</li>
+    <li>أي نوع من التداول، سواء كان ماليًا أو غيره، يأتي مع إمكانية كبيرة للتعرض لخسائر مالية. يقر المستخدم بأنه يفهم تمامًا المخاطر المرتبطة بتداول حساب CFD ذو رافعة مالية، أو حساب فوركس، أو أنواع أخرى من الحسابات التي يمكن فتحها مع أي من الوسطاء المروجين على الموقع.</li>
+    <li>يقر المستخدم ويفهم أن الالتزام المالي الوحيد الذي يقع على عاتق Paid4X.com تجاه المستخدم هو دفع الكاش باك المعلن لكل وحدة من الحجم المتداول على حسابات المستخدم.</li>
+    <li>يفهم المستخدم أن الكاش باك محدود بنسبة معينة من بعض الرسوم الترويجية التي يتلقاها الموقع من الوسطاء المروجين، ويقر بأن هذه النسبة تقرر وفقًا لتقدير Paid4X.com ويمكن تغييرها من قبل الموقع في أي وقت مع أو بدون إشعار مسبق.</li>
+    <li>يقر المستخدم بأن الكاش باك يُدفع فقط للحسابات المؤهلة، والتي يجب فتحها باستخدام الروابط المحددة على الموقع، وليس باستخدام الروابط على موقع الوسيط أو أي موقع آخر بخلاف Paid4X.com. يقر المستخدم بأنه إذا لم يتم فتح الحساب من خلال Paid4X.com، فلا يمكن للمستخدم المطالبة بدفع الكاش باك بأي شكل من الأشكال.</li>
+    <li>يقر المستخدم بأن الكاش باك يُدفع فقط للأدوات المؤهلة التي يدفع الوسيط حوافز ترويجية/تسويقية لتداولها. وفقًا لسياسة الترويج والشراكة للوسيط، قد يتم دفع حوافز لبعض الأدوات أكثر من غيرها أو لا تدفع إطلاقًا. يقر المستخدم بأنه إذا لم يدفع الوسيط رسومًا ترويجية لـ Paid4X.com لتداول هذه الأدوات، فلا يمكن للمستخدم المطالبة بدفع الكاش باك بأي شكل من الأشكال.</li>
+    <li>يقر المستخدم بأن Paid4X.com يملك الحق في إزالة وسيط من الموقع وإيقاف دفع الكاش باك للمستخدمين الذين لديهم حسابات مع هذا الوسيط في أي وقت ولأي سبب يراه الموقع مناسبًا وفقًا لتقديره الخاص. يقر المستخدم بأنه بمجرد إزالة الوسيط من قبل Paid4X.com، تنتهي مسؤولية الموقع في دفع الكاش باك على التداول في حسابات المستخدم المفتوحة مع هذا الوسيط على الفور.</li>
+    <li>في أي حالة وبلا استثناء على الإطلاق، يقر المستخدم بأنه إذا لم يدفع الوسيط رسومًا تحفيزية لـ Paid4X.com عن الصفقات التي أُغلقت على حسابات المستخدم، فلا يمكن للمستخدم المطالبة بدفع الكاش باك عن هذه الصفقات.</li>
+    <li>يقر المستخدم بالفهم الكامل أن الالتزام المالي الوحيد الذي يقع على عاتق Paid4X.com تجاه المستخدم هو دفع نسبة معينة من الرسوم الترويجية التي يتلقاها Paid4X.com من الوسطاء المروجين، وفقط عن التداولات على حسابات المستخدم والأدوات المؤهلة، دون أن يمتد ذلك إلى رسوم أخرى أو إلى حسابات مستخدمين آخرين بأي شكل من الأشكال.</li>
+    <li>يقر المستخدم بأنه إذا كان لأي سبب من الأسباب، رفض الوسيط الذي لديه حساب معه دفع الرسوم الترويجية المستحقة على الصفقات التي أغلقها المستخدم، فإن Paid4X.com يتم إعفاؤه تمامًا من أي مسؤولية مالية أو قانونية تجاه المستخدم. قد يكون سبب ذلك: نزاع بين Paid4X.com والوسيط، أو خلاف حول أحجام التداول على حسابات المستخدم، أو فشل الوسيط في تحويل الرسوم إلى Paid4X.com، أو إفلاس الوسيط، أو أي سبب آخر كان.</li>
+    <li>يقر المستخدم بموافقته على قيام Paid4X.com بخصم رسوم المعاملات للكاش باك، جزئيًا أو كليًا، من مبلغ سحب الكاش باك أو من رصيد محفظة المستخدم على الموقع إذا لزم الأمر.</li>
+  </ul>
+  
+  <h3>المعلومات والبيانات على الموقع</h3>
+  <ul>
+    <li>المعلومات المنشورة على الموقع هي لأغراض إعلامية فقط. Paid4X.com، ومالكيه، ومديريه، وموظفيه، أو أي كيان أو فرد مرتبط بالموقع بأي شكل من الأشكال، ليسوا مستشارين ماليين ولا يدعون ذلك.</li>
+    <li>لا يعتزم Paid4X.com تقديم أي نصيحة استثمارية أو مالية من أي نوع، سواء بشكل مباشر أو غير مباشر أو بواسطة وكيل، في أي جزء من الموقع، بما في ذلك أي نوع من المعلومات أو الوسائط. يقر المستخدم بفهمه الكامل بأن أي محتوى على الموقع لا يجب أن يُعتبر بديلاً عن النصيحة المالية المهنية.</li>
+    <li>المعلومات المنشورة على الموقع يتم توفيرها من قبل الوسطاء المروجين ويتم التحقق من دقتها وقت النشر من قبل Paid4X.com والوسيط. يبذل Paid4X.com كل الجهود الممكنة لضمان أن جميع المعلومات على الموقع دقيقة وصحيحة بقدر ما يمتد علمنا، لكننا لا نقدم أي ضمان بأن المعلومات دقيقة بنسبة 100٪ أو محدثة وخالية من الأخطاء. يوافق المستخدم على عدم تحميل Paid4X.com المسؤولية عن أي عدم دقة أو أخطاء أو معلومات قديمة موجودة على الموقع.</li>
+    <li>جميع القرارات الاستثمارية التي تُتخذ بالاعتماد على المعلومات أو البيانات أو الوسائط أو الإعلانات المتوفرة على Paid4X.com، أو نتيجة فتح حسابات تداول باستخدام الموقع أو العروض التي يروج لها، هي بالكامل وعلى مسؤوليتك الخاصة.</li>
+    <li>Paid4X.com، ومالكيه، ومديريه، وموظفيه، أو أي كيان أو فرد مرتبط بالموقع بأي شكل من الأشكال، لن يكونوا مسؤولين عن أي خسائر قد يتكبدها المستخدم نتيجة فتح حساب واحد أو أكثر مع واحد أو أكثر من الوسطاء المروجين على الموقع.</li>
+    <li>يقر المستخدم بأنه وحده المسؤول عن تحديد ما إذا كان أي منتج أو خدمة مروج لها على الموقع مناسبة لاستثماراته المالية والأهداف التي يسعى لتحقيقها من تلك الاستثمارات.</li>
+    <li>بعض الوسطاء يقدمون ميزات التداول الاجتماعي، بما في ذلك نسخ صفقات مزودي الخدمات. المستخدم الذي يقرر استخدام هذه الخدمات، يقوم بذلك على مسؤوليته الخاصة والحصرية. لا يمكن تحميل أي طرف آخر المسؤولية عن الخسائر المحققة، لا مزود خدمة النسخ، ولا الوسيط الذي لدى المستخدم حساب معه، وبالتأكيد ليس Paid4X.com أو أي كيان مرتبط بالموقع بأي شكل من الأشكال.</li>
+    <li>دقة المعلومات الواردة في الإعلانات التي تشتريها مواقع أو شركات أو وسطاء أو مقدمو خدمات من أي نوع على Paid4X.com لا يمكن تأكيدها من قبلنا. في حالة وجود عرض أو لافتة أو فيديو أو رابط أو مستند أو مقال أو نص لأي إعلان من أطراف أخرى يتضمن معلومات غير دقيقة أو بيانات مزورة، لا يتحمل Paid4x.com أي مسؤولية مالية أو قانونية. تقع على عاتق المستخدم وحده مسؤولية تقييم دقة المعلومات والبيانات المقدمة في جميع الإعلانات قبل شراء أي منتجات أو الاشتراك في أي خدمات معلنة على موقعنا.</li>
+    <li>جميع المحتويات المنشورة على الموقع، بما في ذلك على سبيل المثال لا الحصر العروض، مبالغ الكاش باك، المكافآت، وجميع المحتويات والمعلومات والبيانات الأخرى، قابلة للتغيير دون إشعار مسبق.</li>
+    <li>يروج Paid4X.com روابط لمواقع أخرى، سواء من خلال إعلانات مقدمي الخدمات من أطراف ثالثة أو الروابط المباشرة لمواقع شركائنا. في جميع الحالات، لا يتحمل Paid4X.com أي مسؤولية للتحقق من دقة المحتوى على المواقع التي تؤدي إليها هذه الروابط.</li>
+    <li>إلى أقصى حد مسموح به بموجب القانون المعمول به، وبدون استثناء، لن يكون Paid4X.com أو أي كيان مرتبط بالموقع مسؤولين قانونيًا أو ماليًا عن أي خسائر أو أضرار مباشرة أو غير مباشرة أو نفقات أو أي نوع من التكاليف أو أي شكل آخر من الخسائر المالية التي قد تنشأ بشكل مباشر أو غير مباشر نتيجة استخدام أي نوع من المحتويات المنشورة على الموقع أو من خلال الاتصالات مع المستخدم.</li>
+  </ul>
+
+  <h3>الخصوصية</h3>
+  <ul>
+    <li>بتسجيلك للحصول على عضوية مجانية، يقر المستخدم بموافقته على مشاركة Paid4X.com للمعلومات المقدمة، بما في ذلك على سبيل المثال لا الحصر، الاسم الكامل، البريد الإلكتروني، رقم الهاتف وبلد الإقامة مع الوسطاء المعلن عنهم أو الشركاء الذين يتعامل معهم Paid4X.com أو أي طرف ثالث بما في ذلك الجهات الحكومية والمسؤولين القانونيين إذا طُلب منهم ذلك.</li>
+    <li>لا يلتزم Paid4X.com بالحفاظ على سرية المستخدم بخصوص المعلومات الشخصية أو غيرها المقدمة على الموقع. يقر المستخدم بأن Paid4X.com غير ملزم بالحفاظ على بيانات المستخدم، وأن المستخدم يوافق على سياسة الخصوصية الحالية المطبقة، والتي بموجبها لا يمكن تحميل Paid4X.com المسؤولية أو طلب إيقاف مشاركة معلومات الأعضاء مع شركاء الأعمال أو المسؤولين الحكوميين.</li>
+    <li>يقر المستخدم ويفهم أنه مسؤول عن الحفاظ على سرية كلمة المرور واسم المستخدم لعضويته.</li>
+    <li>يقر المستخدم ويوافق على أن عنوان البريد الإلكتروني المقدم سيتم استخدامه من قبل Paid4X.com لإرسال المراسلات عند الحاجة، ويعتبر الوسيلة الرئيسية للتواصل مع المستخدم. كما يتحمل المستخدم مسؤولية تحديث هذا العنوان عند حدوث أي تغيير.</li>
+  </ul>
+
+  <h3>القانون والنزاعات</h3>
+  <ul>
+    <li>في حال تبين أن أي مادة أو جزء من هذه الشروط والأحكام غير قابلة للتنفيذ، فلن تتأثر صلاحية أو قابلية تنفيذ باقي أجزاء الشروط والأحكام.</li>
+    <li>عند استخدام الموقع، تشهد بأنك ستلتزم بجميع القوانين المعمول بها التي تنطبق على استثمارك واستخدامك لخدماتنا.</li>
+    <li>أنت مسؤول عن جميع الضرائب (إن وجدت) المرتبطة بالخدمة. سيتم اعتبار جميع المدفوعات لك فيما يتعلق بالخدمة شاملة للضرائب (إن وجدت) ولن يتم تعديلها.</li>
+    <li>في حالة نشوء نزاع، يوافق الطرفان على محاولة حل النزاع بحسن نية ووفقًا للممارسات التجارية العامة في المجال المحدد.</li>
+    <li>إذا استمر النزاع واختار Paid4X.com اتخاذ إجراءات قانونية، يوافق المستخدم بشكل لا رجعة فيه على:</li>
+    <ul>
+      <li>أ. أن تكون محاكم المملكة الأردنية الهاشمية لها الولاية القضائية الحصرية لتحديد أي إجراءات.</li>
+      <li>ب. التنازل عن أي اعتراض قد يكون لدى المستخدم في أي وقت على رفع أي إجراءات في تلك المحاكم.</li>
+      <li>ج. يوافق على عدم الادعاء بأن هذه الإجراءات قد رفعت في محكمة غير مناسبة أو أن هذه المحكمة ليس لها اختصاص على المستخدم.</li>
+    </ul>
+  </ul>
+`;
+
 
 
   const [data, setData] = useState([])
@@ -252,6 +318,9 @@ const SignUp = () => {
   const [token, setToken] = useState('')
 
   useEffect(() => {
+    console.log('translations[language]',language);
+    // console.log('sssssssssssssssssssssss',translations);
+    
     if (getCookie('token')) {
       window.location.href = '/';
       return
@@ -263,28 +332,22 @@ const SignUp = () => {
     promise.then((response) => {
       return response.json()
     }).then((pdata) => {
-      // console.log(pdata)
       // var pdata = JSON.stringify(pdata)
       setData(data => pdata)
     }).catch((error) => {
-      console.log(error)
     })
   }, [])
-  // console.log(data)
 
   const country = [... new Set(data.map((item) => {
     return item.country
   }))]
   country.sort()
-  // console.log(data)
 
   let handleCountry = (e) => {
-    console.log('e.target.value', e.target.value);
     setSelectedCountry(e.target.value)
     let states = data.filter((states) => {
       return states.country === e.target.value
     })
-    // console.log(states)
 
     states = [...new Set(states.map((item) => {
       return item.subcountry
@@ -293,8 +356,6 @@ const SignUp = () => {
     setStates(getstates => states)
   }
   let handleState = (e) => {
-    console.log('handleState', e.target.value);
-
     setSelectedState(e.target.value)
     let cities = data.filter((city) => {
       return city.subcountry === e.target.value
@@ -302,7 +363,6 @@ const SignUp = () => {
     cities = [...new Set(cities.map((item) => {
       return item.name
     }))]
-    // console.log(cities)
     cities.sort()
     setCities(getcities => cities)
   }
@@ -312,12 +372,6 @@ const SignUp = () => {
   const validateForm = () => {
     let valid = true;
     const errors = {};
-    console.log('AGE', age);
-    console.log('vipTraining', vipTraining);
-    console.log('trainingBuy', trainingBuy);
-    console.log('numExp', numExp);
-    console.log('membership', membership);
-
     if (!age) {
       errors.age = 'Please select your age';
       valid = false;
@@ -429,8 +483,6 @@ const SignUp = () => {
     }, 'POST');
 
     if (response.status == 1) {
-      console.log('11111111111111111');
-
       await setToken(response.access_token.token)
       await setReference(response.reference)
       // await setAuthOtp(response.otp)
@@ -438,22 +490,18 @@ const SignUp = () => {
 
 
     } else if (response.email) {
-      console.log('22222222222222222');
-
       setLoading(false)
       errors.response = response.email[0]
       setErrors(errors);
     } else {
       setLoading(false)
-      console.log('3333333333333333');
       errors.response = 'Something is wrong'
       setErrors(errors);
     }
   };
 
   const loginSuccess = async (token) => {
-    console.log('111111111111111111otp', otp);
-    console.log('3333333333333333333referance', reference);
+
 
 
     // setCookie('token', token);
@@ -466,9 +514,6 @@ const SignUp = () => {
   }
 
   const sendOtp = async () => {
-    console.log('otp', otp);
-    console.log('reference', reference);
-    console.log('token', token);
     setOtpError('')
 
     if (!otp) {
@@ -484,13 +529,11 @@ const SignUp = () => {
       reference: reference
     }, 'POST', token);
 
-    console.log('OTP response >>', response);
     if (response.status == 1) {
       // setOtpLoading(false)
       setOtpSuccess(true)
       setCookie('token', token);
       setTimeout(() => {
-        console.log('GoOOOOooolLLLLLL');
         window.location.href = '/';
       }, 4000);
     } else {
@@ -578,7 +621,7 @@ const SignUp = () => {
       </>
 
       <Header />
-      <PageHeader withSocialComponent={0} title="Register" text="Register" />
+      <PageHeader withSocialComponent={0} title={t.register} text={t.register} />
       <section className="account padding-top padding-bottom sec-bg-color2">
         <div className="container">
           <div
@@ -590,11 +633,8 @@ const SignUp = () => {
               <div className="col-12">
                 <div className="account__content account__content--style1">
                   <div className="account__header">
-                    <h2>Create Your Account</h2>
-                    <p>
-                      Hey there! Ready to join the party? We just need a few
-                      details from you to get started. Let's do this!
-                    </p>
+                    <h2>{t.CreateYourAccount}</h2>
+                    <p>{t.readyToJoin}</p>
                   </div>
 
 
@@ -605,378 +645,378 @@ const SignUp = () => {
                     noValidate
                   >
                     <div className="row g-4">
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="first-name" className="form-label">
-                            First name
-                          </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            id="first-name"
-                            placeholder="Ex. Jhon"
-                            onChange={(res) => setFirstname(res.target.value)}
-                          />
-                          {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}
-                        </div>
-                      </div>
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="last-name" className="form-label">
-                            Last name
-                          </label>
-                          <input
-                            required
-                            className="form-control"
-                            type="text"
-                            id="last-name"
-                            placeholder="Ex. Doe"
-                            onChange={(res) => setLastName(res.target.value)}
-                          />
-                          {errors.lastName && <p style={{ color: 'red' }}>{errors.lastName}</p>}
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Age
-                          </label>
+                    {/* <h2>{t.CreateYourAccount}</h2> */}
 
-                          <select className="form-control" onChange={(e) => handleAge(e)} >
-                            <option>Select your Age ...</option>
-                            {AgeOptions.map((item, index) => {
-                              return < option value={age} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.age && <p style={{ color: 'red' }}>{errors.age}</p>}
+<div className="col-12 col-md-6">
+  <div>
+    <label htmlFor="first-name" className="form-label">
+      {t.firstName}
+    </label>
+    <input
+      className="form-control"
+      type="text"
+      id="first-name"
+      placeholder={t.enterYourFirstName}
+      onChange={(res) => setFirstname(res.target.value)}
+    />
+    {errors.firstname && <p style={{ color: 'red' }}>{t.errorFirstName}</p>}
+  </div>
+</div>
 
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="account-email"
-                            placeholder="Enter your email"
-                            required
-                            onChange={(res) => setEmail(res.target.value)}
-                          />
-                          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Phone
-                          </label>
-                          <input
-                            type="phone"
-                            className="form-control"
-                            id="account-phone"
-                            placeholder="Enter your Phone Number"
-                            required
-                            onChange={(res) => setPhone(res.target.value)}
-                          />
-                          {errors.phone && <p style={{ color: 'red' }}>{errors.phone}</p>}
-                        </div>
-                      </div>
+<div className="col-12 col-md-6">
+  <div>
+    <label htmlFor="last-name" className="form-label">
+      {t.lastName}
+    </label>
+    <input
+      required
+      className="form-control"
+      type="text"
+      id="last-name"
+      placeholder={t.enterYourLastName}
+      onChange={(res) => setLastName(res.target.value)}
+    />
+    {errors.lastName && <p style={{ color: 'red' }}>{t.errorLastName}</p>}
+  </div>
+</div>
 
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="account-pass" className="form-label">
+      {t.age}
+    </label>
+    <select className="form-control" onChange={(e) => handleAge(e)}>
+      <option>{t.selectYourAge}</option>
+      {AgeOptions.map((item, index) => (
+        <option value={age} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.age && <p style={{ color: 'red' }}>{t.errorAge}</p>}
+  </div>
+</div>
 
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="telegram-sername" className="form-label">
-                            Telegram Username
-                          </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            id="telegram-username"
-                            placeholder="Telegram Username"
-                            onChange={(res) => setTelegramUsername(res.target.value)}
-                          />
-                          {errors.telegramUsername && <p style={{ color: 'red' }}>{errors.telegramUsername}</p>}
-                        </div>
-                      </div>
+<div className="col-12">
+  <div>
+    <label htmlFor="account-email" className="form-label">
+      {t.email}
+    </label>
+    <input
+      type="email"
+      className="form-control"
+      id="account-email"
+      placeholder={t.enterYourEmail}
+      required
+      onChange={(res) => setEmail(res.target.value)}
+    />
+    {errors.email && <p style={{ color: 'red' }}>{t.errorEmail}</p>}
+  </div>
+</div>
 
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="first-name" className="form-label">
-                            Country
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleCountry(e)} >
-                            <option>Select country ...</option>
-                            {country.map((item, index) => {
-                              return < option value={getcountry} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.selectedState && <p style={{ color: 'red' }}>{errors.selectedState}</p>}
-
-                        </div>
-                      </div>
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="last-name" className="form-label">
-                            City/Town
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleState(e)} >
-                            <option>Select City ...</option>
-                            {getstates.map((item, index) => {
-                              return <option value={selectedState} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.selectedCountry && <p style={{ color: 'red' }}>{errors.selectedCountry}</p>}
-                        </div>
-                      </div>
-
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Citizenship
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
-                            <option>Select Citizenship ...</option>
-                            {country.map((item, index) => {
-                              return < option value={getcountry} key={index}>{item}</option>
-                            })}
-                          </select>
-
-                         
-                           {errors.getMethod && <p style={{ color: 'red' }}>{errors.getMethod}</p>}
-
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Trading Experience?
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleNumExp(e)} >
-                            <option>Select Please ...</option>
-                            {numExpOptions.map((item, index) => {
-                              return < option value={numExp} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.numExp && <p style={{ color: 'red' }}>{errors.numExp}</p>}
-
-                        </div>
-                      </div>
-
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Favorite Instruments
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleFavoriteInstruments(e)} >
-                            <option>Select Please ...</option>
-                            {favoriteInstrumentsOptions.map((item, index) => {
-                              return < option value={favoriteInstruments} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.favoriteInstruments && <p style={{ color: 'red' }}>{errors.favoriteInstruments}</p>}
-
-                        </div>
-                      </div>
-
-
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="favorite-broker" className="form-label">
-                            Favorite Broker
-                          </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            id="favorite-broker"
-                            placeholder="Favorite Broker"
-                            onChange={(res) => setFavoriteBroker(res.target.value)}
-                          />
-                          {errors.favoriteBroker && <p style={{ color: 'red' }}>{errors.favoriteBroker}</p>}
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Did you buy any of our training courses on Udemy?
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleTrainingBuy(e)} >
-                            <option>Select Please ...</option>
-                            {trainingBuyOptions.map((item, index) => {
-                              return < option value={trainingBuy} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.trainingBuy && <p style={{ color: 'red' }}>{errors.trainingBuy}</p>}
-
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Did you receive VIP training from us?
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleVipTraining(e)} >
-                            <option>Select Please ...</option>
-                            {vipTrainingOptions.map((item, index) => {
-                              return < option value={vipTraining} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.vipTraining && <p style={{ color: 'red' }}>{errors.vipTraining}</p>}
-
-                        </div>
-                      </div>
+<div className="col-12">
+  <div>
+    <label htmlFor="account-phone" className="form-label">
+      {t.phone}
+    </label>
+    <input
+      type="phone"
+      className="form-control"
+      id="account-phone"
+      placeholder={t.enterYourPhoneNumber}
+      required
+      onChange={(res) => setPhone(res.target.value)}
+    />
+    {errors.phone && <p style={{ color: 'red' }}>{t.errorPhone}</p>}
+  </div>
+</div>
 
 
 
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            What made you get a PAID4X membership?
-                          </label>
+<div className="col-12">
+  <div>
+    <label htmlFor="telegram-username" className="form-label">
+      {t.telegramUsername}
+    </label>
+    <input
+      className="form-control"
+      type="text"
+      id="telegram-username"
+      placeholder={t.enterTelegramUsername}
+      onChange={(res) => setTelegramUsername(res.target.value)}
+    />
+    {errors.telegramUsername && <p style={{ color: 'red' }}>{t.errorTelegramUsername}</p>}
+  </div>
+</div>
 
-                          <select className="form-control" onChange={(e) => handleMembership(e)} >
-                            <option>Select Please ...</option>
-                            {membershipOptions.map((item, index) => {
-                              return < option value={membership} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.membership && <p style={{ color: 'red' }}>{errors.membership}</p>}
+<div className="col-12 col-md-6">
+  <div>
+    <label htmlFor="country" className="form-label">
+      {t.country}
+    </label>
+    <select className="form-control" onChange={(e) => handleCountry(e)}>
+      <option>{t.selectCountry}</option>
+      {country.map((item, index) => (
+        <option value={getcountry} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.selectedCountry && <p style={{ color: 'red' }}>{t.errorCountry}</p>}
+  </div>
+</div>
 
-                        </div>
-                      </div>
+<div className="col-12 col-md-6">
+  <div>
+    <label htmlFor="city-town" className="form-label">
+      {t.cityTown}
+    </label>
+    <select className="form-control" onChange={(e) => handleState(e)}>
+      <option>{t.selectCity}</option>
+      {getstates.map((item, index) => (
+        <option value={selectedState} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.selectedState && <p style={{ color: 'red' }}>{t.errorCityTown}</p>}
+  </div>
+</div>
+
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="citizenship" className="form-label">
+      {t.citizenship}
+    </label>
+    <select className="form-control" onChange={(e) => handlePaymentMethod(e)}>
+      <option>{t.selectCitizenship}</option>
+      {country.map((item, index) => (
+        <option value={getcountry} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.getMethod && <p style={{ color: 'red' }}>{t.errorCitizenship}</p>}
+  </div>
+</div>
+
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="trading-experience" className="form-label">
+      {t.tradingExperience}
+    </label>
+    <select className="form-control" onChange={(e) => handleNumExp(e)}>
+      <option>{t.selectTradingExperience}</option>
+      {numExpOptions.map((item, index) => (
+        <option value={numExp} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.numExp && <p style={{ color: 'red' }}>{t.errorTradingExperience}</p>}
+  </div>
+</div>
 
 
 
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="favorite-instruments" className="form-label">
+      {t.favoriteInstruments}
+    </label>
+    <select className="form-control" onChange={(e) => handleFavoriteInstruments(e)}>
+      <option>{t.selectFavoriteInstruments}</option>
+      {favoriteInstrumentsOptions.map((item, index) => (
+        <option value={favoriteInstruments} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.favoriteInstruments && <p style={{ color: 'red' }}>{t.errorFavoriteInstruments}</p>}
+  </div>
+</div>
+
+<div className="col-12">
+  <div>
+    <label htmlFor="favorite-broker" className="form-label">
+      {t.favoriteBroker}
+    </label>
+    <input
+      className="form-control"
+      type="text"
+      id="favorite-broker"
+      placeholder={t.enterFavoriteBroker}
+      onChange={(res) => setFavoriteBroker(res.target.value)}
+    />
+    {errors.favoriteBroker && <p style={{ color: 'red' }}>{t.errorFavoriteBroker}</p>}
+  </div>
+</div>
+
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="training-buy" className="form-label">
+      {t.trainingBuy}
+    </label>
+    <select className="form-control" onChange={(e) => handleTrainingBuy(e)}>
+      <option>{t.selectTrainingBuy}</option>
+      {trainingBuyOptions.map((item, index) => (
+        <option value={trainingBuy} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.trainingBuy && <p style={{ color: 'red' }}>{t.errorTrainingBuy}</p>}
+  </div>
+</div>
+
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="vip-training" className="form-label">
+      {t.vipTraining}
+    </label>
+    <select className="form-control" onChange={(e) => handleVipTraining(e)}>
+      <option>{t.selectVipTraining}</option>
+      {vipTrainingOptions.map((item, index) => (
+        <option value={vipTraining} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.vipTraining && <p style={{ color: 'red' }}>{t.errorVipTraining}</p>}
+  </div>
+</div>
+
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="membership" className="form-label">
+      {t.membership}
+    </label>
+    <select className="form-control" onChange={(e) => handleMembership(e)}>
+      <option>{t.selectMembership}</option>
+      {membershipOptions.map((item, index) => (
+        <option value={membership} key={index}>
+          {item}
+        </option>
+      ))}
+    </select>
+    {errors.membership && <p style={{ color: 'red' }}>{t.errorMembership}</p>}
+  </div>
+</div>
 
 
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="account-pass" className="form-label">
+      {t.password}
+    </label>
+    <input
+      type="password"
+      className="form-control showhide-pass"
+      id="account-pass"
+      placeholder={t.password}
+      required
+      onChange={(res) => setPassword(res.target.value)}
+    />
+    {errors.password && <p style={{ color: 'red' }}>{t.errorPassword}</p>}
+    {/* <button
+      type="button"
+      id="btnToggle"
+      className="form-pass__toggle"
+    >
+      <i id="eyeIcon1" className="fa fa-eye"></i>
+    </button> */}
+  </div>
+</div>
 
+<div className="col-12">
+  <div className="form-pass">
+    <label htmlFor="account-cpass" className="form-label">
+      {t.confirmPassword}
+    </label>
+    <input
+      type="password"
+      className="form-control showhide-pass"
+      id="account-cpass"
+      placeholder={t.retypePassword}
+      required
+      onChange={(res) => setConPassword(res.target.value)}
+    />
+    {errors.conPassword && <p style={{ color: 'red' }}>{t.errorConPassword}</p>}
+    {/* <button
+      type="button"
+      id="btnCToggle"
+      className="form-pass__toggle"
+    >
+      <i id="eyeIcon2" className="fa fa-eye"></i>
+    </button> */}
+  </div>
+</div>
 
+<div style={{ marginTop: 15, display: 'flex' }}>
+  <input
+    type="checkbox"
+    className="form-check-input"
+    checked={isTermsAccepted}
+    onChange={(e) => setIsTermsAccepted(e.target.checked)}
+  />
+  {/* <label style={{ paddingInline: 5, fontSize: 15 }}>
+    {t.agreeToTerms} <span onClick={() => toggleModal('terms')} style={{ fontWeight: 'bold', color: '#18e8ef', cursor: 'pointer', textDecoration: 'underline' }}>aaaa</span>
+  </label> */}
 
- 
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Password
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control showhide-pass"
-                            id="account-pass"
-                            placeholder="Password"
-                            required
-                            onChange={(res) => setPassword(res.target.value)}
-                          />
-                          {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
-                          <button
-                            type="button"
-                            id="btnToggle"
-                            className="form-pass__toggle"
-                          >
-                            <i id="eyeIcon1" className="fa fa-eye"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-cpass" className="form-label">
-                            Confirm Password
-                          </label>
-                          <input
-                            type="password"
-                            className="form-control showhide-pass"
-                            id="account-cpass"
-                            placeholder="Re-type password"
-                            required
-                            onChange={(res) => setConPassword(res.target.value)}
-                          />
-                          {errors.conPassword && <p style={{ color: 'red' }}>{errors.conPassword}</p>}
-
-                          <button
-                            type="button"
-                            id="btnCToggle"
-                            className="form-pass__toggle"
-                          >
-                            <i id="eyeIcon2" className="fa fa-eye"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div style={{ marginTop: 15, display: 'flex' }}>
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={isTermsAccepted}
-                        onChange={(e) => setIsTermsAccepted(e.target.checked)}
-                      />
-                      <label style={{ paddingInline: 5, fontSize: 15 }}>
-                        By creating an account, you agree to{' '}
+<label style={{ paddingInline: 5, fontSize: 15 }}>
+                       {t.agreeToTerms}{' '}
                         <span
                           onClick={() => toggleModal('terms')}
                           style={{ fontWeight: 'bold', color: '#18e8ef', cursor: 'pointer', textDecoration: 'underline' }}
                         >
-                          Terms & Conditions
+                          {t.termsAndConditions}
                         </span>{' '}
 
                       </label>
-                    </div>
-                    {errors.terms && <p style={{ color: 'red', marginLeft: '8px' }}>{errors.terms}</p>}
 
-                    {!isLoading && !successRegistration && <div>
-                      <button
-                        type="submit"
-                        // onClick={() => submit(e)}
-                        className="trk-btn trk-btn--border trk-btn--primary d-block mt-4"
-                      >
-                        Sign Up
-                      </button>
+</div>
+{errors.terms && <p style={{ color: 'red', marginLeft: '8px' }}>{t.errorTerms}</p>}
 
+{!isLoading && !successRegistration && (
+  <div>
+    <button
+      type="submit"
+      className="trk-btn trk-btn--border trk-btn--primary d-block mt-4"
+    >
+      {t.signUp}
+    </button>
+    {errors.matchPassword && <p style={{ color: 'red' }}>{t.errorMatchPassword}</p>}
+    {errors.response && <p style={{ color: 'red' }}>{t.errorResponse}</p>}
+  </div>
+)}
 
-                      {errors.matchPassword && <p style={{ color: 'red' }}>{errors.matchPassword}</p>}
-                      {errors.response && <p style={{ color: 'red' }}>{errors.response}</p>}
+{isLoading && !successRegistration && (
+  <div style={{ textAlign: 'center' }}>
+    <Spinner animation="border" variant="info" />
+  </div>
+)}
 
-                    </div>}
-
-                    {isLoading && !successRegistration && <div style={{ textAlign: 'center' }}>
-                      <Spinner animation="border" variant="info" />
-                    </div>}
-                    {successRegistration && <>
-                      <Toast
-                        className="d-inline-block m-1"
-                        bg={'success'}
-                        style={{ width: '100%' }}
-                      >
-                        <Toast.Header>
-                          <img
-                            src="holder.js/20x20?text=%20"
-                            className="rounded me-2"
-                            alt=""
-                          />
-                          <strong className="me-auto">Success</strong>
-                        </Toast.Header>
-                        <Toast.Body className={'text-white'}>
-                          Hello, We have sent a verification code to your email....
-                        </Toast.Body>
-                      </Toast>
-                    </>}
+{successRegistration && (
+  <Toast className="d-inline-block m-1" bg="success" style={{ width: '100%' }}>
+    <Toast.Header>
+      <img
+        src="holder.js/20x20?text=%20"
+        className="rounded me-2"
+        alt=""
+      />
+      <strong className="me-auto">{t.successRegistration}</strong>
+    </Toast.Header>
+    <Toast.Body className="text-white">
+      {t.verificationSent}
+    </Toast.Body>
+  </Toast>
+)}
+</div>
                   </form>
                   <div className="account__switch">
-                    <p>
-                      Don’t have an account yet? <Link href={"signin"}>Login</Link>
-                    </p>
+                  <p>
+  {t.dontHaveAccount} <Link href={"signin"}>{t.login}</Link>
+</p>
                   </div>
                 </div>
               </div>
@@ -989,30 +1029,14 @@ const SignUp = () => {
           </span>
         </div>
 
-        {/* <Modal isOpen={modalOpen} toggle={() => setModalOpen(!modalOpen)}>
-          <ModalHeader toggle={() => setModalOpen(!modalOpen)}>
-            {modalContent === 'terms' ? 'Terms of Service' : 'Privacy Policy'}
-          </ModalHeader>
-          <ModalBody>
-            {modalContent === 'terms'
-              ? 'Here are the terms of service...'
-              : 'Here is the privacy policy...'}
-          </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={() => setModalOpen(!modalOpen)}>
-              Close
-            </Button>
-          </ModalFooter>
-        </Modal> */}
-
 
         <Modal isOpen={modalOpen} toggle={() => setModalOpen(!modalOpen)}>
           <ModalHeader toggle={() => setModalOpen(!modalOpen)}>
-            Terms & Conditions
+          {t.termsAndConditions}
           </ModalHeader>
           <ModalBody>
             <div
-              dangerouslySetInnerHTML={{ __html: termsContent }}
+              dangerouslySetInnerHTML={{ __html: language == 'en' ? termsContent : termsContentAr }}
               style={{
                 maxHeight: '400px',
                 overflowY: 'scroll',

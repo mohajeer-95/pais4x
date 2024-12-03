@@ -1,15 +1,22 @@
-/* eslint-disable react/no-unescaped-entities */
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
+import { useBroker } from '@/context/BrokerContext';
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 
 function Roadmap() {
+  const { language, toggleDirection } = useRtl();
+const t = translations[language] || translations['en'];
+
   const route = useRouter()
   return (
     <section className="roadmap roadmap--style1 padding-top  padding-bottom bg-color" id="roadmap">
     <div className="container">
       <div className="section-header section-header--max50">
-        <h2 className="mb-15 mt-minus-5">Simple Steps<span> to cashback</span></h2>
-        <p>A product roadmap shows the path ahead, helps teams plan, and guides the delivery of the product.</p>
-      </div>
+      <h2 className="mb-15 mt-minus-5">
+        {t.simpleStepsToCashback} <span>{t.simpleStepsToCashbackSpan}</span>
+      </h2>
+        <p>{t.productRoadmapDescription}</p>
+        </div>
       <div className="roadmap__wrapper">
         <div className="row gy-4 gy-md-0 gx-5">
           <div className="col-md-6 offset-md-6">
@@ -17,11 +24,11 @@ function Roadmap() {
               <div className="roadmap__item-inner">
                 <div className="roadmap__item-content">
                   <div className="roadmap__item-header">
-                    <h3>Create Paid4x Account</h3>
-                    <span>P1</span>
+                  <h3>{t.createPaid4xAccount}</h3>
+                  <span>{t.p1}</span>
                   </div>
-                  <p>Create your Account on Paid4x platform  using your email.</p>
-                </div>
+                  <p>{t.createPaid4xDescription}</p>
+                  </div>
               </div>
 
             </div>
@@ -32,11 +39,11 @@ function Roadmap() {
               <div className="roadmap__item-inner">
                 <div className="roadmap__item-content">
                   <div className="roadmap__item-header">
-                    <h3>Link your Broker account</h3>
-                    <span>P2</span>
+                  <h3>{t.linkBrokerAccount}</h3>
+                  <span>{t.p2}</span>
                   </div>
-                  <p>Link your broker accounts using your email (the email of the broker website) and verify it by OTP.</p>
-                </div>
+                  <p>{t.linkBrokerDescription}</p>
+                  </div>
               </div>
 
             </div>
@@ -46,11 +53,11 @@ function Roadmap() {
               <div className="roadmap__item-inner">
                 <div className="roadmap__item-content">
                   <div className="roadmap__item-header">
-                  <h3>Collect Cashback </h3>
-                    <span>P4</span>
+                  <h3>{t.collectCashback}</h3>
+                  <span>{t.p3}</span>
                   </div>
-                  <p>Paid4X admin will calculate your earned cashback and insert it into your Account</p>
-                </div>
+                  <p>{t.collectCashbackDescription}</p>
+                  </div>
               </div>
             </div>
           </div>
@@ -60,11 +67,11 @@ function Roadmap() {
               <div className="roadmap__item-inner">
                 <div className="roadmap__item-content">
                   <div className="roadmap__item-header">
-                    <h3>receive payments </h3>
-                    <span>P4</span>
+                  <h3>{t.receivePayments}</h3>
+                  <span>{t.p4}</span>
                   </div>
-                  <p>Paid4x will pay you when your cashback exceeds 200$</p>
-                </div>
+                  <p>{t.receivePaymentsDescription}</p>
+                  </div>
               </div>
 
             </div>

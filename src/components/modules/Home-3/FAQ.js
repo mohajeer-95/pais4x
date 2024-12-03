@@ -40,7 +40,7 @@ const Faq3 = () => {
     <section className="faq padding-top padding-bottom of-hidden">
       <div className="section-header section-header--max65">
         <h2 className="mb-15 mt-minus-5">
-          <span>Frequently</span> Asked questions
+          <span>Frequently</span> Asssked questions
         </h2>
         <p>
           Hey there! Got questions? We've got answers. Check out our FAQ page

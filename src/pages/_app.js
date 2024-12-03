@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { SliderProvider } from '../context/SliderContext';
+import { BrokerProvider } from '@/context/BrokerContext';
+import { RtlProvider } from '@/context/RtlContext'; // Import the RtlProvider
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
@@ -12,65 +14,46 @@ import "aos/dist/aos.css";
 import "@/styles/css/swiper-bundle.min.css";
 import "@/styles/sass/style.scss";
 import "react-datepicker/dist/react-datepicker.css";
+
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(true);
-
-
   const [dark, setDark] = useState(false);
 
-
-  //........... animation.....
   useEffect(() => {
-    setLoading(true);
     AOS.init();
 
+    setLoading(true);
     setTimeout(() => {
       setLoading(false);
-
     }, 1500);
 
-
-
     if (localStorage.getItem("theme") === "dark") {
-      setDark(true)
-    }
-    else {
-      setDark(false)
+      setDark(true);
+    } else {
+      setDark(false);
     }
   }, []);
-
-
 
   return (
     <>
       <Head>
-        <title>
-          {
-            "Paid4x"
-          }
-        </title>
-
+        <title>{"Paid4x"}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
       </Head>
-
-      <SliderProvider>
-
-      <Layout>
-        {loading && (
-          /* <!-- ===============>> Preloader start here <<================= --> */
-          <div className="preloader">
-            <img src="/images/global/logo.png" alt="preloader icon" />
-          </div>
-          /* <!-- ===============>> Preloader end here <<================= --> */
-        )}
-
-
-        <Component {...pageProps} />
-      </Layout>
-      </SliderProvider>
-
+      <RtlProvider> {/* Wrap your app with RtlProvider */}
+        <BrokerProvider>
+          <SliderProvider>
+            <Layout>
+              {loading && (
+                <div className="preloader">
+                  <img src="/images/global/logo.png" alt="preloader icon" />
+                </div>
+              )}
+              <Component {...pageProps} />
+            </Layout>
+          </SliderProvider>
+        </BrokerProvider>
+      </RtlProvider>
     </>
   );
 }

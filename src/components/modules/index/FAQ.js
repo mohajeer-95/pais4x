@@ -2,6 +2,9 @@
 import React from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Link from "next/link";
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 
 const faqdata = [
   
@@ -40,16 +43,16 @@ const faqdata = [
 ];
 
 const Faq = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
   return (
     <section className="faq padding-top padding-bottom of-hidden">
       <div className="section-header section-header--max65">
         <h2 className="mb-15 mt-minus-5">
-          <span>Frequently</span> Asked questions
+        <span>{t.frequently}</span> {t.askedQuestions}
         </h2>
-        <p>
-          Hey there! Got questions? We've got answers. Check out our FAQ page
-          for all the deets. Still not satisfied? Hit us up.
-        </p>
+        <p>{t.faqDescription}</p>
       </div>
       <div className="container">
         <div className="faq__wrapper">
@@ -91,7 +94,7 @@ const Faq = () => {
             </div>
           </div>
           <div className="text-center">
-            <Link href="blogs" className="trk-btn trk-btn--border trk-btn--primary mt-30">View more </Link>
+            <Link href="blogs" className="trk-btn trk-btn--border trk-btn--primary mt-30">{t.ViewMore}</Link>
           </div>
         </div>
       </div>

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { callApiWithToken } from '../../../../public/api/api'
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 
 const PageHeader = ({ title, page, withSocialComponent, brokerId, info }) => {
-
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+  
   const openNewWindow = (link) => {
     window.open(link, "_blank");
   };
@@ -28,10 +31,10 @@ const PageHeader = ({ title, page, withSocialComponent, brokerId, info }) => {
         <div className="page-header__content" data-aos="fade-right" data-aos-duration="1000">
           {title && <h2>{title}</h2>}
           <nav style={{
-            '--bs-breadcrumb-divider': "'/'",
+            '--bs-breadcrumb-divider': "'\'",
           }} aria-label="breadcrumb">
             <ol className="breadcrumb mb-0">
-              <li className="breadcrumb-item "><Link href="/">Home</Link></li>
+              <li className="breadcrumb-item "><Link href="/">{t.home+ ' / '}</Link></li>
               <li className="breadcrumb-item active" aria-current="page">{title}</li>
             </ol>
 

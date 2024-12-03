@@ -1,8 +1,18 @@
 import Link from "next/link";
 import ScrollToTop from "react-scroll-to-top";
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 
 // #18e8ef color logo hajeer see
 function Footer() {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
+  const openNewWindow = (link) => {
+    window.open(link, "_blank");
+  };
+
   return (
     <>
       <footer className="footer brand-1">
@@ -14,7 +24,9 @@ function Footer() {
                   <div className="footer__about">
                     <Link href="/" className="footer__about-logo"><img style={{maxHeight: 44}} src="/images/global/logo.png"
                       alt="Logo" /></Link>
-                    <p className="footer__about-moto ">Paid4x is an intermediate between the Forex investor and the broker, when you open an account on the Forex platform through Paid4X or Link your account after that, the Forex platform will pay Paid4X an amount of money on every trade the investor did</p>
+    <p className="footer__about-moto">
+      {t.footerAbout}
+    </p>
                     {/* <div className="footer__app">
                       <div className="footer__app-item footer__app-item--apple">
                         <div className="footer__app-inner">
@@ -46,42 +58,52 @@ function Footer() {
                   </div>
                 </div>
                 <div className="col-md-2 col-sm-4 col-6">
-                  <div className="footer__links">
-                    <div className="footer__links-tittle">
-                      <h6>Quick links</h6>
-                    </div>
-                    <div className="footer__links-content">
-                      <ul className="footer__linklist">
-                        <li className="footer__linklist-item"> <Link href="about">About Us</Link>
-                        </li>
-                        <li className="footer__linklist-item"> <Link href="team">Brokers</Link>
-                        </li>
-                        <li className="footer__linklist-item"> <Link href="instructor">Instructor</Link> </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="profile">My Account</Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                <div className="footer__links">
+      <div className="footer__links-tittle">
+        <h6>{t.quickLinks}</h6>
+      </div>
+      <div className="footer__links-content">
+        <ul className="footer__linklist">
+          <li className="footer__linklist-item">
+            <Link href="about">{t.aboutUs}</Link>
+          </li>
+          <li className="footer__linklist-item">
+            <Link href="team">{t.brokers}</Link>
+          </li>
+          <li className="footer__linklist-item">
+            <Link href="instructor">{t.instructor}</Link>
+          </li>
+          <li className="footer__linklist-item">
+            <Link scroll={false} href="profile">{t.myAccount}</Link>
+          </li>
+        </ul>
+      </div>
+    </div>
 
                 </div>
                 <div className="col-md-2 col-sm-4 col-6">
-                  <div className="footer__links">
-                    <div className="footer__links-tittle" style={{paddingTop: 45}}>
-
-                    </div>
-                    <div className="footer__links-content">
-                      <ul className="footer__linklist">
-                        <li className="footer__linklist-item"> <Link scroll={false} href="courses">Courses</Link>
-                        </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="training">VIP training</Link>
-                        </li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="cashback">Cashback</Link></li>
-                        <li className="footer__linklist-item"> <Link scroll={false} href="contact">Contact</Link> </li>
-                      </ul>
-                    </div>
-                  </div>
-
-                </div>
+      <div className="footer__links">
+        <div className="footer__links-tittle" style={{ paddingTop: 45 }}>
+          {/* Empty title div, could add a title here if needed */}
+        </div>
+        <div className="footer__links-content">
+          <ul className="footer__linklist">
+            <li className="footer__linklist-item">
+              <Link scroll={false} href="courses">{t.courses}</Link>
+            </li>
+            <li className="footer__linklist-item">
+              <Link scroll={false} href="training">{t.vipTraining}</Link>
+            </li>
+            <li className="footer__linklist-item">
+              <Link scroll={false} href="cashback">{t.cashback}</Link>
+            </li>
+            <li className="footer__linklist-item">
+              <Link scroll={false} href="contact">{t.contact}</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
                 {/* <div className="col-md-2 col-sm-4">
                   <div className="footer__links">
                     <div className="footer__links-tittle">
@@ -112,23 +134,23 @@ function Footer() {
                 <div>
                   <ul className="social">
                     <li className="social__item">
-                      <Link scroll={false} href="" className="social__link social__link--style22"><i className="fab fa-facebook-f"></i></Link>
+                    <div onClick={()=>openNewWindow('https://www.facebook.com/Paid4X?mibextid=LQQJ4d')} scroll={false} className="social__link social__link--style22"><i className="fab fa-facebook-f"></i></div>
                     </li>
-                    <li className="social__item">
+                    {/* <li className="social__item">
                       <Link scroll={false} href="" className="social__link social__link--style22 "><i className="fab fa-instagram"></i></Link>
+                    </li> */}
+                    <li className="social__item">
+                    <div onClick={()=>openNewWindow('https://www.linkedin.com/company/paid4x/')} scroll={false} className="social__link social__link--style22"><i className="fa-brands fa-linkedin-in"></i></div>
                     </li>
                     <li className="social__item">
-                      <Link scroll={false} href="" className="social__link social__link--style22"><i className="fa-brands fa-linkedin-in"></i></Link>
+                    <div onClick={()=>openNewWindow('https://youtube.com/@paid4x?si=r51M6rGhKLeRA18D')} scroll={false} className="social__link social__link--style22"><i className="fab fa-youtube"></i></div>
                     </li>
                     <li className="social__item">
-                      <Link scroll={false} href="" className="social__link social__link--style22"><i className="fab fa-youtube"></i></Link>
+                      <div onClick={()=>openNewWindow('https://x.com/paid4x_com?s=11&t=JqEI_h_zgJGVq37XMc3d9w')} scroll={false} className="social__link social__link--style22 "><i className="fab fa-x"></i></div>
                     </li>
-                    <li className="social__item">
-                      <Link scroll={false} href="" className="social__link social__link--style22 "><i className="fab fa-x"></i></Link>
-                    </li>
-                    <li className="social__item">
+                    {/* <li className="social__item">
                       <Link scroll={false} href="" className="social__link social__link--style22 "><i className="fab fa-u"></i></Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>

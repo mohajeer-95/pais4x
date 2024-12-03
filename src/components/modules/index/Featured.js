@@ -3,9 +3,12 @@ import { callApiWithToken } from '../../../../public/api/api'
 import Spinner from 'react-bootstrap/Spinner';
 import { useSlider } from '../../../context/SliderContext';
 
-
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 function Featured({pageId}) {
-
+    const { language, toggleDirection } = useRtl();
+    const t = translations[language] || translations['en'];
+  
   const [sponserImg, setSponserImg] = useState('')
   const [url, setUrl] = useState('')
   const [loadingIs, setLoading] = useState(false)
@@ -17,7 +20,7 @@ function Featured({pageId}) {
   }
 
   if (!sliderData) {
-    return <div>No data available</div>;
+    return <div className="spinner-container">{t.dataNotFound}</div>;
   }
 
 

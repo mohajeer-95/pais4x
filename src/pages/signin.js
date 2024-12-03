@@ -8,8 +8,14 @@ import Toast from 'react-bootstrap/Toast'
 import Spinner from 'react-bootstrap/Spinner';
 import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
 import { callApiWithToken } from '../../public/api/api'
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 
 const SignIn = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
 
 
   useEffect(() => {
@@ -30,11 +36,11 @@ const SignIn = () => {
     const errors = {};
 
     if (!email) {
-      errors.email = 'your email required';
+      errors.email = t.emailRequired;
       valid = false;
     }
     if (!password) {
-      errors.password = 'Password is required';
+      errors.password = t.passwordRequired;
       valid = false;
     }
 
@@ -90,7 +96,7 @@ const SignIn = () => {
   return (
     <>
       <Header />
-      <PageHeader withSocialComponent={0} title="Register" text="Register" />
+      <PageHeader withSocialComponent={0} title={t.signIn} text={t.signIn} />
       <section className="account padding-top padding-bottom sec-bg-color2">
         <div className="container">
           <div
@@ -102,19 +108,16 @@ const SignIn = () => {
               <div className="col-lg-12">
                 <div className="account__content account__content--style1">
                   <div className="account__header">
-                    <h2>Welcome back!</h2>
-                    <p>
-                      Hey there! Ready to log in? Just enter your Email and
-                      password below and you'll be back in action in no time.
-                      Let's go!
-                    </p>
+                  <h2>{t.welcomeBack}</h2>
+      <p>{t.loginPrompt}</p>
+
                   </div>
 
                   {/* <div className="account__divider account__divider--style1">
                     <span>or</span>
                   </div> */}
 
-                  <form
+                  {/* <form
 
                     action=""
                     className="account__form needs-validation"
@@ -179,17 +182,71 @@ const SignIn = () => {
                         <Link href="forgot-pass">Forgot Password?</Link>
                       </div>
                     </div>
+                  </form> */}
+ <form action="" className="account__form needs-validation" noValidate>
+      <div className="row g-4">
+        <div className="col-12">
+          <div>
+            <label htmlFor="account-email" className="form-label">
+              {t.email}
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="account-email"
+              placeholder={t.email}
+              required
+              onChange={(res) => setEmail(res.target.value)}
+            />
+            {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+          </div>
+        </div>
+        <div className="col-12">
+          <div className="form-pass">
+            <label htmlFor="account-pass" className="form-label">
+              {t.password}
+            </label>
+            <input
+              type="password"
+              className="form-control showhide-pass"
+              id="account-pass"
+              placeholder={t.password}
+              required
+              onChange={(res) => setPassword(res.target.value)}
+            />
+            {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
 
+            {/* <button type="button" id="btnToggle" className="form-pass__toggle">
+              <i id="eyeIcon" className="fa fa-eye"></i>
+            </button> */}
+          </div>
+        </div>
+      </div>
 
-                  </form>
-
+      <div className="account__check">
+        <div className="account__check-remember">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            value=""
+            id="terms-check"
+          />
+          <label htmlFor="terms-check" className="form-check-label">
+            {t.rememberMe}
+          </label>
+        </div>
+        <div className="account__check-forgot">
+          <Link href="forgot-pass">{t.forgotPassword}</Link>
+        </div>
+      </div>
+    </form>
                   {!isLoading && !successLogin && <div>
                     <button
                       onClick={() => submit()}
                       type="submit"
                       className="trk-btn trk-btn--border trk-btn--primary d-block mt-4"
                     >
-                      Sign in
+                     {t.signIn}
                     </button>
                   </div>
                   }
@@ -211,18 +268,18 @@ const SignIn = () => {
                           className="rounded me-2"
                           alt=""
                         />
-                        <strong className="me-auto">Success</strong>
-                      </Toast.Header>
+      <strong className="me-auto">{t.success}</strong>
+      </Toast.Header>
                       <Toast.Body className={'text-white'}>
-                        Hello, Login successfully.
+                    {  t.loginSuccess}
                       </Toast.Body>
                     </Toast>
                   </>}
 
                   <div className="account__switch">
-                    <p>
-                      dont have an account? <Link href="signup">Sign up</Link>
-                    </p>
+                  <p>
+        {t.noAccountPrompt} <Link href="signup">{t.signUp}</Link>
+      </p>
                   </div>
                 </div>
               </div>

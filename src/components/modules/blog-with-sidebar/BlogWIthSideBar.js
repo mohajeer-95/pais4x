@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import BlogData from '../../../../public/api/blog-side-bar/BlogSideBar.json'
-import SidebarSearch from '@/components/base/SidebarSearch'
 import BlogCategories from '@/components/base/BlogCategories'
-import RecentPost from '@/components/base/RecentPost'
-import PopularTag from '@/components/base/PopularTag'
 import BlogCard from '@/components/cards/BlogCard'
-import Link from "next/link";
 import { callApiWithToken } from '../../../../public/api/api'
-
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 const BlogWIthSideBar = () => {
+  const { language, toggleDirection } = useRtl();
+  const t = translations[language] || translations['en'];
+
   const [statebuttonText, setStateButtonText] = useState(false);
 
   const [coursesList, setCourses] = useState([])
@@ -36,6 +35,10 @@ const BlogWIthSideBar = () => {
     } else {
       setStateButtonText(true);
     }
+  };
+
+  const openNewWindow = (link) => {
+    window.open(link, "_blank");
   };
 
   return (
@@ -132,20 +135,20 @@ const BlogWIthSideBar = () => {
 
 
               </div>
-              { !statebuttonText ? <div className="row g-4">
+              {!statebuttonText ? <div className="row g-4">
                 {coursesList.map((item, index) => (
                   // <div key={index} className="col-sm-12 ">
                   <div key={index} className="course-list">
 
-                    <BlogCard  withoutDescription={1} data={item} />
+                    <BlogCard withoutDescription={1} data={item} />
                   </div>
                 ))}
                 {!coursesList.length &&
                   <div
                     style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 40, marginBottom: 40 }}>
-                    Courses data not found now
+                    {t.dataNotFound}
                   </div>}
-              </div>:null}
+              </div> : null}
               {/* <div className="paginations" data-aos="fade-up" data-aos-duration="800">
                 <ul className="lab-ul d-flex flex-wrap justify-content-center mb-1">
                   <li>
@@ -192,17 +195,16 @@ const BlogWIthSideBar = () => {
                         <div className="sidebar__social-content">
                           <ul className="social mt-25">
                             <li className="social__item">
-                              <Link scroll={false} href="https://www.youtube.com/" passHref className="social__link social__link--style2 active"><i className="fab fa-facebook-f"></i></Link>
+                              <div onClick={() => openNewWindow('https://www.facebook.com/Paid4X?mibextid=LQQJ4d')} scroll={false} className="social__link social__link--style4 active"><i className="fab fa-facebook-f"></i></div>
                             </li>
                             <li className="social__item">
-                              <Link scroll={false} href="https://www.youtube.com/" passHref className="social__link social__link--style2 "><i className="fab fa-instagram"></i></Link>
+                              <div onClick={() => openNewWindow('https://www.linkedin.com/company/paid4x/')} scroll={false} className="social__link social__link--style4"><i className="fa-brands fa-linkedin-in"></i></div>
                             </li>
                             <li className="social__item">
-                              <Link scroll={false} href="https://www.youtube.com/" passHref className="social__link social__link--style2"><i
-                                className="fa-brands fa-linkedin-in"></i></Link>
+                              <div onClick={() => openNewWindow('https://youtube.com/@paid4x?si=r51M6rGhKLeRA18D')} scroll={false} className="social__link social__link--style4"><i className="fab fa-youtube"></i></div>
                             </li>
                             <li className="social__item">
-                              <Link scroll={false} href="https://www.youtube.com/" passHref className="social__link social__link--style2"><i className="fab fa-youtube"></i></Link>
+                              <div onClick={() => openNewWindow('https://x.com/paid4x_com?s=11&t=JqEI_h_zgJGVq37XMc3d9w')} className="social__link social__link--style4"><i className="fab fa-x"></i></div>
                             </li>
                           </ul>
                         </div>

@@ -11,7 +11,12 @@ import { default as ReactSelect } from "react-select";
 import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast'
 import { callApiWithToken } from '../../../public/api/api'
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 const SignUp = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
 
   const [firstname, setFirstname] = useState('');
   const [lastName, setLastName] = useState('');
@@ -27,30 +32,32 @@ const SignUp = () => {
   const [getConference, setconference] = useState(null)
 
   const colourOptions = [
-    { value: 1, label: "Missouri Brokers 48-Hour" },
-    { value: 2, label: "Oklahoma Online Brokers" },
-    { value: 3, label: "Hawaii Real Estate Brokers" },
+    { value: 1, label: t.missouriBrokers },
+    { value: 2, label: t.oklahomaBrokers },
+    { value: 3, label: t.hawaiiBrokers },
   ];
+
   const daysOptions = [
-    { value: 1, label: "Saturday" },
-    { value: 2, label: " Sunday" },
-    { value: 3, label: "Monday" },
-    { value: 4, label: "Tuesday" },
-    { value: 5, label: "Wednesday" },
-    { value: 6, label: "Thursday" },
-    { value: 7, label: "Friday" },
+    { value: 1, label: t.saturday },
+    { value: 2, label: t.sunday },
+    { value: 3, label: t.monday },
+    { value: 4, label: t.tuesday },
+    { value: 5, label: t.wednesday },
+    { value: 6, label: t.thursday },
+    { value: 7, label: t.friday },
   ];
 
   const paymentMethodOptions = [
-    'Face to face ',
-    'Live video ',
-  ]
+    t.faceToFace,
+    t.liveVideo,
+  ];
 
   const CommunicationOptions = [
-    'Skype ',
-    'Zoom ',
-    'Google Meet ',
-  ]
+    t.skype,
+    t.zoom,
+    t.googleMeet,
+  ];
+
   useEffect(() => {
 
   }, [])
@@ -188,51 +195,51 @@ const SignUp = () => {
   const validateForm = () => {
     let valid = true;
     const errors = {};
-
     if (!firstname) {
-      errors.firstname = 'First name is required';
+      errors.firstname = t.firstnameRequired;
       valid = false;
     }
     if (!lastName) {
-      errors.lastName = 'Last name is required';
+      errors.lastName = t.lastNameRequired;
       valid = false;
     }
     if (!email) {
-      errors.email = 'Your email is required';
+      errors.email = t.emailRequired;
       valid = false;
     }
     if (!phone) {
-      errors.phone = 'Your phone is required';
+      errors.phone = t.phoneRequired;
       valid = false;
     }
     if (!optionSelected) {
-      errors.courseSelected = 'Please select Course';
+      errors.courseSelected = t.courseSelectedRequired;
       valid = false;
     }
     if (!optionDaysSelected) {
-      errors.daysAvailabil = 'Please select your availabil days';
+      errors.daysAvailability = t.daysAvailabilityRequired;
       valid = false;
     }
     if (!date) {
-      errors.date = 'Select date';
+      errors.date = t.dateRequired;
       valid = false;
     }
     if (!getcountry) {
-      errors.country = 'Your country is required';
+      errors.country = t.countryRequired;
       valid = false;
     }
     if (!selectedState) {
-      errors.city = 'Your City is required';
+      errors.city = t.cityRequired;
       valid = false;
     }
     if (!getMethod) {
-      errors.MethodCommunication = 'Communication method is required';
+      errors.MethodCommunication = t.methodCommunicationRequired;
       valid = false;
     }
     if (!getConference) {
-      errors.videoConference = 'Please select video Conference';
+      errors.videoConference = t.videoConferenceRequired;
       valid = false;
     }
+  
     setErrors(errors);
     return valid;
   };
@@ -257,16 +264,7 @@ const SignUp = () => {
     optionDaysSelected.map((day) => {
       daysSelected.push(day.label)
     })
-    console.log('first_name', firstname)
-    console.log('last_name', lastName)
-    console.log('email', email)
-    console.log('method_of_communication', getMethod)
-    console.log('favorite_video_conference_app', getConference)
-    console.log('course_required', courses)
-    console.log('days_availabil', daysSelected)
-    console.log('country', getcountry)
-    console.log('city', selectedState)
-    console.log('date', date)
+
 
     const response = await callApiWithToken('https://paid4x.com/broker/public/api/vip-training', {
       first_name: firstname,
@@ -320,12 +318,10 @@ const SignUp = () => {
             <div className="row g-4">
               <div className="col-12">
                 <div className="account__content account__content--style1">
-                  <div className="account__header">
-                    <h2>Create VIP Account</h2>
-                    <p>
-                      Hey there! Ready to join the VIP Account,
-                    </p>
-                  </div>
+                <div className="account__header">
+      <h2>{t.createVipAccount}</h2>
+      <p>{t.joinVipAccount}</p>
+    </div>
 
                   <form
                     action=""
@@ -333,118 +329,99 @@ const SignUp = () => {
                     noValidate
                   >
                     <div className="row g-4">
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="first-name" className="form-label">
-                            First name
-                          </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            id="first-name"
-                            placeholder="Ex. Jhon"
-                            onChange={(res) => setFirstname(res.target.value)}
-                          />
-                          {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}
-
-                        </div>
-                      </div>
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="last-name" className="form-label">
-                            Last name
-                          </label>
-                          <input
-                            required
-                            className="form-control"
-                            type="text"
-                            id="last-name"
-                            placeholder="Ex. Doe"
-                            onChange={(res) => setLastName(res.target.value)}
-                          />
-                          {errors.lastName && <p style={{ color: 'red' }}>{errors.lastName}</p>}
-
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="account-email"
-                            placeholder="Enter your email"
-                            required
-                            onChange={(res) => setEmail(res.target.value)}
-                          />
-                          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Phone
-                          </label>
-                          <input
-                            type="phone"
-                            className="form-control"
-                            id="account-phone"
-                            placeholder="Enter your Phone Number"
-                            required
-                            onChange={(res) => setPhone(res.target.value)}
-                          />
-                          {errors.phone && <p style={{ color: 'red' }}>{errors.phone}</p>}
-
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Method of communication
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
-                            <option>Select Method of communication ...</option>
-                            {paymentMethodOptions.map((item, index) => {
-                              return < option value={getMethod} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.MethodCommunication && <p style={{ color: 'red' }}>{errors.MethodCommunication}</p>}
-
-                        </div>
-                      </div>
 
 
+                    <div className="col-12 col-md-6">
+        <div>
+          <label htmlFor="first-name" className="form-label">{t.firstname}</label>
+          <input
+            className="form-control"
+            type="text"
+            id="first-name"
+            placeholder={t.firstnamePlaceholder}
+            onChange={(res) => setFirstname(res.target.value)}
+          />
+          {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}
+        </div>
+      </div>
+
+      <div className="col-12 col-md-6">
+        <div>
+          <label htmlFor="last-name" className="form-label">{t.lastname}</label>
+          <input
+            required
+            className="form-control"
+            type="text"
+            id="last-name"
+            placeholder={t.lastnamePlaceholder}
+            onChange={(res) => setLastName(res.target.value)}
+          />
+          {errors.lastName && <p style={{ color: 'red' }}>{errors.lastName}</p>}
+        </div>
+      </div>
 
 
+      <div className="col-12">
+        <div>
+          <label htmlFor="account-email" className="form-label">{t.email}</label>
+          <input
+            type="email"
+            className="form-control"
+            id="account-email"
+            placeholder={t.emailPlaceholder}
+            required
+            onChange={(res) => setEmail(res.target.value)}
+          />
+          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+        </div>
+      </div>
+
+      <div className="col-12">
+        <div>
+          <label htmlFor="account-phone" className="form-label">{t.phone}</label>
+          <input
+            type="phone"
+            className="form-control"
+            id="account-phone"
+            placeholder={t.phonePlaceholder}
+            required
+            onChange={(res) => setPhone(res.target.value)}
+          />
+          {errors.phone && <p style={{ color: 'red' }}>{errors.phone}</p>}
+        </div>
+      </div>
 
 
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Favorite video conference app
-                          </label>
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="account-pass" className="form-label">{t.methodCommunication}</label>
+          <select className="form-control" onChange={(e) => handlePaymentMethod(e)}>
+            <option>{t.selectMethodCommunication}</option>
+            {paymentMethodOptions.map((item, index) => (
+              <option value={item} key={index}>{item}</option>
+            ))}
+          </select>
+          {errors.MethodCommunication && <p style={{ color: 'red' }}>{errors.MethodCommunication}</p>}
+        </div>
+      </div>
 
-                          <select className="form-control" onChange={(e) => handleCommunicationMethod(e)} >
-                            <option>Select Favorite video conference ...</option>
-                            {CommunicationOptions.map((item, index) => {
-                              return < option value={getConference} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.videoConference && <p style={{ color: 'red' }}>{errors.videoConference}</p>}
-
-                        </div>
-                      </div>
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="account-pass" className="form-label">{t.videoConferenceApp}</label>
+          <select className="form-control" onChange={(e) => handleCommunicationMethod(e)}>
+            <option>{t.selectVideoConferenceApp}</option>
+            {CommunicationOptions.map((item, index) => (
+              <option value={item} key={index}>{item}</option>
+            ))}
+          </select>
+          {errors.videoConference && <p style={{ color: 'red' }}>{errors.videoConference}</p>}
+        </div>
+      </div>
 
                       <div className="col-12">
                         <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Course required
-                          </label>
+                        <label htmlFor="account-pass" className="form-label">{t.courseRequired}</label>
+
                           <ReactSelect
                             options={colourOptions}
                             isMulti
@@ -464,9 +441,8 @@ const SignUp = () => {
 
                       <div className="col-12">
                         <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Days Availabil
-                          </label>
+                        <label htmlFor="account-pass" className="form-label">{t.daysAvailability}</label>
+
                           <ReactSelect
                             options={daysOptions}
                             isMulti
@@ -485,7 +461,7 @@ const SignUp = () => {
                       <div className="col-12">
                         <div className="form-pass">
                           <label htmlFor="account-pass" className="form-label">
-                            Date
+                            {t.date}
                           </label>
 
                           <input
@@ -509,11 +485,11 @@ const SignUp = () => {
                       <div className="col-12 col-md-6">
                         <div>
                           <label htmlFor="first-name" className="form-label">
-                            Country
+                            {t.country}
                           </label>
 
                           <select className="form-control" onChange={(e) => handleCountry(e)} >
-                            <option>Select country ...</option>
+                            <option>{t.selectCountry}</option>
                             {country.map((item, index) => {
                               return < option value={getcountry} key={index}>{item}</option>
                             })}
@@ -524,11 +500,11 @@ const SignUp = () => {
                       <div className="col-12 col-md-6">
                         <div>
                           <label htmlFor="last-name" className="form-label">
-                            City/Town
+                           {t.cityTown}
                           </label>
 
                           <select className="form-control" onChange={(e) => handleState(e)} >
-                            <option>Select City ...</option>
+                            <option>{t.selectCity}</option>
                             {getstates.map((item, index) => {
                               return <option value={selectedState} key={index}>{item}</option>
                             })}
@@ -545,7 +521,7 @@ const SignUp = () => {
 
                     {!isLoading && !successSubmited &&
                       <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">
-                        Submit Now
+                       {t.submit}
                       </button>}
 
                     {isLoading && !successSubmited &&

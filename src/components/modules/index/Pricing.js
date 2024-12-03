@@ -3,9 +3,14 @@ import Link from "next/link";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 
 
 const Pricing = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
   return (
     <section className="pricing padding-top " style={{ paddingBottom: 40 }}>
       <div className="section-header section-header--max50">
@@ -15,56 +20,18 @@ const Pricing = () => {
       <Container>
         <Row>
           <Col xs={12} lg={6} md={6} style={{ paddingInline: 50 }}>
-            <p>
-              If you are the kind of investor who prefers the live interaction with your coach, and could be asking several questions during the teaching process, then the VIP training is the one for you.
-However, there is a caveat: the cost of the VIP training is completely different from what you will pay for the recorded courses. Currently, the rate is $70 per hour of personal one-on-one coaching & training, whether face-to-face, or through live video. In addition to that, VIP courses take more time than the recorded ones, because of the questions & other forms of interaction.
+          <p>{t.vipTrainingInfo}</p>
 
-            </p>
-            {/*             
-
-
-            <Row>
-              <Col>
-                <p>
-                  - Skrill
-                </p>
-                <p>
-                  - Paypal
-                </p>
-                <p>
-                  - MoneyGram
-                </p>
-              </Col>
-              <Col>
-                <p>
-                  - Bank Transfers
-                </p>
-                <p>
-                  - Western Union
-                </p>
-              </Col>
-            </Row>
- */}
+     
 
 
           </Col>
           <Col xs={12} lg={6} md={6} style={{ paddingInline: 50 }}>
-            <h4>
-            We always advise our student to go for the recorded courses, because: 
-                        </h4>
-
-            <p>
-              -	They are much cheaper
-            </p>
-            <p>
-              -	They are available according to your schedule
-
-            </p>
-            <p>
-              -	They include the same training material.
-            </p>
-
-          </Col>
+        <h4>{t.adviseRecordedCourses}</h4>
+        <p>- {t.recordedCourseReason1}</p>
+        <p>- {t.recordedCourseReason2}</p>
+        <p>- {t.recordedCourseReason3}</p>
+      </Col>
         </Row>
 
       </Container>

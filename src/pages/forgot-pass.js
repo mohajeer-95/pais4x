@@ -5,11 +5,17 @@ import PageHeader from '@/components/modules/about-us/PageHeader';
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import { getCookie } from 'cookies-next';
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 
 const ResetPass = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
 
   useEffect(() => {
 
@@ -24,7 +30,7 @@ const ResetPass = () => {
 
     // Basic validation
     if (!email) {
-      setError("Email is required.");
+      setError(t.emailIsRequired);
       return;
     }
 
@@ -52,18 +58,18 @@ const ResetPass = () => {
          const result = await response.json();
 
       if (result.status) {
-        setSuccess("Password reset link sent successfully, We sent The new Password to your email.");
+        setSuccess(t.passwordResetSuccess);
        
         setTimeout(() => {
           window.location.href = '/signin';
         }, 4000);
 
       } else {
-        setError(result.message || "Something went wrong. Please try again.");
+        setError(result.message || t.passwordResetError);
       }
 
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      setError(t.genericError);
     }
   };
 
@@ -74,7 +80,7 @@ const ResetPass = () => {
 
     // Basic validation
     if (!email) {
-      setError("Email is required.");
+      setError(t.t.emailIsRequired);
       return;
     }
 
@@ -110,7 +116,7 @@ const ResetPass = () => {
   return (
     <>
       <Header />
-      <PageHeader withSocialComponent={0} title="Register" text="Register" />
+      <PageHeader withSocialComponent={0} title={t.forgotPassword} page={t.forgotPassword}/>
       <section className="account padding-top padding-bottom sec-bg-color2">
         <div className="container">
           <div
@@ -122,15 +128,12 @@ const ResetPass = () => {
               <div className="col-lg-12">
                 <div className="account__content account__content--style1">
                   <div className="account__header">
-                    <h2>Reset Your Password</h2>
-                    <p>
-                      Hey there! Forgot your password? No worries, just click
-                      "forgot password" and follow the steps to recover it. Easy
-                      peasy lemon squeezy!
-                    </p>
+                  <h2>{t.resetPasswordHeading}</h2>
+      <p>{t.resetPasswordDescription}</p>
+
                   </div>
 
-                  <form
+                  {/* <form
                     className="account__form needs-validation"
                     noValidate
                     onSubmit={handleSubmit}
@@ -161,8 +164,34 @@ const ResetPass = () => {
                     >
                       Reset password
                     </button>
-                  </form>
+                  </form> */}
+    <form className="account__form needs-validation" noValidate onSubmit={handleSubmit}>
+      <div className="row g-4">
+        <div className="col-12">
+          <div>
+            <label htmlFor="account-email" className="form-label">
+              {t.email}
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="account-email"
+              placeholder={t.email}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+        </div>
+      </div>
 
+      <button
+        type="submit"
+        className="trk-btn trk-btn--border trk-btn--primary d-block mt-4"
+      >
+        {t.resetPasswordButton}
+      </button>
+    </form>
                   <div className="account__switch">
                     {/* <p>
                       <Link href="signin" className="style2">

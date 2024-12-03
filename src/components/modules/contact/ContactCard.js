@@ -4,8 +4,15 @@ import Link from "next/link";
 import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast'
 import { callApiWithToken } from '../../../../public/api/api'
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 
 function ContactCard() {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
+
   // const { register, handleSubmit, watch, formState: { errors } } = useForm();
   // const onSubmit = data => {
   // }
@@ -121,8 +128,9 @@ function ContactCard() {
     }, 3000);
   }
 
-
-
+  const openNewWindow = (link) => {
+    window.open(link, "_blank");
+  };
 
   return (
     <div className="contact padding-top padding-bottom">
@@ -130,41 +138,35 @@ function ContactCard() {
         <div className="contact__wrapper">
 
           <div className="section-header section-header--max65">
-            <h2 className="mb-15 mt-minus-5">Contact <span>Us</span></h2>
-            <p>
-              {'You can reach us by email at this address at any time! We will try our absolute best to get back to you within 24 on working days. Click below to copy email.'}
-            </p>
-
-            <h6>
-              {'Our support working hours are Monday to Friday from 5:00 a.m. to 5:00 p.m. GMT.'}
-            </h6>
-            <p>
-              {'For questions about the brokers please refer to the dedicated page of the broker on our site & if you still cannot find the info you are looking for there, please use the support links to contact the broker directly.'}
-            </p>
+            <h2 className="mb-15 mt-minus-5">{t.contactUs} <span></span></h2>
+            <p>{t.contactEmail}</p>
+            <h6>{t.supportHours}</h6>
+            <p>{t.brokerQuestions}</p>
           </div>
+
 
           <div className="row g-5">
             <div className="col-md-5">
               <div className="contact__info" data-aos="fade-right" data-aos-duration="1000">
 
                 <div className="contact__social">
-                  <h3>let’s <span>{`get in touch `}</span>
+                  <h3>let’s <span>{'get in touch'}</span>
                     with us</h3>
                   <ul className="social">
                     <li className="social__item">
-                      <Link scroll={false} href="" className="social__link social__link--style4 active"><i className="fab fa-facebook-f"></i></Link>
+                      <div onClick={() => openNewWindow('https://www.facebook.com/Paid4X?mibextid=LQQJ4d')} scroll={false} className="social__link social__link--style4 active"><i className="fab fa-facebook-f"></i></div>
                     </li>
-                    <li className="social__item">
+                    {/* <li className="social__item">
                       <Link scroll={false} href="" className="social__link social__link--style4 "><i className="fab fa-instagram"></i></Link>
+                    </li> */}
+                    <li className="social__item">
+                      <div onClick={() => openNewWindow('https://www.linkedin.com/company/paid4x/')} scroll={false} className="social__link social__link--style4"><i className="fa-brands fa-linkedin-in"></i></div>
                     </li>
                     <li className="social__item">
-                      <Link scroll={false} href="" className="social__link social__link--style4"><i className="fa-brands fa-linkedin-in"></i></Link>
+                      <div onClick={() => openNewWindow('https://youtube.com/@paid4x?si=r51M6rGhKLeRA18D')} scroll={false} className="social__link social__link--style4"><i className="fab fa-youtube"></i></div>
                     </li>
                     <li className="social__item">
-                      <Link scroll={false} href="" className="social__link social__link--style4"><i className="fab fa-youtube"></i></Link>
-                    </li>
-                    <li className="social__item">
-                      <Link href="" className="social__link social__link--style4"><i className="fab fa-twitter"></i></Link>
+                      <div onClick={() => openNewWindow('https://x.com/paid4x_com?s=11&t=JqEI_h_zgJGVq37XMc3d9w')} className="social__link social__link--style4"><i className="fab fa-x"></i></div>
                     </li>
                   </ul>
                 </div>
@@ -207,7 +209,7 @@ function ContactCard() {
                       </div>
                       <div className="contact__item-content">
                         <p>
-                          Amman-Jordan
+                          {t.Amman_Jordan}
                         </p>
                         <p>
                           16 Shafeeq Bent Malik St,
@@ -224,60 +226,65 @@ function ContactCard() {
                   <div className="row g-4">
                     <div className="col-12">
                       <div>
-                        <label htmlFor="name" className="form-label">Name</label>
+                        <label htmlFor="name" className="form-label">{t.name}</label>
                         <input
                           className="form-control"
                           type="text"
                           id="first-name"
-                          placeholder="Ex. Jhon"
+                          placeholder={t.namePlaceholder}
                           onChange={(res) => setFirstname(res.target.value)}
                         />
-                        {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}                      </div>
+                        {errors.firstname && <p style={{ color: 'red' }}>{t.nameRequired}</p>}
+                      </div>
                     </div>
+
                     <div className="col-12">
                       <div>
-                        <label htmlFor="email" className="form-label">Email</label>
+                        <label htmlFor="email" className="form-label">{t.email}</label>
                         <input
                           type="email"
                           className="form-control"
                           id="account-email"
-                          placeholder="Enter your email"
+                          placeholder={t.emailPlaceholder}
                           required
                           onChange={(res) => setEmail(res.target.value)}
                         />
-                        {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+                        {errors.email && <p style={{ color: 'red' }}>{t.emailRequired}</p>}
                       </div>
                     </div>
+
                     <div className="col-12">
                       <div>
                         <label htmlFor="account-pass" className="form-label">
-                          Contact us form?
+                          {t.contactUsForm}
                         </label>
-
-                        <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
-                          <option>Select -	Contact us form ...</option>
-                          {paymentMethodOptions.map((item, index) => {
-                            return < option style={{ height: 22 }} value={getcountry} key={index}>{item}</option>
-                          })}
+                        <select className="form-control" onChange={(e) => handlePaymentMethod(e)}>
+                          <option>{t.selectContactUsForm}</option>
+                          {paymentMethodOptions.map((item, index) => (
+                            <option style={{ height: 22 }} value={getcountry} key={index}>{item}</option>
+                          ))}
                         </select>
-                        {errors.question && <p style={{ color: 'red' }}>{errors.question}</p>}
-
+                        {errors.question && <p style={{ color: 'red' }}>{t.questionRequired}</p>}
                       </div>
                     </div>
+
                     <div className="col-12">
                       <div>
-                        <label htmlFor="textarea" className="form-label">Message</label>
-                        <textarea onChange={(res) => setMessage(res.target.value)} cols="30" rows="5" className="form-control" id="textarea"
-                          placeholder="Enter Your Message"></textarea>
-                        {errors.message && <p style={{ color: 'red' }}>{errors.message}</p>}
-
+                        <label htmlFor="textarea" className="form-label">{t.message}</label>
+                        <textarea
+                          onChange={(res) => setMessage(res.target.value)}
+                          cols="30"
+                          rows="5"
+                          className="form-control"
+                          id="textarea"
+                          placeholder={t.messagePlaceholder}
+                        ></textarea>
+                        {errors.message && <p style={{ color: 'red' }}>{t.messageRequired}</p>}
                       </div>
                     </div>
                   </div>
-
                   {!isLoading && !successSubmited &&
-                    <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">contact us
-                      now
+                    <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">{t.contact_us_now}
                     </button>}
 
                   {isLoading && !successSubmited &&
@@ -297,11 +304,12 @@ function ContactCard() {
                           className="rounded me-2"
                           alt=""
                         />
-                        <strong className="me-auto">Success</strong>
+                        <strong className="me-auto">{t.success}</strong>
                       </Toast.Header>
                       <Toast.Body className={'text-white'}>
-                        Hello, your message is sent.
+                        {t.messageSent}
                       </Toast.Body>
+
                     </Toast>
                   </>}
                 </form>

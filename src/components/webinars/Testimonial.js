@@ -341,21 +341,17 @@
 
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react'
-import Header from '@/components/Header'
-import PageHeader from '@/components/modules/about-us/PageHeader';
-import Footer from "@/components/Footer";
-import Link from 'next/link';
-import Dropdown from 'react-bootstrap/Dropdown';
-import Form from 'react-bootstrap/Form';
-import { components } from "react-select";
-import { default as ReactSelect } from "react-select";
-import DatePicker from "react-datepicker";
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast'
 import { callApiWithToken } from '../../../public/api/api'
 
 const SignUp = () => {
-
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+  
   const [dataMethods, setDataMethods] = useState([])
   const [getMethod, setMethod] = useState(null)
 
@@ -409,27 +405,27 @@ const SignUp = () => {
     const errors = {};
 
     if (!companyName) {
-      errors.companyName = 'Company name is required';
+      errors.companyName = t.companyName;
       valid = false;
     }
     if (!getMethod) {
-      errors.companyType = 'Company type is required';
+      errors.companyType = t.companyType;
       valid = false;
     }
     if (!date) {
-      errors.date = 'Please selectdate';
+      errors.date = t.date;
       valid = false;
     }
     if (!getConference) {
-      errors.language = 'Language is required';
+      errors.language = t.language;
       valid = false;
     }
     if (!webinarsNumber) {
-      errors.webinarsNumber = 'Please enter the webinars number';
+      errors.webinarsNumber = t.webinarsNumber;
       valid = false;
     }
     if (!offer) {
-      errors.offer = 'Your Offer is required';
+      errors.offer = t.offer;
       valid = false;
     }
  
@@ -501,12 +497,10 @@ const SignUp = () => {
             <div className="row g-4">
               <div className="col-12">
                 <div className="account__content account__content--style1">
-                  <div className="account__header">
-                    <h2>Suggest Webinars</h2>
-                    <p>
-                      Please contact us with the details of your request or offer.
-                    </p>
-                  </div>
+                <div className="account__header">
+      <h2>{t.suggestWebinars}</h2>
+      <p>{t.suggestWebinarsDetails}</p>
+    </div>
 
                   <form
                     className="account__form needs-validation"
@@ -515,135 +509,149 @@ const SignUp = () => {
                     <div className="row g-4">
 
 
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Company Name
-                          </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            id="Company-Name"
-                            onChange={(res) => setCompanyName(res.target.value)}
-                          />
-                          {errors.companyName && <p style={{ color: 'red' }}>{errors.companyName}</p>}
+                    <div className="col-12">
+        <div>
+          <label htmlFor="Company-Name" className="form-label">
+            {t.companyNameLabel}
+          </label>
+          <input
+            className="form-control"
+            type="text"
+            id="Company-Name"
+            onChange={(res) => setCompanyName(res.target.value)}
+          />
+          {errors.companyName && <p style={{ color: 'red' }}>{errors.companyName}</p>}
+        </div>
+      </div>
 
-                        </div>
-                      </div>
+      {/* Company Type Field */}
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="account-pass" className="form-label">
+            {t.companyTypeLabel}
+          </label>
+          <select className="form-control" onChange={(e) => handlePaymentMethod(e)}>
+            <option>{t.companyTypePlaceholder}</option>
+            {paymentMethodOptions.map((item, index) => (
+              <option value={getMethod} key={index}>
+                {item}
+              </option>
+            ))}
+          </select>
+          {errors.companyType && <p style={{ color: 'red' }}>{errors.companyType}</p>}
+        </div>
+      </div>
 
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Type of company
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handlePaymentMethod(e)} >
-                            <option>Select company type ...</option>
-                            {paymentMethodOptions.map((item, index) => {
-                              return < option value={getMethod} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.companyType && <p style={{ color: 'red' }}>{errors.companyType}</p>}
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Planned date
-                          </label>
-                          <input
-                            onChange={() => changeDatePicker(date)}
-                            className="form-control"
-                            type="date"
-                            data-date-format="YYYY-MM-DD"
-                            name="party"
-                            min="2024-04-01"
-                            max="2026-04-20"
-                            required />
-                          {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
-
-                        </div>
-                      </div>
-
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Languages
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleCommunicationMethod(e)} >
-                            <option>Select languages ...</option>
-                            {CommunicationOptions.map((item, index) => {
-                              return < option value={getConference} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.language && <p style={{ color: 'red' }}>{errors.language}</p>}
-
-                        </div>
-                      </div>
+      {/* Planned Date Field */}
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="planned-date" className="form-label">
+            {t.plannedDateLabel}
+          </label>
+          <input
+            onChange={() => changeDatePicker(date)}
+            className="form-control"
+            type="date"
+            data-date-format="YYYY-MM-DD"
+            name="party"
+            id="planned-date"
+            min="2024-04-01"
+            max="2026-04-20"
+            required
+          />
+          {errors.date && <p style={{ color: 'red' }}>{errors.date}</p>}
+        </div>
+      </div>
 
 
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Number of webinars
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="account-email"
-                            placeholder="Enter number of webinars ..."
-                            required
-                            onChange={(e) => setWebinarsNumber(e.target.value)}
-                          />
-                          {errors.webinarsNumber && <p style={{ color: 'red' }}>{errors.webinarsNumber}</p>}
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="languages" className="form-label">
+            {t.languagesLabel}
+          </label>
+          <select
+            className="form-control"
+            id="languages"
+            onChange={(e) => handleCommunicationMethod(e)}
+          >
+            <option>{t.languagesPlaceholder}</option>
+            {CommunicationOptions.map((item, index) => (
+              <option value={getConference} key={index}>
+                {item}
+              </option>
+            ))}
+          </select>
+          {errors.language && <p style={{ color: 'red' }}>{errors.language}</p>}
+        </div>
+      </div>
 
-                        </div>
-                      </div>
+      {/* Number of Webinars Field */}
+      <div className="col-12">
+        <div>
+          <label htmlFor="webinars-number" className="form-label">
+            {t.webinarsNumberLabel}
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="webinars-number"
+            placeholder={t.webinarsNumberPlaceholder}
+            required
+            onChange={(e) => setWebinarsNumber(e.target.value)}
+          />
+          {errors.webinarsNumber && (
+            <p style={{ color: 'red' }}>{errors.webinarsNumber}</p>
+          )}
+        </div>
+      </div>
 
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Your offer (in USD)
-                          </label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            id="account-email"
-                            placeholder="Enter Your offer (in USD) ..."
-                            required
-                            onChange={(e) => setOffer(e.target.value)}
-                          />
-                          {errors.offer && <p style={{ color: 'red' }}>{errors.offer}</p>}
+      {/* Offer Field */}
+      <div className="col-12">
+        <div>
+          <label htmlFor="offer" className="form-label">
+            {t.offerLabel}
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="offer"
+            placeholder={t.offerPlaceholder}
+            required
+            onChange={(e) => setOffer(e.target.value)}
+          />
+          {errors.offer && <p style={{ color: 'red' }}>{errors.offer}</p>}
+        </div>
+      </div>
 
-                        </div>
-                      </div>
 
-                      <div className="col-12">
-                        <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Subjects
-                          </label>
-                          <textarea
-                            className="form-control"
-                            type="text"
-                            id="Company-Name"
-                            placeholder="technical analysis, trading techniques, risk management, other "
-                            onChange={(e) => setSubject(e.target.value)}
-                          />
-                          {errors.subject && <p style={{ color: 'red' }}>{errors.subject}</p>}
+      <div className="col-12">
+        <div>
+          <label htmlFor="subjects" className="form-label">
+            {t.subjectsLabel}
+          </label>
+          <textarea
+            className="form-control"
+            type="text"
+            id="subjects"
+            placeholder={t.subjectsPlaceholder}
+            onChange={(e) => setSubject(e.target.value)}
+          />
+          {errors.subject && <p style={{ color: 'red' }}>{errors.subject}</p>}
+        </div>
+      </div>
 
-                        </div>
-                      </div>
 
                     </div>
 
-                    {!isLoading && !successSubmited &&
-                      <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">
-                        Submit Now
-                      </button>}
+                    {!isLoading && !successSubmited && (
+        <button
+          onClick={submit}
+          className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block"
+        >
+          {t.submitButton}
+        </button>
+      )}
+
                     {errors.response && <p style={{ color: 'red' }}>{errors.response}</p>}
 
                     {isLoading && !successSubmited &&

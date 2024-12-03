@@ -2,10 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast'
 import { callApiWithToken } from '../../../../public/api/api'
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 
 
 
 const Newsletter = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
 
   const [email, setEmail] = useState('')
   const [isLoading, setLoading] = useState(false);
@@ -55,9 +61,8 @@ const Newsletter = () => {
     <section className="cta padding-top padding-bottom bg-color">
       <div className="container">
       <div className="section-header section-header--max65" style={{marginTop: 22}}>
-        <p>
-        Subscribe to our newsletter & be the first to know about new promotions & exciting offers from your favorite brokers. Be ready to take advantage of the next big bonus, or to enroll in that exciting competition, subscribe today.
-        </p>
+      <p>{t.newsletterDescription}</p>
+
       </div>
         <div className="cta__wrapper">
           <div className="cta__newsletter justify-content-center">
@@ -74,14 +79,11 @@ const Newsletter = () => {
                   <span>Subscribe</span> our news
                 </h2> */}
 
-                <h2>
-                  Subscribe our news
-                </h2>
+<h2>{t.subscribeHeading}</h2>
 
-                <p>
-                  Hey! Are you tired of missing out on our updates? Subscribe to
-                  our news now and stay in the loop!
-                </p>
+
+<p>{t.subscribeDescription}</p>
+
 
                 <div className="cta-form__inner d-sm-flex align-items-center">
                   <input
@@ -97,7 +99,7 @@ const Newsletter = () => {
                       <button onClick={() => submit()} style={{ backgroundColor: 'black' }}
                         className="trk-btn trk-btn--large trk-btn--secondary2"
                       >
-                        Submit
+                        {t.submit}
                       </button>
                     </div>}
                   {isLoading &&
@@ -120,10 +122,10 @@ const Newsletter = () => {
                         className="rounded me-2"
                         alt=""
                       />
-                      <strong className="me-auto">Success</strong>
-                    </Toast.Header>
+      <strong className="me-auto">{t.success}</strong>
+      </Toast.Header>
                     <Toast.Body className={'text-white'}>
-                      Hello, your message is sent.
+                    {t.messageSent}
                     </Toast.Body>
                   </Toast>
                 </>}

@@ -14,9 +14,15 @@ import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast'
 import { callApiWithToken } from '../../../public/api/api'
 import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 
 
 const SignUp = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
 
   const [date, setDate] = useState(new Date());
 
@@ -46,31 +52,31 @@ const SignUp = () => {
 
 
   const colourOptions = [
-    { value: 1, label: "Missouri Brokers 48-Hour" },
-    { value: 2, label: "Oklahoma Online Brokers" },
-    { value: 3, label: "Hawaii Real Estate Brokers" },
+    { value: 1, label: t.missouriBrokers },
+    { value: 2, label: t.oklahomaBrokers },
+    { value: 3, label: t.hawaiiBrokers },
   ];
 
   const daysOptions = [
-    { value: 1, label: "Saturday" },
-    { value: 2, label: " Sunday" },
-    { value: 3, label: "Monday" },
-    { value: 4, label: "Tuesday" },
-    { value: 5, label: "Wednesday" },
-    { value: 6, label: "Thursday" },
-    { value: 7, label: "Friday" },
+    { value: 1, label: t.saturday },
+    { value: 2, label: t.sunday },
+    { value: 3, label: t.monday },
+    { value: 4, label: t.tuesday },
+    { value: 5, label: t.wednesday },
+    { value: 6, label: t.thursday },
+    { value: 7, label: t.friday },
   ];
 
   const communicationMethodOptions = [
-    'Face to face ',
-    'Live video ',
-  ]
+    t.faceToFace,
+    t.liveVideo,
+  ];
 
   const CommunicationOptions = [
-    'Skype ',
-    'Zoom ',
-    'Google Meet ',
-  ]
+    t.skype,
+    t.zoom,
+    t.googleMeet,
+  ];
   useEffect(() => {
 
   }, [])
@@ -235,9 +241,9 @@ const SignUp = () => {
       errors.daysAvailable = 'Days available is required';
       valid = false;
     }
-    console.log('optionSelected',optionSelected);
+    console.log('optionSelected', optionSelected);
     if (!optionSelected) {
-      console.log('optionSelectedQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ',optionSelected);
+      console.log('optionSelectedQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ', optionSelected);
 
       errors.courses = 'Courses is required';
       valid = false;
@@ -344,199 +350,186 @@ const SignUp = () => {
                     noValidate
                   >
                     <div className="row g-4">
+
                       <div className="col-12 col-md-6">
+
                         <div>
                           <label htmlFor="first-name" className="form-label">
-                            First name
+                            {t.firstName}
                           </label>
                           <input
                             className="form-control"
                             type="text"
                             id="first-name"
-                            placeholder="Ex. Jhon"
+                            placeholder={t.firstNamePlaceholder}
                             onChange={(res) => setFirstname(res.target.value)}
                           />
-                          {errors.firstname && <p style={{ color: 'red' }}>{errors.firstname}</p>}
-
+                          {errors.firstname && <p style={{ color: 'red' }}>{t.firstNameRequired}</p>}
                         </div>
                       </div>
+
                       <div className="col-12 col-md-6">
                         <div>
                           <label htmlFor="last-name" className="form-label">
-                            Last name
+                            {t.lastName}
                           </label>
                           <input
                             required
                             className="form-control"
                             type="text"
                             id="last-name"
-                            placeholder="Ex. Doe"
+                            placeholder={t.lastNamePlaceholder}
                             onChange={(res) => setLastName(res.target.value)}
                           />
-                          {errors.lastName && <p style={{ color: 'red' }}>{errors.lastName}</p>}
-
+                          {errors.lastName && <p style={{ color: 'red' }}>{t.lastNameRequired}</p>}
                         </div>
                       </div>
+
                       <div className="col-12">
                         <div>
                           <label htmlFor="account-email" className="form-label">
-                            Email
+                            {t.email}
                           </label>
                           <input
                             type="email"
                             className="form-control"
                             id="account-email"
-                            placeholder="Enter your email"
+                            placeholder={t.emailPlaceholder}
                             required
                             onChange={(res) => setEmail(res.target.value)}
                           />
-                          {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-
+                          {errors.email && <p style={{ color: 'red' }}>{t.emailRequired}</p>}
                         </div>
                       </div>
+
+
+
                       <div className="col-12">
                         <div>
-                          <label htmlFor="account-email" className="form-label">
-                            Phone
+                          <label htmlFor="account-phone" className="form-label">
+                            {t.phone}
                           </label>
                           <input
                             type="phone"
                             className="form-control"
                             id="account-phone"
-                            placeholder="Enter your Phone Number"
+                            placeholder={t.phonePlaceholder}
                             required
                             onChange={(res) => setPhone(res.target.value)}
                           />
-                          {errors.phone && <p style={{ color: 'red' }}>{errors.phone}</p>}
-
+                          {errors.phone && <p style={{ color: 'red' }}>{t.phoneRequired}</p>}
                         </div>
                       </div>
 
                       <div className="col-12">
                         <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Method of communication
+                          <label htmlFor="communication-method" className="form-label">
+                            {t.methodOfCommunication}
                           </label>
-
-                          <select className="form-control" onChange={(e) => setcommunicationMethod(e)} >
-                            <option>Select Method of communication ...</option>
-                            {communicationMethodOptions.map((item, index) => {
-                              return < option value={getMethod} key={index}>{item}</option>
-                            })}
+                          <select className="form-control" onChange={(e) => setcommunicationMethod(e)}>
+                            <option>{t.selectMethodOfCommunication}</option>
+                            {communicationMethodOptions.map((item, index) => (
+                              <option value={getMethod} key={index}>{item}</option>
+                            ))}
                           </select>
-                          {errors.communicationMethod && <p style={{ color: 'red' }}>{errors.communicationMethod}</p>}
-
-                        </div>
-                      </div>
-
-
-
-
-
-
-                      <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Favorite video conference app
-                          </label>
-
-                          <select className="form-control" onChange={(e) => handleCommunicationMethod(e)} >
-                            <option>Select Favorite video conference ...</option>
-                            {CommunicationOptions.map((item, index) => {
-                              return < option value={getConference} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.videoConference && <p style={{ color: 'red' }}>{errors.videoConference}</p>}
-
+                          {errors.communicationMethod && <p style={{ color: 'red' }}>{t.communicationMethodRequired}</p>}
                         </div>
                       </div>
 
                       <div className="col-12">
                         <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Course required
+                          <label htmlFor="favorite-video-conference" className="form-label">
+                            {t.favoriteVideoConference}
                           </label>
-                          <ReactSelect
-                            options={colourOptions}
-                            isMulti
-                            closeMenuOnSelect={false}
-                            hideSelectedOptions={false}
-                            components={{
-                              OptionDay
-                            }}
-                            onChange={(e) => handleChange(e)}
-                            allowSelectAll={true}
-                            value={optionSelected}
-                          />
-                          {errors.courses && <p style={{ color: 'red' }}>{errors.courses}</p>}
+                          <select className="form-control" onChange={(e) => handleCommunicationMethod(e)}>
+                            <option>{t.selectFavoriteVideoConference}</option>
+                            {CommunicationOptions.map((item, index) => (
+                              <option value={getConference} key={index}>{item}</option>
+                            ))}
+                          </select>
+                          {errors.videoConference && <p style={{ color: 'red' }}>{t.videoConferenceRequired}</p>}
                         </div>
                       </div>
 
+                  
                       <div className="col-12">
-                        <div className="form-pass">
-                          <label htmlFor="account-pass" className="form-label">
-                            Days Available
-                          </label>
-                          <ReactSelect
-                            options={daysOptions}
-                            isMulti
-                            closeMenuOnSelect={false}
-                            hideSelectedOptions={false}
-                            components={{
-                              Option
-                            }}
-                            onChange={(e) => handleDaysChange(e)}
-                            allowSelectAll={true}
-                            value={optionDaysSelected}
-                          />
-                          {errors.daysAvailable && <p style={{ color: 'red' }}>{errors.daysAvailable}</p>}
-                        </div>
-                      </div>
+        <div className="form-pass">
+          <label htmlFor="account-pass" className="form-label">
+            {t.courseRequired}
+          </label>
+          <ReactSelect
+            options={colourOptions}
+            isMulti
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
+            components={{ OptionDay }}
+            onChange={(e) => handleChange(e)}
+            allowSelectAll={true}
+            value={optionSelected}
+            placeholder={t.selectCourse}
+          />
+          {errors.courses && <p style={{ color: 'red' }}>{t.coursesRequired}</p>}
+        </div>
+      </div>
 
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="first-name" className="form-label">
-                            Country
-                          </label>
+      <div className="col-12">
+        <div className="form-pass">
+          <label htmlFor="account-pass" className="form-label">
+            {t.daysAvailable}
+          </label>
+          <ReactSelect
+            options={daysOptions}
+            isMulti
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
+            components={{ Option }}
+            onChange={(e) => handleDaysChange(e)}
+            allowSelectAll={true}
+            value={optionDaysSelected}
+            placeholder={t.selectDaysAvailable}
+          />
+          {errors.daysAvailable && <p style={{ color: 'red' }}>{t.daysAvailableRequired}</p>}
+        </div>
+      </div>
 
-                          <select className="form-control" onChange={(e) => handleCountry(e)} >
-                            <option>Select country ...</option>
-                            {country.map((item, index) => {
-                              return < option value={getcountry} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.country && <p style={{ color: 'red' }}>{errors.country}</p>}
+                       <div className="col-12 col-md-6">
+        <div>
+          <label htmlFor="first-name" className="form-label">
+            {t.country}
+          </label>
+          <select className="form-control" onChange={(e) => handleCountry(e)}>
+            <option>{t.selectCountry}</option>
+            {country.map((item, index) => (
+              <option value={getcountry} key={index}>{item}</option>
+            ))}
+          </select>
+          {errors.country && <p style={{ color: 'red' }}>{t.countryRequired}</p>}
+        </div>
+      </div>
 
-                        </div>
-                      </div>
-                      <div className="col-12 col-md-6">
-                        <div>
-                          <label htmlFor="last-name" className="form-label">
-                            City/Town
-                          </label>
-
-
-
-                          <select className="form-control" onChange={(e) => handleState(e)} >
-                            <option>Select City ...</option>
-                            {getstates.map((item, index) => {
-                              return <option value={selectedState} key={index}>{item}</option>
-                            })}
-                          </select>
-                          {errors.city && <p style={{ color: 'red' }}>{errors.city}</p>}
-
-
-
-                        </div>
-                      </div>
-
+      <div className="col-12 col-md-6">
+        <div>
+          <label htmlFor="last-name" className="form-label">
+            {t.cityTown}
+          </label>
+          <select className="form-control" onChange={(e) => handleState(e)}>
+            <option>{t.selectCity}</option>
+            {getstates.map((item, index) => (
+              <option value={selectedState} key={index}>{item}</option>
+            ))}
+          </select>
+          {errors.city && <p style={{ color: 'red' }}>{t.cityRequired}</p>}
+        </div>
+      </div>
 
                     </div>
 
-                    {!isLoading && !successSubmited &&
-                      <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">
-                        Submit Now
-                      </button>}
+                    {!isLoading && !successSubmited && (
+        <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">
+          {t.submitNow}
+        </button>
+      )}
+
                     {errors.response && <p style={{ color: 'red' }}>{errors.response}</p>}
 
                     {isLoading && !successSubmited &&
@@ -556,11 +549,12 @@ const SignUp = () => {
                             className="rounded me-2"
                             alt=""
                           />
-                          <strong className="me-auto">Success</strong>
-                        </Toast.Header>
-                        <Toast.Body className={'text-white'}>
-                          Hello, your message is sent.
-                        </Toast.Body>
+      <strong className="me-auto">{t.success}</strong>
+      </Toast.Header>
+      <Toast.Body className={'text-white'}>
+          {t.messageSent}
+        </Toast.Body>
+
                       </Toast>
                     </>}
                   </form>

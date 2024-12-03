@@ -7,12 +7,18 @@ import Testimonial from "@/components/price/testimoniall";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Partner from "@/components/modules/index/Partner";
+import translations from '@/translations';
+import { useRtl } from '@/context/RtlContext';
 
 const Price = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
   return (
     <>
       <Header />
-      <PageHeader withSocialComponent={0} title={'Payment'} page={'About Payment'}/>
+      <PageHeader withSocialComponent={0} title={t.payments} page={t.payments}/>
+
       <Partner title='Instructor' page='Instructor' />
       <Featured pageId={9}/>
       <Pricing />

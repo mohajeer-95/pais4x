@@ -3,15 +3,26 @@ import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 
 function Header({ headerClass = null, pageName }) {
+  const { language, toggleDirection } = useRtl();
+  const t = translations[language] || translations['en'];
+
   const [menu, setMenu] = useState(false); // Mobile menu toggle
   const [viewMode, setViewMode] = useState(true); // Default to group A
   const [token, setToken] = useState(false);
   const router = useRouter();
-
+  
+ 
   // Check route and set viewMode accordingly
   useEffect(() => {
+    console.log('translations object:', translations);
+
+    // console.log('Language in headder :', language); // Debugging
+    // console.log('t in headder :', t); // Debugging
+
     const currentPath = router.pathname;
     const groupBRoutes = ['/courses', '/instructor', '/training', '/refund', '/seminars', '/webinars'];
 
@@ -138,10 +149,21 @@ function Header({ headerClass = null, pageName }) {
     setScrollTop(window.scrollY)
   }, [scrollTop])
 
-  const isSticky = (e) => {
+  // const isSticky = (e) => {
+  //   const header = document.querySelector('.header-section');
+  //   const scrollTop = window.scrollY;
+  //   scrollTop >= 250 ? header.classList.add('header-fixed', 'fadeInUp') : header.classList.remove('header-fixed', 'fadeInUp');
+  // };
+
+  const isSticky = () => {
     const header = document.querySelector('.header-section');
     const scrollTop = window.scrollY;
-    scrollTop >= 250 ? header.classList.add('header-fixed', 'fadeInUp') : header.classList.remove('header-fixed', 'fadeInUp');
+  
+    if (header) {
+      scrollTop >= 250 
+        ? header.classList.add('header-fixed', 'fadeInUp') 
+        : header.classList.remove('header-fixed', 'fadeInUp');
+    }
   };
 
   function closeAllMenus() {
@@ -151,7 +173,7 @@ function Header({ headerClass = null, pageName }) {
       item.querySelector('.submenu').style.display = 'none'
     })
   }
-
+ 
   // ...........main menu...............
   const toggleMenu = () => {
     setMenu(!menu);
@@ -210,7 +232,7 @@ function Header({ headerClass = null, pageName }) {
                 </Link>
 
                 <div style={{ marginLeft: 15, display: 'flex', flexDirection: 'column', bottom: 0 }}>
-                  <span style={{ fontSize: '9px', bottom: 0 }}>Sponsored</span>
+                  <span style={{ fontSize: '9px', bottom: 0 }}>{t.sponsored}</span>
                   <Link href="/">
                     <img style={{ maxHeight: 15 }} className="dark" src="/images/global/sponser1.png" alt="logo" />
                   </Link>
@@ -225,7 +247,7 @@ function Header({ headerClass = null, pageName }) {
                 </Link>
 
                 <div style={{ display: 'flex', flexDirection: 'column', bottom: 0 }}>
-                  <span style={{ fontSize: '9px', bottom: 0 }}>Sponsored</span>
+                  <span style={{ fontSize: '9px', bottom: 0 }}>{t.sponsored}</span>
                   <Link href="/courses">
                     <img style={{ maxHeight: 20, }} className="dark" src="/images/global/sponser2.png" alt="logo" />
                   </Link>
@@ -234,10 +256,10 @@ function Header({ headerClass = null, pageName }) {
 
 
               {token ? <Link href="/profile" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
-                <span>My Account</span>
+                <span>{t.myAccount}</span>
               </Link> :
                 <Link href="/signin" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
-                  <span>Get Started</span>
+                  <span>{t.getStarted}</span>
                 </Link>
               }
 
@@ -247,89 +269,98 @@ function Header({ headerClass = null, pageName }) {
 
 
               {token ? <Link style={{ display: pageName == 'profile' ? 'none' : 'block' }} href="/profile" className="hidden-pc get-started-btn">
-                <span>My Account</span>
+                <span>{t.myAccount}</span>
               </Link> :
                 <Link href="/signin" className="hidden-pc get-started-btn">
-                  <span>Get Started</span>
+                  <span>{t.getStarted}</span>
                 </Link>
               }
 
               {!viewMode ? <div className="menu-area">
-                <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
-                  <li style={{ backgroundColor: '#eaeaea' }}>
-                    <Link style={{ fontSize: 13 }} href="/courses">COURSES</Link>
-                  </li>
+                       <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/courses">{t.courses}</Link>
+              </li>
 
-                  <li style={{ backgroundColor: '#eaeaea' }}>
-                    <Link style={{ fontSize: 13 }} href="/instructor">INSTRUCTOR</Link>
-                  </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/instructor">{t.instructor}</Link>
+              </li>
 
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/training">{t.vip}</Link>
+              </li>
 
-                  <li style={{ backgroundColor: '#eaeaea' }}>
-                    <Link style={{ fontSize: 13 }} href="/training">VIP</Link>
-                  </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/refund">{t.refund}</Link>
+              </li>
 
-                  <li style={{ backgroundColor: '#eaeaea' }}>
-                    <Link style={{ fontSize: 13 }} href="/refund">REFUND</Link>
-                  </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/seminars">{t.seminars}</Link>
+              </li>
 
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/webinars">{t.webinars}</Link>
+              </li>
 
-                  <li style={{ backgroundColor: '#eaeaea' }}>
-                    <Link style={{ fontSize: 13 }} href="/seminars">SEMINARS</Link>
-                  </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/socials">{t.socials}</Link>
+              </li>
 
-                  <li style={{ backgroundColor: '#eaeaea' }}>
-                    <Link style={{ fontSize: 13 }} href="/webinars">WEBINARS</Link>
-                  </li>
-                  
-                  <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/socials">SOCIALS</Link>
-                    </li>
-
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/contact">CONTACT</Link>
-                    </li>
-                </ul>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/contact">{t.contact}</Link>
+              </li>
+            </ul>
               </div>
                 :
                 <div className="menu-area">
 
-                  <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
+<ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/about">{t.about}</Link>
+              </li>
 
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/about">ABOUT</Link>
-                    </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/cashback">{t.cashback}</Link>
+              </li>
 
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/cashback">CASHBACK</Link>
-                    </li>
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/enroll">ENROLL</Link>
-                    </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/enroll">{t.enroll}</Link>
+              </li>
 
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/brokers">{t.brokers}</Link>
+              </li>
 
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/brokers">BROKERS</Link>
-                    </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/promotions">{t.promotions}</Link>
+              </li>
 
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/promotions">PROMOTIONS</Link>
-                    </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/blogs">{t.faqs}</Link>
+              </li>
 
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/blogs">FAQS</Link>
-                    </li>
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/payments">PAYMENTS</Link>
-                    </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/payments">{t.payments}</Link>
+              </li>
 
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/socials">SOCIALS</Link>
-                    </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/socials">{t.socials}</Link>
+              </li>
 
-                    <li style={{ backgroundColor: '#eaeaea' }}>
-                      <Link style={{ fontSize: 13 }} href="/contact">CONTACT</Link>
-                    </li>
+              <li style={{ backgroundColor: '#eaeaea' }}>
+                <Link style={{ fontSize: 13 }} href="/contact">{t.contact}</Link>
+              </li>
+
+              {/* Language Toggle */}
+              <li style={{ backgroundColor: '#18e8ef', padding: 2, borderRadius: 4, paddingInline: 10 }}>
+                <div
+                  style={{ cursor: 'pointer', fontSize: 13, fontWeight: 'bold', color: '#0C263A' }}
+                  onClick={toggleDirection}
+                >
+                  {t.languageToggle}
+                </div>
+              </li>
+          
                   </ul>
                 </div>}
               <div className="header-action">
@@ -360,198 +391,3 @@ export default Header;
 
 
 
-
-
-// import Link from "next/link";
-// import { useState, useEffect, useCallback } from "react";
-// import { useRouter } from 'next/router';
-// import { getCookie } from 'cookies-next';
-
-// function Header({ headerClass = null, pageName }) {
-//   const [menu, setMenu] = useState(false); // Mobile menu toggle
-//   const [viewMode, setViewMode] = useState(true); // Default to group A
-//   const [token, setToken] = useState(false);
-//   const router = useRouter();
-
-//   // Check route and set viewMode accordingly
-//   useEffect(() => {
-//     const currentPath = router.pathname;
-//     const groupBRoutes = ['/courses', '/instructor', '/training', '/refund', '/seminars', '/webinars'];
-
-//     // Set viewMode based on route (Group A or Group B)
-//     if (groupBRoutes.includes(currentPath)) {
-//       setViewMode(false);  // Show menu group B
-//     } else {
-//       setViewMode(true);   // Show menu group A
-//     }
-//   }, [router.pathname]);
-
-//   const toggleMenu = () => {
-//     setMenu(!menu); // Toggle mobile menu visibility
-//   };
-
-//   const handleClickLogoA = () => {
-//     setViewMode(true); // Show group A menu
-//     setMenu(false); // Close mobile menu after selection
-//   };
-
-//   const handleClickLogoB = () => {
-//     setViewMode(false); // Show group B menu
-//     setMenu(false); // Close mobile menu after selection
-//   };
-
-//   return (
-//     <>
-//       <header className={`header-section ${headerClass ? headerClass : 'bg-color-3'}`}>
-//         <div className="header-bottom">
-//           <div className="container">
-//             <div className="header-wrapper">
-//               {/* Green Paid4x Logo for Group A */}
-//               <div onClick={handleClickLogoA} className="logo" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-//                 <Link href="/">
-//                   <img style={{ maxHeight: 40 }} className="dark" src="/images/global/logo.png" alt="Paid4x" />
-//                 </Link>
-//                 <div style={{ marginLeft: 15, display: 'flex', flexDirection: 'column' }}>
-//                   <span style={{ fontSize: '9px' }}>Sponsored by</span>
-//                   <Link href="/">
-//                     <img style={{ maxHeight: 15 }} className="dark" src="/images/global/sponser1.png" alt="FXC" />
-//                   </Link>
-//                 </div>
-//               </div>
-
-//               {/* Blue Paid4x Video Logo for Group B */}
-//               <div onClick={handleClickLogoB} className="logo" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-//                 <Link href="/courses">
-//                   <img style={{ maxHeight: 40, marginRight: '10px' }} className="dark" src="/images/global/el.png" alt="Paid4x Video" />
-//                 </Link>
-//                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-//                   <span style={{ fontSize: '9px' }}>Sponsored by</span>
-//                   <Link href="/courses">
-//                     <img style={{ maxHeight: 20 }} className="dark" src="/images/global/sponser2.png" alt="Pepperstone" />
-//                   </Link>
-//                 </div>
-//               </div>
-
-//               {/* Get Started / My Account Button */}
-//               {token ? (
-//                 <Link href="/profile" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
-//                   <span>My Account</span>
-//                 </Link>
-//               ) : (
-//                 <Link href="/signin" className="hidden-mobile trk-btn trk-btn--border trk-btn--primary">
-//                   <span>Get Started</span>
-//                 </Link>
-//               )}
-
-//               {/* Hamburger Menu Icon for Mobile */}
-//               <div className="header-bar d-lg-none" onClick={toggleMenu}>
-//                 <span></span>
-//                 <span></span>
-//                 <span></span>
-//               </div>
-//             </div>
-
-//             {/* Mobile and Desktop Menus */}
-//             <div className={`header-wrapper-menue ${menu ? 'menu-open' : ''}`} style={{ backgroundColor: '#F8FFFD', borderTopStyle: 'ridge', paddingBlock: pageName === 'profile' ? 15 : 5 }}>
-//               {viewMode ? (
-//                 // Menu Group A
-//                 <div className="menu-area">
-//                   <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
-//                     <li><Link href="/about">ABOUT</Link></li>
-//                     <li><Link href="/cashback">CASHBACK</Link></li>
-//                     <li><Link href="/enroll">ENROLL</Link></li>
-//                     <li><Link href="/brokers">BROKERS</Link></li>
-//                     <li><Link href="/promotions">PROMOTIONS</Link></li>
-//                     <li><Link href="/blogs">FAQS</Link></li>
-//                     <li><Link href="/payments">PAYMENTS</Link></li>
-//                     <li><Link href="/socials">SOCIALS</Link></li>
-//                     <li><Link href="/contact">CONTACT US</Link></li>
-//                   </ul>
-//                 </div>
-//               ) : (
-//                 // Menu Group B
-//                 <div className="menu-area">
-//                   <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
-//                     <li><Link href="/courses">COURSES</Link></li>
-//                     <li><Link href="/instructor">INSTRUCTOR</Link></li>
-//                     <li><Link href="/training">VIP</Link></li>
-//                     <li><Link href="/refund">REFUND</Link></li>
-//                     <li><Link href="/seminars">SEMINARS</Link></li>
-//                     <li><Link href="/webinars">WEBINARS</Link></li>
-//                   </ul>
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-//         </div>
-//       </header>
-
-//       {/* CSS for responsiveness */}
-//       <style jsx>{`
-//         .header-bar {
-//           display: flex;
-//           flex-direction: column;
-//           cursor: pointer;
-//         }
-
-//         .header-bar span {
-//           background-color: #000;
-//           height: 3px;
-//           margin: 4px 0;
-//           width: 25px;
-//         }
-
-//         @media (max-width: 991px) {
-//           .menu-area ul {
-//             display: ${menu ? 'block' : 'none'};
-//             flex-direction: column;
-//             background-color: white;
-//             position: absolute;
-//             width: 100%;
-//             top: 60px;
-//             left: 0;
-//             padding: 10px;
-//             border-top: 1px solid #ddd;
-//           }
-
-//           .menu-area ul li {
-//             padding: 10px 0;
-//           }
-
-//           .menu-area ul li a {
-//             font-size: 16px;
-//             font-weight: bold;
-//           }
-
-//           .header-bar {
-//             display: block;
-//           }
-
-//           .trk-btn {
-//             display: none;
-//           }
-//         }
-
-//         @media (min-width: 992px) {
-//           .menu-area ul {
-//             display: flex;
-//           }
-
-//           .menu-area ul li {
-//             padding: 10px;
-//           }
-
-//           .header-bar {
-//             display: none;
-//           }
-
-//           .trk-btn {
-//             display: block;
-//           }
-//         }
-//       `}</style>
-//     </>
-//   );
-// }
-
-// export default Header;

@@ -1,14 +1,200 @@
 import React, { useEffect } from 'react'
 import Header from '@/components/Header'
 import PageHeader from '@/components/modules/about-us/PageHeader'
-import Roadmap from '@/components/modules/about-us/Roadmap'
 import Featured from "@/components/modules/index/Featured";
 
 import Partner from "@/components/modules/index/Partner";
 import Footer from '@/components/Footer'
-import Story from '@/components/modules/about-us/Story'
 import Accordion from "react-bootstrap/Accordion";
-import Link from "next/link";
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
+const faqdataAR = [
+  {
+    question: 'ما هو الكاشباك؟',
+    answer: 'وفقاً لقاموس أوكسفورد فإن الكاشباك هو "نوع من أنواع الحافز يتم تقديمها للمشترين لأنواع معينة من المنتجات، يحصلون من خلاله على إسترجاع نقدي بعد القيام بعملية الشراء". في التداول عبر الأنترنت، يتم دفع الكاشباك للعملاء على مراكز التداول التي يقومون بإغلاقها. في العادة، يتم دفع الكاشباك لكل عملية يتم أغلاقها وفقاً لشروط وأحكام العرض، ولكن في الكثير من الأحيان يكون هنالك قيود مفروضة على الوقت أو الادوات الإستثمارية أو أنواع الحسابات التي يتم دفع الكاشباك لها.'
+  },
+  {
+    question: 'ما هو وسيط الكاشباك؟',
+    answer: 'الوسيط المعرف (الـ آي بي) هو شخص أو شركة تعمل في مجال الترويج لشركات الوساطة، ويقوم بتعريف العملاء المحتملين، والأشخاص الباحثين عن هذا النوع من الخدمات بالشركات التي تقدم هذه الخدمات. وإذا ما أختار الفرد الباحث عن هذه الخدمة شركة وساطة قام الوسيط المعرف بتقديم معلومات له عنها، وقام بفتح حساب لديها وبدأ بالتداول، يصبح مستحقاً لعمولات تسويقية بدل ذلك. وسيط الكاشباك هو وسيط معرف يقوم بمشاركة هذه العمولات مع العملاء الذين قاموا بفتح حساباتهم عن طريقه.'
+  },
+  {
+    question: 'ما هو مصدر الأموال التي يتم دفعها من خلال الكاشباك؟',
+    answer: 'عندما يقوم الوسيط المعرف، شخصاً كان أم شركة، بربط العملاء بشركات الوساطة، يتم دفع المال له مقابل ذلك. يمكننا أن نفكر بذلك على أنه "عمولة مبيعات" لان الوسيط المعرف يتلقى هذه العمولة فقط في حال كان هنالك بيع (أي في الأسواق المالية: إغلاق عملية تداول).' 
+  },
+  {
+    question: 'كيف يمكنني الإنضمام إلى برنامج الكاشباك (بيد تو تريد)؟',
+    answer: 'بالذهاب إلى صفحة التسجيل وتعبئة الحقول المطلوبة.'
+  },
+  {
+    question: 'هل سأحصل على المبلغ المعلن عنه من الكاشباك، أم أن هذه الأرقام مقدمة ضمن مفهوم "ما يصل إلى"، أعتماداً على عدد العقود التي سأقوم بإغلاقها؟',
+    answer: 'سوف تحصل على هذه المبالغ بغض النظر عن عدد العقود التي أغلقتها. بعض وسطاء الكاشباك يروجون لأرقام يقومون بدفعها للعملاء الذين يغلقون أعداداً كبيرة من العقود، بينما لا تنطبق هذه الأرقام على العملاء الذين يقومون بإغلاق أعداد قليلة منها. وبالتالي، فقد يحصل العميل على المبلغ المعلن في شهر ما، لكن إذا تراجع نشاط حسابك في الشهر التالي، فستحصل على مبلغ أقل لكل عقد. نحن لا نقوم بذلك هنا. عندما نعلن أن عملائنا سيحصلون على مبلغ محدد من الكاشباك مقابل كل عقد (لوت)، فإن كل عميل سيحصل على ذات المبلغ سواء قام بأغلاق لوت واحد أو 10 ألاف لوت. ولكن من الجدير بالذكر أن مبلغ الكاشباك قد يختلف من أداة تداول إلى أخرى، أو من نوع حساب إلى أخر، عند نفس الوسيط. وحتى نقدم لكم المعلومة الدقيقة حول مبالغ الكاشباك التي ستحصل عليها من كل أداة أستثمارية، قمنا بإنشاء صفحة خاصة لكل وسيط على موقعنا، تحتوي على كل المعلومات التي ترغب بمعرفتها عن هذا الوسيط، بما في ذلك مبلغ الكاشباك الذي نقوم بدفعه لكل أداة أستثمارية، وكل نوع حساب. يمكنك زيارة هذه الصفحات عن طريق الذهاب إلى صفحة الوسطاء، ومن ثم النقر على رابط (صفحة الوسيط) المتوفر بجانب شعار كل وسيط.'
+  },
+  {
+    question: 'هل العمولات وفروقات الأسعار (السبريد) هي نفسها لو قمت بفتح حسابي عن طريق موقع بيدفوركس أو عن طريق موقع شركة الوساطة مباشرة؟',
+    answer: 'لأننا نهتم بمصلحة عملائنا إلى أقصى حد، فأننا ننخرط في الشراكة فقط مع الوسطاء الذين يعطونكم نفس شروط التداول التي ستحصلون عليها من موقعهم مباشرة، في حال قمتم بفتح حساباتكم عن طريق موقعنا. لن نقوم إطلاقاً بفرض عمولة عليكم، أو توسيع فرق السعر (السبريد) مقابل خدماتنا، إطلاقاً. إن لب سياستنا التي لن تتغير مطلقاً هو: لا عمولات إضافية، لا توسعة للسبريد، ولا رسوم خفية.'
+  },
+  {
+    question: 'كيف يمكنني أن أعرف مقدماً ما هو مبلغ الكاشباك الذي سأحصل عليه عن كل تداول؟',
+    answer: 'بالذهاب إلى صفحة العملاء على موقعنا. هناك، ستجد كل المعلومات التي تريد معرفتها قبل أن تبدأ التداول بأموال حقيقية. الرجاء ملاحظة أن أنواع الحسابات المختلفة أو حتى أنواع الأدوات الإستثمارية المختلفة، لدى نفس الوسيط، تتلقى مبالغ كاشباك مختلفة. لذلك، تأكد من معرفتك لمبالغ الكاشباك التي ستستحقها، قبل فتح حسابك.'
+  },
+  {
+    question: 'هل التسجيل مجاني؟',
+    answer: 'نعم، التسجيل مجاني تماماً.'
+  },
+  {
+    question: 'هل يمكنني أن أفتح أكثر من حساب؟',
+    answer: 'بكل تأكيد، يمكنك أن تفتح حساباً واحداً مع وسيط واحد، أو عدة حسابات مع نفس الوسيط، أو عدة حسابات مع عدة وسطاء، وستحصل على الكاشباك عنها جميعاً.'
+  },
+  {
+    question: 'ماذا لو كان لدي حساب بالفعل مع وسيط ما؟',
+    answer: 'بعض الوسطاء يدفعون العمولات مقابل العملاء الذين ينتقلون من وسيط معرف إلى آخر، ولكن البعض الأخر لا يقوم بذلك. إذا وجدت رابطاً على صفحة الوسيط، مخصصاً للعملاء الذين لديهم حساب بالفعل مع الوسيط، فهذا يعني أنه يمكنك كسب الكاشباك من نقل حسابك إلى موقعنا. الرجاء ملاحظة أنه يجب إستخدام هذا الرابط بالذات حتى تصبح مستحقاً للحصول على الكاشباك. إذا لم يكن هنالك مثل هذا الرابط على صفحته، فهذا يعني أن الوسيط لن يقوم بدفع أي عمولات لنا عندما تنقل حسابك وتفتحه عن طريقنا، لأنك في الأصل عميل مسجل لدى هذا الوسيط وليس عميل جديد. في هذه الحالة، يمكنك أختيار وسيط أخر لفتح حساب جديد معه والبدء بكسب الدولارات من الكاشباك.'
+  },
+  {
+    question: 'كيف يمكنني أن أتفقد رصيد الكاشباك الخاص بي؟',
+    answer: 'بالدخول إلى صفحتك على موقعنا. الرجاء ملاحظة أن بعض الوسطاء يقومون بتحديث رصيد العمولات بشكل فوري، بينما يحدثه وسطاء أخرون على أساس يومي في نهاية اليوم. إن قدرتنا على تحديث الرصيد الذي يظهر أمامك تعتمد على الكيفية التي يتم بها التحديث من قبل الوسيط الذي تتداول معه. في كل الأحوال، هنالك طريقة سهلة يمكنك من خلالها أن تحتسب الكاشباك الخاص بك بنفسك. هذه الطريقة يتم شرحها في هذا الفيديو.'
+  },
+  {
+    question: 'ما هو أقل مبلغ يمكنني سحبه؟',
+    answer: 'يمكنك أن تقوم بسحب أي مبلغ مسموح سحبه بحسب شروط وأحكام خدمة الدفع التي تستخدمها. ولكن للمبالغ التي تقل عن 100 دولار، وإذا كانت طريقة السحب التي أستخدمها العميل تستوفي رسوماً على التحويل، فإننا سنقوم بتحميل هذه الرسوم للعميل (أي، سيتم خصمها من المبلغ المسحوب أو من رصيد محفظة الكاشباك). من جهة أخرى، فإن بيدفوركس ستقوم بتغطية رسوم التحويل للحوالات التي تبلغ 100 دولار أو أكثر.'
+  },
+  {
+    question: 'ماذا يحصل في حال عدم سحبي للكاشباك لعدة أشهر أو حتى عدة سنوات؟',
+    answer: 'لن تفقد سنتاً واحداً منه، وسيبقى رصيدك في آمان حتى تقرر أنك قد وصلت بالفعل إلى الوقت المناسب لك (أو المبلغ المناسب لك) حتى تقوم بالسحب.'
+  },
+  {
+    question: 'هل هنالك حالات لن يتم فيها الدفع لي؟',
+    answer: 'نعم. إذا رأى الوسيط الذي أخترته لفتح حسابك، بأنك قد قمت بإنتهاك الشروط والأحكام، وأنك قد تداولت بطريقة غير مقبولة بالنسبة لسياسته. في هذه الحالة، لن يقوم الوسيط بدفع العمولات لنا، وبالتالي، لن نستطيع بدورنا أن ندفع لك الكاشباك. كذلك، لو فشل الوسيط في تحويل العمولات التي تخص حسابك لأي سبب كان، حتى لو ان هذا السبب لا علاقة له بتداولاتك، فإننا لن نتمكن من دفع الكاشباك لك. بخلاف ذلك، سنقوم بالدفع لك مقابل كل عملية تقوم بإغلاقها طالما بقينا نقدم خدماتنا، ونحن نخطط لأن نقدم هذه الخدمات لسنوات طويلة قادمة. أي بإختصار، إذا دفع لنا وسيطك، سندفع لك، هذه هي الخلاصة.'
+  },
+  {
+    question: 'كيف يمكنني معرفة الحالات التي لن يقوم الوسيط بدفع العمولات لها؟',
+    answer: 'يمكنك أن تجد سياسة الوسيط بخصوص هذا الأمر على الصفحة المخصصة له على موقعنا، مع كل المعلومات عنه.'
+  },
+  {
+    question: 'ما هو أقل مبلغ إيداع للإستفادة من برنامج بيد تو تريد للكاشباك؟',
+    answer: 'لا يوجد أي حد أدنى من طرفنا في بيدفوركس، ولكن قد يكون للوسيط الذي أخترته حد أدنى للإيداع.'
+  },
+  {
+    question: 'هل يمكن أن يتغير مبلغ الكاشباك بالزيادة أو النقصان؟',
+    answer: 'نعم، وفي حالة وحيدة هي: إذا قام وسيطك بتغيير عمولاتنا. إذا قام الوسيط بخفضها، فإننا سنضطر لخفض الكاشباك، وإن قام بزيادتها، فسنكون سعداء للغاية بأن نقوم بزيادة الكاشباك لك.'
+  },
+  {
+    question: 'في حال تم تغير مبلغ الكاشباك، هل ستقومون بإخبارنا قبل تطبيق التغيير؟',
+    answer: 'إذا تم إعلامنا بذلك قبل تطبيقه، طبعاً. ولكن إذا قام الوسيط بتطبيق هذه التغييرات بشكل فوري وبدون إنذار مسبق، فإننا سنضطر لعمل الشيء ذاته.'
+  },
+  {
+    question: 'هل أتلقى الكاشباك على العمليات الرابحة أم الخاسرة؟',
+    answer: 'يسعدنا أن نقوم بدفع الكاشباك لك عن كل عملية تقوم بإغلاقها، سواءً قمت بإغلاقها على ربح، أم على خسارة، أم على رأسمالها، ما دام وسيطك لا يقوم بإلغائها على أساس أنها تخالف الشروط والأحكام.'
+  },
+  {
+    question: 'هل سأتلقى الكاشباك أيضاً عن عمليات الهيدج؟',
+    answer: 'نعم، إلا إذا كان مذكوراً على صفحة وسيطك أنك لن تتلقى عليها الكاشباك.'
+  },
+  {
+    question: 'هل هنالك حد أقصى للكاشباك الذي يمكنني تحصيله؟',
+    answer: 'السماء هي الحد!'
+  },
+  {
+    question: 'بأي عملة يتم إظهار رصيد محفظة الكاشباك؟',
+    answer: 'بالدولار الأمريكي'
+  },
+  {
+    question: 'كم أحتاج من الوقت حتى أجمع 1,000 دولار من الكاشباك؟',
+    answer: 'هذا يعتمد على عاملين رئيسين: حجم إيداعك، ودرجة نشاط حسابك. بالنسبة للحسابات الصغيرة أو العملاء الذين يقومون بإغلاق عميلة واحدة في اليوم على سبيل المثال، قد يحتاج ذلك إلى وقت طويل. لكن بالنسبة للمتداولين النشطاء الذين يقومون بدخول السوق والخروج منه عدة مرات في اليوم، أو يقومون بإيداعات أكبر، مما يسمح ليهم بتداول أحجام عقود أكبر، فإن ذلك قد يستغرق وقتاً قصيراً للغاية.'
+  },
+  {
+    question: 'ما هي نسبة العمولات المخصصة لبرنامج الكاشباك بيد تو تريد؟',
+    answer: 'نحن ندفع بالضبط 50% من عمولاتنا، ونحتفظ بالـ 50% الأخرى لتغطية النفقات التي تتضمن: رسوم حوالات الكاشباك، إستضافة الموقع، الأمن السيبراني، صيانة الموقع، إنتاج الفيديو، إدارة صفحات التواصل الإجتماعي، الحملات الإعلانية والرواتب...'
+  },
+  {
+    question: 'هل يمكن أن يتم تعديل حصة العملاء من إيرادات الموقع والبالغة 50%؟',
+    answer: 'سنقوم بمراجعة هذه الحصة على أساس سنوي، لنرى ما إذا كانت إيراداتنا تسمح بزيادتها. لن نقوم بخفضها أبداً، لكن إن سمحت لنا إيرادتنا بأن نخصص أقل من 30% منها لتغطية النفقات...'
+  },
+  {
+    question: 'هل يمكنني التوقف عن إستخدام خدماتكم إذا أردت ذلك؟',
+    answer: 'بأي وقت!'
+  },
+  {
+    question: 'لماذا تم تقسيم دوراتكم على منصة يوديمي إلى مواضيع منفصلة، ولماذا لا تقومون بجمعها كلها في دورة واحدة شاملة؟',
+    answer: 'نحن نحب كثيراً أن نوفر عليكم المال والوقت. لذلك، قمنا بتقسيم دورتنا الشاملة والطويلة إلى دورات أقصر، كل منها تركز على موضوع واحد فقط...'
+  },
+  {
+    question: 'من هم المدربين الذين يقومون بتقديم دوراتكم؟',
+    answer: 'لدينا مدرب واحد فقط: منذر مرجي، الذي يحمل شهادة محلل فني معتمد ولقب CMT من جمعية محللي السوق الفنيين* في نيويورك بالولايات المتحدة الأمريكية...'
+  },
+  {
+    question: 'هل هنالك دعم مقدم برفقة هذه الدورات؟',
+    answer: 'نعم، بكل تأكيد. بالنسبة للدورات المسجلة، يمكنكم طرح أسئلتكم حول موضوع الدورة لمدة 30 يوماً من تاريخ شرائها، بالإضافة إلى أي دعم يتوجب علينا تقديمه بحسب سياسة منصة يوديمي...'
+  },
+  {
+    question: 'أين يمكنني أن أجد روابط دوراتكم على يوديمي؟',
+    answer: 'على صفحة الدورات على موقعنا. كما يمكنك الذهاب إلى موقع يوديمي وإستخدام خاصية البحث للعثور على دوراتنا...'
+  },
+  {
+    question: 'ما الفرق بين إستخدام روابط الدورات أو شرائها بشكل مباشر من يوديمي؟',
+    answer: 'ستحصل على نفس الدورة بالضبط، ولكننا سنحصل على نسبة أكبر من رسوم الدورة في حال إستخدام روابطنا مباشرة، مما سيساعدنا في إنتاج المزيد من الدورات لمساعدتكم في زيادة معرفتكم بالسوق. دورات ستكون جديدة، متقدمة، محدثة وعصرية، وتواكب أحدث ما توصلت له أبحاث التحليل وأكتشافات الباحثين الجديدة، أو أساليب التداول الجديدة. إذا أردت أن تدعم أعمالنا وتساعدنا في تقديم أفضل الدورات لسنوات قادمة، فإن إستخدام الرابط الخاص سيكون طريقة رائعة لتقديم هذا الدعم.'
+  },
+  {
+    question: 'كيف يمكنني أن أسترد ما دفعته من رسوم التدريب (يوديمي/كبار العملاء)؟',
+    answer: 'إذا كنت قد دفعت رسوماً لتلقي التدريب من طرفنا، سواءً كان ذلك، عن طريق دوراتنا المسجلة على يوديمي، أم دورات كبار العملاء عن طريق موقعنا، يمكنك أن تحصل على إسترداد كامل إذا قمت بفتح حساب تداول واحد أو أكثر، مع الوسطاء الموجودين على موقعنا. وهذا ليس جزءاً من الكاشباك، بل إضافة له. سنقوم بدفع الكاشباك لك عن كل عملية*، وفوق ذلك، ستحصل على إسترداد رسوم التدريب التي دفعتها بالكامل، عندما تحقق رصيد الكاشباك المطلوب لذلك. لكل 5 دولارات من الكاشباك، ستتمكن من إسترداد 1 دولار من رسوم التدريب، وسيستمر ذلك حتى تسترد كامل المبلغ الذي دفعته على التدريب. * تطبق الشروط والأحكام'
+  },
+  {
+    question: 'هل يمكنني الحصول على إسترداد جزئي؟',
+    answer: 'إذا لم تكن تريد الإنتظار، يمكنك طلب إسترداد جزئي في أي وقت، وسنقوم بحساب المبلغ الذي يمكنك إسترداده، وإيداعه في محفظة الكاشباك الخاصة بك.'
+  },
+  {
+    question: 'كيف يمكنني طلب الإسترداد الجزئي؟',
+    answer: 'بنفس الطريقة التي تطلب فيها الإسترداد الكامل: عن طريقة تعبئة النموذج المخصص لذلك.'
+  },
+  {
+    question: 'هل هنالك حد زمني للحصول على الإسترداد الكامل؟',
+    answer: 'إطلاقاً. لديك كل الوقت الذي تحتاجه حتى تصل إلى رصيد الكاشباك الذي يسمح لك بطلب الإسترداد الكامل. بمجرد الوصول إلى الرصيد المطلوب، يمكنك فوراً طلب الإسترداد الكامل، وسنقوم بإيداع المبلغ في محفظة الكاشباك الخاصة بك، ومن هناك يمكنك ان تسحبه في أي وقت تريد، بإستخدام أي من وسائل السحب المتعددة المتوفرة.'
+  },
+  {
+    question: 'هل هنالك حد أقصى لمبلغ الإسترداد الكامل الذي يمكنني سحبه؟',
+    answer: 'إطلاقاً. سنقوم بدفع كل دولار كنت قد دفعته على خدماتنا التدريبية، سواءً المسجلة، أو خدمات كبار العملاء، أياً كان المبلغ.'
+  },
+  {
+    question: 'هل يمكنني أستخدام الكاشباك للدفع للدورات التدريبية؟',
+    answer: 'إذا كان لديك ما يكفي من المال في محفظة الكاشباك الخاصة بك، يمكنك إستخدامه للدفع مقابل تدريب كبار العملاء. ولكن بالنسبة للدورات المسجلة، فإن عملية الدفع يجب معالجتها عن طريق يوديمي.'
+  },
+  {
+    question: 'ما هي اللغات التي يتوفر فيها التدريب؟',
+    answer: 'العربية والإنجليزية.'
+  },
+  {
+    question: 'ما هي طرق الدفع المتوفرة التي أستطيع من خلالها أن أقوم بالسحب؟',
+    answer: 'تستطيع سحب أموالك عن طريق: - فاينست - فوليت - باي بال - مانيغرام - الحوالات البنكية. إذا كنت تفضل وسيلة دفع أخرى، الرجاء تعبئة هذا النموذج، وإن كان بالإمكان إستخدامها من طرفنا، سيسعدنا ان نتعاون معك وأن نقوم بإرسال الأموال لك عبر الطريقة التي تفضلها.'
+  },
+  {
+    question: 'من يغطي تكاليف التحويل؟',
+    answer: 'حالياً، لا تستوفي خدمات فاينست و فوليت أي رسوم على التحويل من محفظتنا إلى محفظتكم. بالنسبة لوسائل الدفع الأخرى، إذا كان مبلغ السحب حتى 99.99 دولار، فإن تكاليف السحب سيتم خصمها من المبلغ المسحوب أو رصيد محفظة العميل. أما في حال كان المبلغ المسحوب 100 دولار أو أكثر، فإن بيدفوركس ستتكفل بتغطية تكاليف التحويل.'
+  },
+  {
+    question: 'من هم الوسطاء الذين يمكنني أن أفتح حسابي معهم وأستفيد من الكاشباك؟',
+    answer: 'يمكنك أن تتعرف بسهولة على هؤلاء الوسطاء عبر شريط التيكر تيب الذي يمكن مشاهدته على كل صفحات الموقع. أما إذا أردت الإطلاع على قائمة كاملة للوسطاء، الرجاء زيارة صفحة الوسطاء.'
+  },
+  {
+    question: 'هل يمكنني أن أنقل حسابي من وسيط لأخر وأستمر في الإستفادة من برنامج بيد تو تريد؟',
+    answer: 'بكل تأكيد. يمكنك أن تختار أي وسيط من الوسطاء الموجودين على الموقع وتستمر في جني الكاشباك على كل تداولاتك (تطبق الشروط والأحكام). ولكن، قد يختلف مبلغ الكاشباك من وسيط إلى أخر.'
+  },
+  {
+    question: 'لماذا هنالك فرق في الكاشباك الذي أحصل عليه من أنواع الحسابات المختلفة أو من الوسطاء المختلفين؟',
+    answer: 'بسبب عوامل عديدة، مثل الإختلاف في الفارق السعري (السبريد) أو العمولة التي يستوفيها كل وسيط. نحن في موقع بيد فوركس دوت كوم لا نملك أي سلطة تخولنا تحديد مبلغ الكاشباك الذي يقدمه كل وسيط، بإستثناء مفاوضتنا لهم لتقديم مبلغ أفضل.'
+  },
+  {
+    question: 'كيف يمكنني متابعة الأخبار حول خدماتكم، أو حول العروض الترويجية التي يقدمها الوسطاء الموجودين على موقع بيدفوركس دوت كوم؟',
+    answer: 'الرجاء التكرم بزيارة صفحة العروض بين الحين والأخر، لتفقد العروض الترويجية الجديدة التي يقدمها وسطائنا. بتفقدك لهذه الصفحة بشكل دوري، ستكون على إستعداد لإستغلال أي عروض ترويجية، أو مسابقات، أو عروض البونص، التي يعلن عنها الوسطاء. كما أننا نقوم بالإعلان عن هذه العروض الترويجية عبر صفحاتنا على منصات التواصل الإجتماعي، فتابعونا هناك للحصول على كل التحديثات!'
+  },
+  {
+    question: 'إذا كان لدي سؤال لم يتم ذكره هنا، كيف يمكنني الحصول على الدعم؟',
+    answer: 'يمكنك التواصل مع فريق الدعم عبر تطبيق تلغرام خلال ساعات العمل الرسمية، أو عبر البريد الإلكتروني في أي وقت، أو عبر قنوات التواصل الإجتماعي. يقوم أحد أعضاء فريق الدعم بالتحقق من جميع طرق التواصل مع فريق الدعم مرة كل 15 دقيقة خلال ساعات العمل الرسمية.'
+  },
+  {
+    question: 'ما هي ساعات عمل فريق الدعم؟',
+    answer: 'حالياً، نحن نقدم الدعم لـ 5 أيام في الأسبوع، من الإثنين إلى الجمعة، من الساعة 9:00 صباحاً وحتى 9:00 مساءاً بتوقيت دبي.'
+  }
+];
 
 const faqdata = [
   {
@@ -21,7 +207,7 @@ const faqdata = [
   },
   {
     question: 'What is the source of the cashback funds?',
-    answer: 'As an introducing broker, the individual or company introducing clients to a brokerage firm is paid in return for introducing these clients. We may think of these payments as “sales commissions” because the IB only gets paid in case there is a sale (i.e. a trade closed).'
+    answer: 'As an introducing broker, the individual or company introducing clients to a brokerage firm is paid in return for introducing these clients. We may think of these payments as “sales commissions” because the IB only gets paid in case there is a sale (i.e. a trade closed).' 
   },
   {
     question: 'How can I enroll into the Paid2Trade program?',
@@ -29,7 +215,7 @@ const faqdata = [
   },
   {
     question: 'Will I be getting the advertised amount of cashback, or are these numbers presented in an “up to” offer, depending on my number of lots?',
-    answer: 'You will be getting these amounts regardless of your trading volume. Some cashback providers may promote numbers that are on the higher end of the trading volume, meaning they only apply to traders who trade a large number of lots a month, and if their trading volumes drop the next month, the cashback rate drops as well. We do not do that here. When we say that you will get a certain amount of dollars for each lot with this broker, you will get this amount from the first lot, and you will get the same cashback amount if you trade 1 lot a month, or 10,000 lots. However, it is worth noting that the cashback amount may differ from one instrument to another, or from one account type to another, even with the same broker.'
+    answer: 'You will be getting these amounts regardless of your trading volume. Some cashback providers may promote numbers that are on the higher end of the trading volume, meaning they only apply to traders who trade a large number of lots a month, and if their trading volumes drop the next month, the cashback rate drops as well. We do not do that here. When we say that you will get a certain amount of dollars for each lot with this broker, you will get this amount from the first lot, and you will get the same cashback amount if you trade 1 lot a month, or 10,000 lots. However, it is worth noting that the cashback amount may differ from one instrument to another, or from one account type to another, even with the same broker. In order to provide you with accurate details about the cashback amounts that you will get from trading each instrument, we created a dedicated page for each broker. This page includes all the info that you may want to know about this broker, including the cashback amount we pay for every instrument & every account type. You can visit these pages by going to the brokers page, and clicking on the broker page button, which can be found next to the logo of each broker.'
   },
   {
     question: 'Are the spreads & commissions the same if I open through Paid4X.com or directly through the broker’s site?',
@@ -65,7 +251,7 @@ const faqdata = [
   },
   {
     question: 'Are there cases when I will not be paid?',
-    answer: 'Yes. If for any reason the broker you have your account with decides that you have violated the terms & conditions, and that you have traded in a way that is not acceptable by them. In this case, your broker will not pay us commissions, and therefore, we cannot pay you cashback. Also, if for any other reason, which may not be related to your trades, your broker fails to pay us our commissions, we cannot pay you the cashback.'
+    answer: 'Yes. If for any reason the broker you have your account with decides that you have violated the terms & conditions, and that you have traded in a way that is not acceptable by them. In this case, your broker will not pay us commissions, and therefore, we cannot pay you cashback. Also, if for any other reason, which may not be related to your trades, your broker fails to pay us our commissions, we cannot pay you the cashback. Other than that, we will pay you for every trade you close for as long we offer our services, and we plan to offer them for many, many years to come. So in short, if we are paid, you are paid, period.'
   },
   {
     question: 'How can I know in which cases the broker will not pay commissions?',
@@ -105,7 +291,7 @@ const faqdata = [
   },
   {
     question: 'What is the percentage of your commissions that you devote for the cashback program Paid2Trade?',
-    answer: 'We payout exactly 50% of our commissions, and keep the other 50% to cover expenses including: Cashback transfer costs, webhosting, online security, site maintenance, video production, social media management, advertisement & salaries. Our expenses are estimated to consume about 30% of our commissions, which leaves us with an estimated net revenue of only 20% of the total commissions we receive.'
+    answer: 'We payout exactly 50% of our commissions, and keep the other 50% to cover expenses including: Cashback transfer costs, webhosting, online security, site maintenance, video production, social media management, advertisement & salaries. Our expenses are estimated to consume about 30% of our commissions, which leaves us with an estimated net revenue of only 20% of the total commissions we receive. Yes, we pay you 50% & make 20%.'
   },
   {
     question: 'Can our 50% share change?',
@@ -121,7 +307,7 @@ const faqdata = [
   },
   {
     question: 'Who are the instructors who give your courses?',
-    answer: 'We only have one instructor: Munthir Marji, who is a CMT (Chartered Market Technician), a full member of the MTA (Market Technicians Association)* in NY, USA, who holds a bachelor’s degree in economics & a master’s degree in finance, 23 years of experience in the FX/CFD industry, and has been training since 2002. * Now known as The CMT Association'
+    answer: 'We only have one instructor: Munthir Marji, who is a CMT (Chartered Market Technician), a full member of the MTA (Market Technicians Association) in NY, USA, who holds a bachelor’s degree in economics & a master’s degree in finance, 23 years of experience in the FX/CFD industry, and has been training since 2002.  Now known as The CMT Association'
   },
   {
     question: 'Do training courses come with support?',
@@ -137,7 +323,7 @@ const faqdata = [
   },
   {
     question: 'How can I refund what I paid for training courses (Udemy/VIP)?',
-    answer: 'If you paid for any training, be it for a recorded video course on Udemy, or for the VIP service on our site, you can get a full refund if you open one trading account or more, with the brokers listed on our site. This is not a part of your cashback, but something extra on top of it. You will get cashback for every trade*, and in addition to that, you will get a refund of the training fees, once you reach the required cashback balance. For every 5 dollars of cashback you make, we will refund 1 dollar of training fees, and we will keep on adding the dollars to your refund amount, until you get back the full amount that you paid for training. * Terms & Conditions Apply.'
+    answer: 'If you paid for any training, be it for a recorded video course on Udemy, or for the VIP service on our site, you can get a full refund if you open one trading account or more, with the brokers listed on our site. This is not a part of your cashback, but something extra on top of it. You will get cashback for every trade*, and in addition to that, you will get a refund of the training fees, once you reach the required cashback balance. For every 5 dollars of cashback you make, we will refund 1 dollar of training fees, and we will keep on adding the dollars to your refund amount, until you get back the full amount that you paid for training.'
   },
   {
     question: 'Can I get a partial refund?',
@@ -198,26 +384,25 @@ const faqdata = [
 ];
 
 
-
-
 const Blogs = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+  const selectedFaqData = language === 'ar' ? faqdataAR : faqdata;
+
 
   return (
     <>
       <Header />
-      <PageHeader withSocialComponent={0} title='Frequently' page='Faq' />
+      <PageHeader withSocialComponent={0} title={t.frequently} page={t.frequently}/>
       <Partner />
       <Featured pageId={2} />
 
       <section className="faq padding-top padding-bottom of-hidden">
         <div className="section-header section-header--max65">
           <h2 className="mb-15 mt-minus-5">
-            <span>Frequently</span> Asked questions
+          <span>{t.frequently}</span> {t.askedQuestions}
           </h2>
-          <p>
-            Hey there! Got questions? Weve got answers. Check out our FAQ page
-            for all the deets. Still not satisfied? Hit us up.
-          </p>
+          <p>{t.faqDescription}</p>
         </div>
         <div className="container">
           <div className="faq__wrapper">
@@ -226,7 +411,7 @@ const Blogs = () => {
                 <Accordion className="accordion--style1">
                   <div className="row">
                     {
-                      faqdata.map((data, index) => (
+                      selectedFaqData.map((data, index) => (
                         <div key={index} className="col-12">
                           <Accordion.Item className="accordion__item" eventKey={index}>
                             <div className="accordion__header">

@@ -26,6 +26,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Story from '@/components/modules/about-us/Story'
 import { callApiWithToken } from '../../../../public/api/api'
 import Rating from '@mui/material/Rating';
+import { useBroker } from '@/context/BrokerContext';
 
 
 const Mentor = ({ title }) => {
@@ -33,8 +34,9 @@ const Mentor = ({ title }) => {
   const [value, setValue] = useState(0);
   const [isLinked, setIsLinked] = useState(0);
 
-  const router = useRouter();
-  const { id } = router.query;  // Get the dynamic ID from the route
+  // const  id  = 100;  // Get the dynamic ID from the route
+  const { brokerData } = useBroker();
+
 
   const imageUrl = 'https://paid4x.com/broker/public/'
   const [statebuttonText, setStateButtonText] = useState(false);
@@ -60,7 +62,7 @@ const Mentor = ({ title }) => {
   const [support, setsupport] = useState([])
   const [trading_cost, settrading_cost] = useState([])
   const [broker, setbroker] = useState([])
-  const [brokerData, setBrokerData] = useState([])
+  const [brokerAllData, setBrokerData] = useState([])
   const [brokerId, setBrokerId] = useState(null)
   const [query, setQuery] = useState(null);
   const longText = "This is a long text, it should be displayed properly. React is awesome, it allows you to build complex UIs.";
@@ -75,17 +77,35 @@ const Mentor = ({ title }) => {
 
 
   useEffect(() => {
+    const savedBrokerDataLocal = localStorage.getItem('brokerData');
+    
+    if (!brokerData && !savedBrokerDataLocal) {
+      router.push('/brokers'); // Redirect to the brokers list page
+    }else if(brokerData){
+      setBrokerId(brokerData)
+    }else if(savedBrokerDataLocal){
+      setBrokerId(savedBrokerDataLocal)
+    }else{
+      router.push('/brokers'); // Redirect to the brokers list page
+    }
+
+    console.log('brokerId',brokerId);
+
     const fetchData = async () => {
       try {
         const token = getCookie('token')
         setToken(token)
         let response;
-        if (token && id) {
+        if (token && brokerId) {
+          console.log('rorroororororororororororororororororororororo');
+          
           // Call API with token if user is logged in
-          response = await getBrokerById(id, token);
+          response = await getBrokerById(brokerId, token);
         } else {
+          console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+          
           // Call API without token if user is logged out
-          response = await getBrokerById(id);
+          response = await getBrokerById(brokerId);
         }
         setBrokerData(response); // Store the API response
       } catch (err) {
@@ -94,41 +114,12 @@ const Mentor = ({ title }) => {
         setLoadindAllData(true); // Stop the loading state
       }
     };
-    if (id) {
-      setQuery(id);
-      setBrokerId(id)
+    if (brokerId) {
+      setQuery(brokerId);
+      setBrokerId(brokerId)
       fetchData();
     }
-  }, [router.isReady]);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = getCookie('token'); // Retrieve the token
-        if (id) {
-          let response;
-          if (token) {
-            // Call API with token if user is logged in
-            response = await getBrokerById(id, token);
-          } else {
-            // Call API without token if user is logged out
-            response = await getBrokerById(id);
-          }
-        }
-      } catch (error) {
-        console.error('Fetch error:', error);
-      } finally {
-      }
-    };
-
-
-    if (router.isReady) {
-      setQuery(router.query);
-      setBrokerId(router.query.id)
-      fetchData();
-    }
-  }, [router.isReady, router.query.id]);
+  }, [brokerId]);
 
 
 
@@ -195,7 +186,6 @@ const Mentor = ({ title }) => {
 
 
   const updateBrokerState = (broker) => {
-    console.log('BEEEEEESSS$%456546456546546456', broker);
 
     setBrokerData(broker);
     setbroker_account(broker.broker_account);
@@ -211,7 +201,6 @@ const Mentor = ({ title }) => {
   };
 
   const handleDescription = (description) => {
-    console.log('DDDDDDDDD', description);
 
     const shortDescription = description?.length > 108 ? description.substring(0, 110) + '...' : description;
     setDescription(description?.slice(0, 400) + '...');
@@ -234,7 +223,6 @@ const Mentor = ({ title }) => {
   const handleStarRating = (avgRating) => {
     const starNumber = Array(Math.floor(avgRating)).fill('star');
 
-    console.log('starNumber', starNumber);
 
     const modifiedArr = modifyArray(starNumber);
 
@@ -452,7 +440,7 @@ const Mentor = ({ title }) => {
                         className="bg-image rounded hover-zoom hover-overlay"
                       >
                         <MDBCardImage
-                          src={info?.logo ? imageUrl + info?.logo : 'images/global/logo2.png'}
+                          src={info?.logo ? imageUrl + info?.image : '/images/global/logo2.png'}
                           fluid
                           className="w-100"
                           style={{ maxWidth: 150 }}

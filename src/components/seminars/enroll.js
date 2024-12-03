@@ -12,8 +12,14 @@ import DatePicker from "react-datepicker";
 import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast'
 import { callApiWithToken } from '../../../public/api/api'
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
+
 
 const SignUp = () => {
+    const { language } = useRtl();
+    const t = translations[language] || translations['en'];
+
 
     const [dataMethods, setDataMethods] = useState([])
     const [getMethod, setMethod] = useState(null)
@@ -161,27 +167,27 @@ const SignUp = () => {
         const errors = {};
 
         if (!companyName) {
-            errors.companyName = 'Name is required';
+            errors.companyName = t.validationErrors.companyName;
             valid = false;
         }
         if (!getcountry) {
-            errors.country = 'Your country is required';
+            errors.country = t.validationErrors.country;
             valid = false;
         }
         if (!selectedState) {
-            errors.city = 'Your city is required';
+            errors.city = t.validationErrors.city;
             valid = false;
         }
         if (!seminarsNumber) {
-            errors.seminarsNumber = 'Please enter Phone number';
+            errors.phoneNumber = t.validationErrors.phoneNumber;
             valid = false;
         }
         if (!offer) {
-            errors.offer = 'WhatsApp or telegram is required';
+            errors.contactMethod = t.validationErrors.contactMethod;
             valid = false;
         }
         if (!subject) {
-            errors.offer = 'Email is required';
+            errors.email = t.validationErrors.email;
             valid = false;
         }
         setErrors(errors);
@@ -191,7 +197,7 @@ const SignUp = () => {
 
 
     const submit = async (e) => {
-        return null;
+        // return null;
         setLoading(true);
         e.preventDefault();
         if (!validateForm()) {
@@ -261,7 +267,7 @@ const SignUp = () => {
                             <div className="col-12">
                                 <div className="account__content account__content--style1">
                                     <div className="account__header">
-                                        <h2>Suggest Enroll</h2>
+                                        <h2>{t.suggestEnroll}</h2>
                                     </div>
 
                                     <form
@@ -273,37 +279,33 @@ const SignUp = () => {
 
                                             <div className="col-12">
                                                 <div>
-                                                    <label htmlFor="account-email" className="form-label">
-                                                        Name
+                                                    <label htmlFor="name" className="form-label">
+                                                        {t.name}
                                                     </label>
                                                     <input
-                                                        placeholder="Enter Name ..."
-
+                                                        placeholder={t.namePlaceholder}
                                                         className="form-control"
                                                         type="text"
-                                                        id="Name"
+                                                        id="name"
                                                         onChange={(res) => setCompanyName(res.target.value)}
                                                     />
-                                                    {errors.companyName && <p style={{ color: 'red' }}>{errors.companyName}</p>}
-
+                                                    {errors.companyName && <p style={{ color: 'red' }}>{t.nameRequired}</p>}
                                                 </div>
                                             </div>
 
-
                                             <div className="col-12">
                                                 <div>
-                                                    <label htmlFor="account-email" className="form-label">
-                                                        Email
+                                                    <label htmlFor="email" className="form-label">
+                                                        {t.email}
                                                     </label>
                                                     <input
                                                         className="form-control"
                                                         type="text"
-                                                        id="Company-Name"
-                                                        placeholder="Enter Email... "
+                                                        id="email"
+                                                        placeholder={t.emailPlaceholder}
                                                         onChange={(e) => setSubject(e.target.value)}
                                                     />
-                                                    {errors.subject && <p style={{ color: 'red' }}>{errors.subject}</p>}
-
+                                                    {errors.subject && <p style={{ color: 'red' }}>{t.emailRequired}</p>}
                                                 </div>
                                             </div>
 
@@ -311,41 +313,37 @@ const SignUp = () => {
 
 
 
-
-
                                             <div className="col-12">
                                                 <div>
-                                                    <label htmlFor="account-email" className="form-label">
-                                                        Phone
+                                                    <label htmlFor="account-phone" className="form-label">
+                                                        {t.phone}
                                                     </label>
                                                     <input
                                                         type="number"
                                                         className="form-control"
-                                                        id="account-email"
-                                                        placeholder="Enter Phone ..."
+                                                        id="account-phone"
+                                                        placeholder={t.phonePlaceholder}
                                                         required
                                                         onChange={(e) => setSeminarsNumber(e.target.value)}
                                                     />
-                                                    {errors.seminarsNumber && <p style={{ color: 'red' }}>{errors.seminarsNumber}</p>}
-
+                                                    {errors.seminarsNumber && <p style={{ color: 'red' }}>{t.phoneRequired}</p>}
                                                 </div>
                                             </div>
 
                                             <div className="col-12">
                                                 <div>
-                                                    <label htmlFor="account-email" className="form-label">
-                                                        WhatsApp/Telegram
+                                                    <label htmlFor="account-whatsapp" className="form-label">
+                                                        {t.whatsappTelegram}
                                                     </label>
                                                     <input
                                                         type="number"
                                                         className="form-control"
-                                                        id="account-email"
-                                                        placeholder="Enter Your WhatsApp ..."
+                                                        id="account-whatsapp"
+                                                        placeholder={t.whatsappTelegramPlaceholder}
                                                         required
                                                         onChange={(e) => setOffer(e.target.value)}
                                                     />
-                                                    {errors.offer && <p style={{ color: 'red' }}>{errors.offer}</p>}
-
+                                                    {errors.offer && <p style={{ color: 'red' }}>{t.whatsappTelegramRequired}</p>}
                                                 </div>
                                             </div>
 
@@ -353,50 +351,44 @@ const SignUp = () => {
 
                                             <div className="col-12 col-md-6">
                                                 <div>
-                                                    <label htmlFor="first-name" className="form-label">
-                                                        Country
+                                                    <label htmlFor="country" className="form-label">
+                                                        {t.country}
                                                     </label>
-
-                                                    <select className="form-control" onChange={(e) => handleCountry(e)} >
-                                                        <option>Select country ...</option>
+                                                    <select className="form-control" onChange={(e) => handleCountry(e)}>
+                                                        <option>{t.selectCountry}</option>
                                                         {country.map((item, index) => {
-                                                            return < option value={getcountry} key={index}>{item}</option>
+                                                            return <option value={getcountry} key={index}>{item}</option>;
                                                         })}
                                                     </select>
-                                                    {errors.country && <p style={{ color: 'red' }}>{errors.country}</p>}
-
-
+                                                    {errors.country && <p style={{ color: 'red' }}>{t.countryRequired}</p>}
                                                 </div>
                                             </div>
+
                                             <div className="col-12 col-md-6">
                                                 <div>
-                                                    <label htmlFor="last-name" className="form-label">
-                                                        City/Town
+                                                    <label htmlFor="city" className="form-label">
+                                                        {t.city}
                                                     </label>
-
-
-
-                                                    <select className="form-control" onChange={(e) => handleState(e)} >
-                                                        <option>Select City ...</option>
+                                                    <select className="form-control" onChange={(e) => handleState(e)}>
+                                                        <option>{t.selectCity}</option>
                                                         {getstates.map((item, index) => {
-                                                            return <option value={selectedState} key={index}>{item}</option>
+                                                            return <option value={selectedState} key={index}>{item}</option>;
                                                         })}
                                                     </select>
-                                                    {errors.city && <p style={{ color: 'red' }}>{errors.city}</p>}
-
-
-
+                                                    {errors.city && <p style={{ color: 'red' }}>{t.cityRequired}</p>}
                                                 </div>
                                             </div>
+
 
 
 
                                         </div>
 
-                                        {!isLoading && !successSubmited &&
+                                        {!isLoading && !successSubmited && (
                                             <button onClick={submit} className="trk-btn trk-btn--border trk-btn--primary mt-4 d-block">
-                                                Submit Now
-                                            </button>}
+                                                {t.submitNow}
+                                            </button>
+                                        )}
                                         {errors.response && <p style={{ color: 'red' }}>{errors.response}</p>}
 
                                         {isLoading && !successSubmited &&
@@ -416,10 +408,10 @@ const SignUp = () => {
                                                         className="rounded me-2"
                                                         alt=""
                                                     />
-                                                    <strong className="me-auto">Success</strong>
+                                                    <strong className="me-auto">{t.success}</strong>
                                                 </Toast.Header>
                                                 <Toast.Body className={'text-white'}>
-                                                    Hello, your message is sent.
+                                                    {t.messageSent}
                                                 </Toast.Body>
                                             </Toast>
                                         </>}

@@ -9,13 +9,17 @@ import Featured from "@/components/modules/index/Featured";
 import Footer from '@/components/Footer'
 import Story from '@/components/modules/about-us/Story'
 import Partner from "@/components/modules/index/Partner";
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 
 const AboutUs = () => {
-
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+  
   return (
     <>
     <Header/>
-    <PageHeader withSocialComponent={0} title='About Us' page= 'About'/>
+    <PageHeader withSocialComponent={0} title={t.aboutUs} page={t.aboutUs}/>
     <Partner title='About Us' page= 'About'/>
     <Featured pageId={1}/>
     {/* <Story/> */}
