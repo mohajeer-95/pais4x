@@ -9,7 +9,7 @@ import Partner from "@/components/modules/index/Partner";
 import Newsletter from "@/components/modules/index/Newsletter";
 import Featured from "@/components/modules/index/Featured";
 
-const blogDetails = () => {
+const Profile = () => {
   const { language } = useRtl();
   const t = translations[language] || translations['en'];
 
@@ -26,4 +26,4 @@ const blogDetails = () => {
   )
 }
 
-export default blogDetails
+export default Profile
