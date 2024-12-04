@@ -37,7 +37,7 @@ const Team = () => {
   return (
     <section className="team padding-top padding-bottom bg-color">
     <div className="section-header section-header--max50">
-      <h2 className="mb-15 mt-minus-5">{t.brokersListHeading} <span>List</span></h2>
+      <h2 className="mb-15 mt-minus-5">{t.brokersListHeading} <span></span></h2>
       <p>{t.brokersListDescription}</p>
       <div>{t.brokersListFooter}</div>
     </div>

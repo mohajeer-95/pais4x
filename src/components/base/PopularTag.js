@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Link from "next/link";
 import FsLightbox from "fslightbox-react";
 import Image from "next/image";
 import Table from 'react-bootstrap/Table';
@@ -7,8 +6,6 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import {
   MDBCard,
-  MDBCardBody,
-  MDBCol,
   MDBContainer,
   MDBInput,
   MDBRow,
@@ -24,14 +21,15 @@ import {
   MDBModalBody,
   MDBModalFooter,
 } from "mdb-react-ui-kit";
-import { getCookies, setCookie, deleteCookie, getCookie } from 'cookies-next';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
+import { deleteCookie, getCookie } from 'cookies-next';
 import { callApiWithToken } from '../../../public/api/api'
-
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 
 const PopularTag = () => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
+
   const [toggler, setToggler] = useState(false);
   const [value, setValue] = useState(1);
   const [scrollableModal, setScrollableModal] = useState(false);
@@ -128,7 +126,7 @@ const PopularTag = () => {
     window.location.href = '/services';
 
   };
-  
+
   const onChangeRecipient = (event) => {
     setVaryingRecipient(event.target.value);
   };
@@ -161,7 +159,7 @@ const PopularTag = () => {
         <MDBModalDialog scrollable>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Payment Policy</MDBModalTitle>
+              <MDBModalTitle>{t.paymentPolicy}</MDBModalTitle>
               <MDBBtn
                 className='btn-close'
                 color='none'
@@ -169,20 +167,14 @@ const PopularTag = () => {
               ></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
-              <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in,
-                egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-              </p>
-              <p>
-                Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl
-                consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-              </p>
+              <p>{t.paymentPolicyDescription1}</p>
+              <p>{t.paymentPolicyDescription2}</p>
             </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn className="ms-1" color='secondary' onClick={() => setScrollableModal(!setScrollableModal)}>
                 Close
               </MDBBtn>
-              <MDBBtn className="ms-1">Send</MDBBtn>
+              <MDBBtn className="ms-1">{t.sendMail}</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
@@ -207,7 +199,7 @@ const PopularTag = () => {
             </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn className="ms-1" color='secondary' onClick={() => setReceiptModal(!setReceiptModal)}>
-                Close
+                {t.close}
               </MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
@@ -223,16 +215,15 @@ const PopularTag = () => {
             <MDBModalContent>
 
               <MDBModalHeader>
-                <MDBModalTitle>New Link with FXCentrum</MDBModalTitle>
+                <MDBModalTitle>{t.newLinkWith}</MDBModalTitle>
                 <MDBBtn className='btn-close' color='none
         ' onClick={() => setOpenLinkModal(false)}></MDBBtn>
               </MDBModalHeader>
               <MDBModalBody>
                 <form>
-                  <p>
-                    Please enter your email and then the verification code to complete the subscription ...
-                  </p>
-                  <h6>Email:  <span class="badge badge-primary">New</span></h6>
+                  <p>{t.enterEmailAndVerificationCode}</p>
+
+                  <h6>{t.email}: <span className="badge badge-primary">{t.new}</span></h6>
 
                   <div className='mb-3'>
                     {openLinkModal && (
@@ -245,9 +236,13 @@ const PopularTag = () => {
                       />
                     )}
                   </div>
-                  {varyingState == 2 ? <p>We have sent a verification code to your email...</p> : null}
+                  {varyingState == 2 ? (
+                    <p>{t.verificationCodeSent}</p>
+                  ) : null}
 
-                  {varyingState == 2 ? <h6>Enter OTP:  <span class="badge badge-primary">New</span></h6> : null}
+                  {varyingState == 2 ? (
+                    <h6>{t.enterOTP}: <span className="badge badge-primary">{t.new}</span></h6>
+                  ) : null}
 
                   <div className='mb-3'>
                     {varyingState == 2 ?
@@ -264,10 +259,10 @@ const PopularTag = () => {
               </MDBModalBody>
               <MDBModalFooter>
                 <MDBBtn className='ms-1' color='secondary' onClick={() => setOpenLinkModal(!openLinkModal)}>
-                  Close
+                  {t.close}
                 </MDBBtn>
-                {varyingState == 1 ? <MDBBtn className="ms-1" onClick={() => sendMail()}>sent</MDBBtn> : null}
-                {varyingState == 2 ? <MDBBtn className="ms-1" onClick={() => setOpenLinkModal(!openLinkModal)}>sent</MDBBtn> : null}
+                {varyingState == 1 ? <MDBBtn className="ms-1" onClick={() => sendMail()}>{t.sentMail}</MDBBtn> : null}
+                {varyingState == 2 ? <MDBBtn className="ms-1" onClick={() => setOpenLinkModal(!openLinkModal)}>{t.sentMail}</MDBBtn> : null}
               </MDBModalFooter>
             </MDBModalContent>
           </MDBModalDialog>
@@ -290,7 +285,7 @@ const PopularTag = () => {
 
 
 
-       
+
 
 
           <div className="banner__wrapper">
@@ -311,16 +306,16 @@ const PopularTag = () => {
                     <div style={{ width: 150, justifySelf: 'center' }}>
                       <ToggleButtonGroup type="radio" name="options" value={value} defaultValue={1} onChange={handleChange}>
                         <ToggleButton id="tbg-btn-1" value={1}>
-                          My Informations
+                          {t.myInformations}
                         </ToggleButton>
                         <ToggleButton id="tbg-btn-4" value={4}>
-                          walet information
+                          {t.walletInformation}
                         </ToggleButton>
                         <ToggleButton id="tbg-btn-2" value={2}>
-                          Cashback log
+                          {t.cashbackLog}
                         </ToggleButton>
                         <ToggleButton id="tbg-btn-3" value={3}>
-                          Payment history
+                          {t.paymentHistory}
                         </ToggleButton>
                       </ToggleButtonGroup>
                     </div>
@@ -342,77 +337,93 @@ const PopularTag = () => {
                     data-aos="fade-right"
                     data-aos-duration="1000"
                   >
-                    {value == 1 ? <Table striped>
-                      <thead>
-                      </thead>
-                      <tbody>
-                        <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                          <td style={{ textAlign: 'center' }} colSpan={2}><h6 style={{ fontweight: 'bold' }}>My Information </h6></td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontweight: 'bold' }}>Name: </td>
-                          <td>{userData?.name + ' ' + userData?.last_name}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontweight: 'bold' }}>Email: </td>
-                          <td>{userData?.email}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontweight: 'bold' }}>Phone: </td>
-                          <td>{userData?.phone}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontweight: 'bold' }}>Change Password: </td>
-                          <td>
-                            <MDBBtn onClick={() => changePassword()} style={{ maxHeight: 30, minWidth: 75, width: 120, maxWidth: 170, fontSize: 10, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
-                              Change Password
-                            </MDBBtn>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontweight: 'bold' }}>Logout: </td>
-                          <td>
-                            <MDBBtn onClick={() => logOut()} style={{ maxHeight: 30, width: 120, maxWidth: 170, fontSize: 10, fontWeight: 'bold' }} type="submit" color="danger" className="ms-1">
-                              Logout
-                            </MDBBtn>
-                          </td>
-                        </tr>
-                      
-                        
-                      </tbody>
-                    </Table> : null}
+                    {value == 1 ? (
+                      <Table striped>
+                        <thead></thead>
+                        <tbody>
+                          <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
+                            <td style={{ textAlign: 'center' }} colSpan={2}>
+                              <h6 style={{ fontWeight: 'bold' }}>{t.myInformation}</h6>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold' }}>{t.name}:</td>
+                            <td>{userData?.name + ' ' + userData?.last_name}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold' }}>{t.email}:</td>
+                            <td>{userData?.email}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold' }}>{t.phone}:</td>
+                            <td>{userData?.phone}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold' }}>{t.changePassword}:</td>
+                            <td>
+                              <MDBBtn
+                                onClick={() => changePassword()}
+                                style={{ maxHeight: 30, minWidth: 75, width: 120, maxWidth: 170, fontSize: 10, fontWeight: 'bold' }}
+                                type="submit"
+                                color="warning"
+                                className="ms-1"
+                              >
+                                {t.changePassword}
+                              </MDBBtn>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold' }}>{t.logout}:</td>
+                            <td>
+                              <MDBBtn
+                                onClick={() => logOut()}
+                                style={{ maxHeight: 30, width: 120, maxWidth: 170, fontSize: 10, fontWeight: 'bold' }}
+                                type="submit"
+                                color="danger"
+                                className="ms-1"
+                              >
+                                {t.logout}
+                              </MDBBtn>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                    ) : null}
 
-                    {value == 4 ? <Table bordered hover>
-                      <thead>
-                      </thead>
-                      <tbody>
-                        <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                          <td style={{ textAlign: 'center' }} colSpan={2}><h6 style={{ fontweight: 'bold' }}>Walet information </h6></td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontweight: 'bold' }}>My credit: </td>
-                          <td>{Number(totalPaymentsCashback?.total_cashback) - Number(totalPaymentsCashback?.total_payment) + '$'}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontweight: 'bold' }}>total cashback: </td>
-                          <td>{totalPaymentsCashback?.total_cashback}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ fontweight: 'bold' }}>Total Payment: </td>
-                          <td>{totalPaymentsCashback?.total_payment}</td>
-                        </tr>
-                      </tbody>
-                    </Table> : null}
+                    {value == 4 ? (
+                      <Table bordered hover>
+                        <thead></thead>
+                        <tbody>
+                          <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
+                            <td style={{ textAlign: 'center' }} colSpan={2}>
+                              <h6 style={{ fontWeight: 'bold' }}>{t.walletInformation}</h6>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold' }}>{t.myCredit}:</td>
+                            <td>{Number(totalPaymentsCashback?.total_cashback) - Number(totalPaymentsCashback?.total_payment) + '$'}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold' }}>{t.totalCashback}:</td>
+                            <td>{totalPaymentsCashback?.total_cashback}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold' }}>{t.totalPayment}:</td>
+                            <td>{totalPaymentsCashback?.total_payment}</td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                    ) : null}
                     {value == 2 ?
                       <Table striped bordered hover>
                         <thead>
                           <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                            <td style={{ textAlign: 'center' }} colSpan={3}><h6 style={{ fontWeight: 'bold' }}>My Cashback log </h6></td>
+                            <td style={{ textAlign: 'center' }} colSpan={3}><h6 style={{ fontWeight: 'bold' }}>{t.myCashbackLog}</h6></td>
                           </tr>
                           <tr>
-                            <th>Cashback</th>
-                            <th>brokers name</th>
-                            <th>Date</th>
+                            <th>{t.cashback}</th>
+                            <th>{t.brokersName}</th>
+                            <th>{t.date}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -424,11 +435,13 @@ const PopularTag = () => {
                             </tr>
                           ))}
                         </tbody>
-                        {!cashBackLog.cashback_list?.length &&
-                          <div
-                            style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 40 }}>
-                            You do not have a cashback at this time
-                          </div>}
+                        {!cashBackLog.cashback_list?.length && (
+                          <tr>
+                            <td colSpan={3} style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 40 }}>
+                              {t.noCashbackMessage}
+                            </td>
+                          </tr>
+                        )}
                       </Table> : null}
 
 
@@ -436,16 +449,20 @@ const PopularTag = () => {
                       <Table striped bordered hover>
                         <thead>
                           <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                            <td style={{ textAlign: 'center' }} colSpan={2}><h6 style={{ fontweight: 'bold' }}> Payment history</h6></td>
                             <td style={{ textAlign: 'center' }} colSpan={2}>
-                              <button onClick={() => setScrollableModal(!scrollableModal)} style={styles.btn}>Ask for a Payment?</button>
+                              <h6 style={{ fontWeight: 'bold' }}>{t.paymentHistory}</h6>
+                            </td>
+                            <td style={{ textAlign: 'center' }} colSpan={2}>
+                              <button onClick={() => setScrollableModal(!scrollableModal)} style={{ padding: '8px 16px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px' }}>
+                                {t.askForPayment}
+                              </button>
                             </td>
                           </tr>
                           <tr>
-                            <th>Cashback</th>
-                            <th>Date</th>
-                            <th>Payment way</th>
-                            <th style={{ textAlign: 'center' }}>Receipt</th>
+                            <th>{t.cashback}</th>
+                            <th>{t.date}</th>
+                            <th>{t.paymentWay}</th>
+                            <th style={{ textAlign: 'center' }}>{t.receipt}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -467,11 +484,12 @@ const PopularTag = () => {
                           ))
                           }
 
-                          {!paymentLog?.payment_list?.length &&
+                          {!paymentLog?.payment_list?.length && (
                             <div
                               style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 40 }}>
-                              You do not have a transaction at this time
-                            </div>}
+                              {t.noTransactionMessage}
+                            </div>
+                          )}
                         </tbody>
                       </Table> : null}
 
@@ -494,9 +512,9 @@ const PopularTag = () => {
                       <MDBTable className="mb-4">
                         <MDBTableHead>
                           <tr>
-                            <th style={{ textAlign: 'center' }} scope="col">Broker Name</th>
-                            <th style={{ textAlign: 'center' }} scope="col">Date of Link</th>
-                            <th style={{ textAlign: 'center' }} scope="col">Status</th>
+                            <th style={{ textAlign: 'center' }} scope="col">{t.brokerName}</th>
+                            <th style={{ textAlign: 'center' }} scope="col">{t.dateOfLink}</th>
+                            <th style={{ textAlign: 'center' }} scope="col">{t.status}</th>
                           </tr>
                         </MDBTableHead>
                         <MDBTableBody>
@@ -510,18 +528,29 @@ const PopularTag = () => {
 
                             {item.date_added == '' ? <th scope="row">{item.date_added}</th> : <th scope="row">{item.date_added}</th>}
 
-                            {item.status > 0 ?
+                            {item.status > 0 ? (
                               <td style={{ textAlign: 'center' }}>
-                                <MDBBtn style={{ minWidth: 75, maxWidth: 76, fontSize: 15, fontWeight: 'bold' }} type="submit" color="success" className="ms-1">
-                                  Linked
-                                </MDBBtn>
-                              </td> :
-                              <td style={{ textAlign: 'center' }}>
-                                <MDBBtn style={{ minWidth: 75, maxWidth: 100, fontSize: 13, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
-                                  In Progress
+                                <MDBBtn
+                                  style={{ minWidth: 75, maxWidth: 76, fontSize: 15, fontWeight: 'bold' }}
+                                  type="submit"
+                                  color="success"
+                                  className="ms-1"
+                                >
+                                  {t.linked}
                                 </MDBBtn>
                               </td>
-                            }
+                            ) : (
+                              <td style={{ textAlign: 'center' }}>
+                                <MDBBtn
+                                  style={{ minWidth: 75, maxWidth: 100, fontSize: 13, fontWeight: 'bold' }}
+                                  type="submit"
+                                  color="warning"
+                                  className="ms-1"
+                                >
+                                  {t.inProgress}
+                                </MDBBtn>
+                              </td>
+                            )}
                           </tr>))}
                         </MDBTableBody>
                       </MDBTable>
@@ -531,13 +560,13 @@ const PopularTag = () => {
 
 
                 {!brokerList?.brokers_link &&
-                            <div
-                              style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 20 }}>
+                  <div
+                    style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center', marginTop: 20, marginBottom: 20 }}>
 
-                              <span style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center' }}>
-                                You do not have a link with any borker at this time
-                              </span>
-                            </div>}
+                    <span style={{ color: 'orange', fontWeight: 'bold', fontSize: 17, textAlign: 'center' }}>
+                      {t.noLinkMessage}
+                    </span>
+                  </div>}
 
               </div>
 

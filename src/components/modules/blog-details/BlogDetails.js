@@ -3,7 +3,7 @@ import React from 'react'
 import CommentForm from './CommentForm'
 import Comments from './Comments'
 import Link from 'next/link'
-const BlogDetails = () => {
+const BlogDetailss = () => {
   return (
     <div className="blog-details__item">
       <div className="blog-details__item-inner">
@@ -111,4 +111,4 @@ const BlogDetails = () => {
   )
 }
 
-export default BlogDetails
+export default BlogDetailss

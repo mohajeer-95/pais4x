@@ -14,8 +14,8 @@ function Header({ headerClass = null, pageName }) {
   const [viewMode, setViewMode] = useState(true); // Default to group A
   const [token, setToken] = useState(false);
   const router = useRouter();
-  
- 
+
+
   // Check route and set viewMode accordingly
   useEffect(() => {
     console.log('translations object:', translations);
@@ -158,10 +158,10 @@ function Header({ headerClass = null, pageName }) {
   const isSticky = () => {
     const header = document.querySelector('.header-section');
     const scrollTop = window.scrollY;
-  
+
     if (header) {
-      scrollTop >= 250 
-        ? header.classList.add('header-fixed', 'fadeInUp') 
+      scrollTop >= 250
+        ? header.classList.add('header-fixed', 'fadeInUp')
         : header.classList.remove('header-fixed', 'fadeInUp');
     }
   };
@@ -173,7 +173,7 @@ function Header({ headerClass = null, pageName }) {
       item.querySelector('.submenu').style.display = 'none'
     })
   }
- 
+
   // ...........main menu...............
   const toggleMenu = () => {
     setMenu(!menu);
@@ -226,7 +226,7 @@ function Header({ headerClass = null, pageName }) {
 
 
 
-            <div onClick={handleClickLogoA} className="logo" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+              <div onClick={handleClickLogoA} className="logo" style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
                 <Link href="/">
                   <img style={{ maxHeight: 40, }} className="dark" src="/images/global/logo.png" alt="logo" />
                 </Link>
@@ -277,90 +277,99 @@ function Header({ headerClass = null, pageName }) {
               }
 
               {!viewMode ? <div className="menu-area">
-                       <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/courses">{t.courses}</Link>
-              </li>
+                <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/courses">{t.courses}</Link>
+                  </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/instructor">{t.instructor}</Link>
-              </li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/instructor">{t.instructor}</Link>
+                  </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/training">{t.vip}</Link>
-              </li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/training">{t.vip}</Link>
+                  </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/refund">{t.refund}</Link>
-              </li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/refund">{t.refund}</Link>
+                  </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/seminars">{t.seminars}</Link>
-              </li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/seminars">{t.seminars}</Link>
+                  </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/webinars">{t.webinars}</Link>
-              </li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/webinars">{t.webinars}</Link>
+                  </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/socials">{t.socials}</Link>
-              </li>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/socials">{t.socials}</Link>
+                  </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/contact">{t.contact}</Link>
-              </li>
-            </ul>
+                  <li style={{ backgroundColor: '#eaeaea' }}>
+                    <Link style={{ fontSize: 13 }} href="/contact">{t.contact}</Link>
+                  </li>
+                  <li style={{ backgroundColor: '#18e8ef', padding: 2, borderRadius: 4, paddingInline: 10 }}>
+                      <div
+                        style={{ cursor: 'pointer', fontSize: 13, fontWeight: 'bold', color: '#0C263A' }}
+                        onClick={toggleDirection}
+                      >
+                        {t.languageToggle}
+                      </div>
+                    </li>
+                </ul>
+
               </div>
                 :
                 <div className="menu-area">
 
-<ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/about">{t.about}</Link>
-              </li>
+                  <ul id="menu" className={`menu menu--style1 ${menu ? 'active' : ''}`}>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/about">{t.about}</Link>
+                    </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/cashback">{t.cashback}</Link>
-              </li>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/cashback">{t.cashback}</Link>
+                    </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/enroll">{t.enroll}</Link>
-              </li>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/enroll">{t.enroll}</Link>
+                    </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/brokers">{t.brokers}</Link>
-              </li>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/brokers">{t.brokers}</Link>
+                    </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/promotions">{t.promotions}</Link>
-              </li>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/promotions">{t.promotions}</Link>
+                    </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/blogs">{t.faqs}</Link>
-              </li>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/blogs">{t.faqs}</Link>
+                    </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/payments">{t.payments}</Link>
-              </li>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/payments">{t.payments}</Link>
+                    </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/socials">{t.socials}</Link>
-              </li>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/socials">{t.socials}</Link>
+                    </li>
 
-              <li style={{ backgroundColor: '#eaeaea' }}>
-                <Link style={{ fontSize: 13 }} href="/contact">{t.contact}</Link>
-              </li>
+                    <li style={{ backgroundColor: '#eaeaea' }}>
+                      <Link style={{ fontSize: 13 }} href="/contact">{t.contact}</Link>
+                    </li>
 
-              {/* Language Toggle */}
-              <li style={{ backgroundColor: '#18e8ef', padding: 2, borderRadius: 4, paddingInline: 10 }}>
-                <div
-                  style={{ cursor: 'pointer', fontSize: 13, fontWeight: 'bold', color: '#0C263A' }}
-                  onClick={toggleDirection}
-                >
-                  {t.languageToggle}
-                </div>
-              </li>
-          
+                    {/* Language Toggle */}
+                    <li style={{ backgroundColor: '#18e8ef', padding: 2, borderRadius: 4, paddingInline: 10 }}>
+                      <div
+                        style={{ cursor: 'pointer', fontSize: 13, fontWeight: 'bold', color: '#0C263A' }}
+                        onClick={toggleDirection}
+                      >
+                        {t.languageToggle}
+                      </div>
+                    </li>
+
                   </ul>
                 </div>}
               <div className="header-action">

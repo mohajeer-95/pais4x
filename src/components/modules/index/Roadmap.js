@@ -76,6 +76,19 @@ const t = translations[language] || translations['en'];
 
             </div>
           </div>
+          <div className="col-md-6 offset-md-6">
+            <div className="roadmap__item ms-md-4 aos-init" data-aos="fade-left" data-aos-duration="800">
+              <div className="roadmap__item-inner">
+                <div className="roadmap__item-content">
+                  <div className="roadmap__item-header">
+                  <h3>{t.p5title}</h3>
+                  <span>{t.p5}</span>
+                  </div>
+                  <p>{t.p5Description}</p>
+                  </div>
+              </div>
+            </div>
+          </div>
      
         </div>
       </div>

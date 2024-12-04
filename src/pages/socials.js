@@ -90,7 +90,7 @@ const AboutUs = () => {
                                 <div className={styles.imageWrapper}>
                                     <img src={item.img} alt={item.name} className={styles.image} />
                                     <div className={styles.overlay}>
-                                        <span className={styles.text}>{item.ref == 'soon' ? 'SOON...' : 'click'}</span>
+                                        <span className={styles.text}>{item.ref == 'soon' ? t.soon : t.click}</span>
                                     </div>
                                 </div>
                             </div>

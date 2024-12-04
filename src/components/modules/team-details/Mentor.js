@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import Spinner from 'react-bootstrap/Spinner';
 import TextWithNewLines from '../../../components/handleTextLong'
@@ -27,14 +26,16 @@ import Story from '@/components/modules/about-us/Story'
 import { callApiWithToken } from '../../../../public/api/api'
 import Rating from '@mui/material/Rating';
 import { useBroker } from '@/context/BrokerContext';
+import { useRtl } from '@/context/RtlContext';
+import translations from '@/translations';
 
 
 const Mentor = ({ title }) => {
+  const { language } = useRtl();
+  const t = translations[language] || translations['en'];
 
   const [value, setValue] = useState(0);
   const [isLinked, setIsLinked] = useState(0);
-
-  // const  id  = 100;  // Get the dynamic ID from the route
   const { brokerData } = useBroker();
 
 
@@ -65,7 +66,7 @@ const Mentor = ({ title }) => {
   const [brokerAllData, setBrokerData] = useState([])
   const [brokerId, setBrokerId] = useState(null)
   const [query, setQuery] = useState(null);
-  const longText = "This is a long text, it should be displayed properly. React is awesome, it allows you to build complex UIs.";
+  const longText = "Unavailable description right now, please try again later.";
 
   const [pargraph, setpargraph] = useState('');
   const [starRateNumber, setStarRateNumber] = useState(['star']);
@@ -97,13 +98,10 @@ const Mentor = ({ title }) => {
         setToken(token)
         let response;
         if (token && brokerId) {
-          console.log('rorroororororororororororororororororororororo');
           
           // Call API with token if user is logged in
           response = await getBrokerById(brokerId, token);
-        } else {
-          console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
-          
+        } else {     
           // Call API without token if user is logged out
           response = await getBrokerById(brokerId);
         }
@@ -345,13 +343,13 @@ const Mentor = ({ title }) => {
                   <MDBModalContent>
                     <MDBModalBody className='py-1'>
                       <div className='d-flex justify-content-center align-items-center my-3'>
-                        <p className='mb-0'>We use cookies to improve your website experience</p>
-                        <MDBBtn color='success' size='sm' className='ms-2' onClick={toggleOpen}>
-                          Ok, thanks
-                        </MDBBtn>
-                        <MDBBtn size='sm' className='ms-2'>
-                          Learn more
-                        </MDBBtn>
+                      <p className='mb-0'>{t.cookiesMessage}</p>
+                      <MDBBtn color='success' size='sm' className='ms-2' onClick={() => toggleOpen()}>
+        {t.okThanks}
+      </MDBBtn>
+      <MDBBtn size='sm' className='ms-2'>
+        {t.learnMore}
+      </MDBBtn>
                       </div>
                     </MDBModalBody>
                   </MDBModalContent>
@@ -365,16 +363,16 @@ const Mentor = ({ title }) => {
                   <MDBModalContent>
 
                     <MDBModalHeader>
-                      <MDBModalTitle>New Link with {info?.name}</MDBModalTitle>
-                      <MDBBtn className='btn-close' color='none
+                    <MDBModalTitle>{t.newLinkWith.replace('{info?.name}', info?.name)}</MDBModalTitle>
+                    <MDBBtn className='btn-close' color='none
                       ' onClick={() => setVaryingModal(false)}></MDBBtn>
                     </MDBModalHeader>
                     <MDBModalBody>
                       <form>
-                        <p>
-                          Please enter your email and then the verification code to complete the subscription ...
-                        </p>
-                        <h6>Email:  <span class="badge badge-primary">New</span></h6>
+                      <p>
+        {t.enterEmailVerification}
+      </p>
+      <h6>{t.emailLabel}</h6>
 
                         <div className='mb-3'>
                           {varyingModal && (
@@ -391,9 +389,9 @@ const Mentor = ({ title }) => {
                         {linkLoading && varyingState == 1 && <div className="text-center" style={{ marginTop: 30, marginBottom: 30 }}>
                           <Spinner animation="border" variant="info" />
                         </div>}
-                        {varyingState > 1 ? <p>We have sent a verification code to your email...</p> : null}
+                        {varyingState > 1 && <p>{t.verificationSent}</p>}
 
-                        {varyingState > 1 ? <h6>Enter OTP:  <span class="badge badge-primary"></span></h6> : null}
+                        {varyingState > 1 && <h6>{t.enterOtp}</h6>}
 
                         <div className='mb-3'>
                           {varyingState > 1 ?
@@ -419,11 +417,11 @@ const Mentor = ({ title }) => {
                       </form>
                     </MDBModalBody>
                     <MDBModalFooter>
-                      <MDBBtn className='ms-1' color='secondary' onClick={() => cleanAfterSuccess()}>
-                        Close
-                      </MDBBtn>
-                      {varyingState == 1 ? <MDBBtn className="ms-1" onClick={() => sendMail()}>sent</MDBBtn> : null}
-                      {varyingState != 1 ? <MDBBtn className="ms-1" onClick={() => sendOtp()}>sent</MDBBtn> : null}
+                    <MDBBtn className='ms-1' color='secondary' onClick={() => cleanAfterSuccess()}>
+        {t.close}
+      </MDBBtn>
+                      {varyingState == 1 ? <MDBBtn className="ms-1" onClick={() => sendMail()}>{t.sentMail}</MDBBtn> : null}
+                      {varyingState != 1 ? <MDBBtn className="ms-1" onClick={() => sendOtp()}>{t.sendOtp}</MDBBtn> : null}
                     </MDBModalFooter>
                   </MDBModalContent>
                 </MDBModalDialog>
@@ -473,7 +471,7 @@ const Mentor = ({ title }) => {
                       className="border-sm-start-none border-start"
                     >
                       <div className="d-flex flex-row align-items-center mb-1 justify-content-center">
-                        <h4 className="mb-1 me-1">Cashback:</h4>
+                        <h4 className="mb-1 me-1">{t.cashback}</h4>
                         <span className="text-danger">
                         </span>
                       </div>
@@ -513,20 +511,20 @@ const Mentor = ({ title }) => {
                         </div>
                         : isLinked == 2 ?
                           <div className="d-flex flex-column mt-4 align-items-center">
-                            <MDBBtn style={{ minWidth: 75, maxWidth: 100, fontSize: 13, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
-                              In Progress
-                            </MDBBtn>
+      <MDBBtn style={{ minWidth: 75, maxWidth: 100, fontSize: 13, fontWeight: 'bold' }} type="submit" color="warning" className="ms-1">
+        {t.inProgress}
+      </MDBBtn>
                           </div>
                           : token ? <div className="d-flex flex-column mt-4">
-                            <MDBBtn style={{ maxHeight: 55, fontSize: 13 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
-                              Link With {info?.name}
-                            </MDBBtn>
+      <MDBBtn style={{ maxHeight: 55, fontSize: 13 }} color="primary" size="sm" onClick={() => handleLinkWith()}>
+        {t.linkWith.replace('{info?.name}', info?.name)}
+      </MDBBtn>
                           </div>
                             :
                             <div className="d-flex flex-column mt-4">
-                              <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" href='signin'>
-                                Login to Link
-                              </MDBBtn>
+      <MDBBtn style={{ maxHeight: 35 }} color="primary" size="sm" href='signin'>
+        {t.loginToLink}
+      </MDBBtn>
                             </div>}
                     </MDBCol>
                   </MDBRow>
@@ -546,14 +544,14 @@ const Mentor = ({ title }) => {
               <div>
 
                 <div className="col-12" style={{ marginTop: 1 }}>
-                  <h3>Your Cashback</h3>
+                <h3>{t.yourCashback}</h3>
 
 
                   {instrumentKeys && <table style={{ borderCollapse: 'collapse', width: '100%' }}>
                     <thead>
                       <tr>
-                        <th style={{ border: '1px solid black', padding: '8px' }}>Instrument Account</th>
-                        {broker_type.map((item, index) => (
+                      <th style={{ border: '1px solid black', padding: '8px' }}>{t.instrumentAccount}</th>
+                      {broker_type.map((item, index) => (
                           <th key={index} style={{ border: '1px solid black', padding: '8px' }}>
                             {item.type_name}
                           </th>
@@ -580,7 +578,7 @@ const Mentor = ({ title }) => {
 
 
                 <div className="roadmap__item-header" style={{marginTop: 50}}>
-                  <h3>Get to Know {info?.name}</h3>
+                <h3>{t.getToKnow.replace('{info?.name}', info?.name)}</h3>
                 </div>
 
                 {description?.length ?
@@ -594,7 +592,7 @@ const Mentor = ({ title }) => {
                 {info?.description?.length > 109 &&
                   <button onClick={() => handleClick()}
                     style={styles.btn}>
-                    {!statebuttonText ? 'See more' : 'Show less'}
+                    {!statebuttonText ? t.seeMore : t.seeLess}
                   </button>}
               </div>
             </div>
@@ -607,29 +605,27 @@ const Mentor = ({ title }) => {
                       <div className="accordion__header">
                         <Accordion.Button className="accordion__button">
                           <span className="accordion__button-content">
-                            Broker
+                          {t.broker}
                           </span>
                         </Accordion.Button>
                       </div>
                       <Accordion.Body className="accordion__body">
                         <Table striped>
-
-
                           <tbody>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Entity Name: </td>
+                              <td style={{ fontWeight: 'bold' }}>{t.entityName}</td>
                               <td>{broker?.entity_name}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Broker type: </td>
+                              <td style={{ fontWeight: 'bold' }}>{t.brokerType}</td>
                               <td>{broker?.broker_type}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Headquarters: </td>
+                              <td style={{ fontWeight: 'bold' }}>{t.headquarters}</td>
                               <td>{broker?.headquarters}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Branch Offices: </td>
+                              <td style={{ fontWeight: 'bold' }}>{t.branchOffices}</td>
                               <td>{broker?.branch_offices}</td>
                             </tr>
                           </tbody>
@@ -644,7 +640,7 @@ const Mentor = ({ title }) => {
                       <div className="accordion__header">
                         <Accordion.Button className="accordion__button">
                           <span className="accordion__button-content">
-                            Account
+                            {t.theAccount}
                           </span>
                         </Accordion.Button>
                       </div>
@@ -654,40 +650,40 @@ const Mentor = ({ title }) => {
                           <tbody>
 
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Bonus: </td>
-                              <td>{broker_account?.bonus}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.bonus}</td>
+                            <td>{broker_account?.bonus}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Swap-Free/Islamic Accounts: </td>
-                              <td>{broker_account?.islamic_accounts}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.swapFreeAccounts}</td>
+                            <td>{broker_account?.islamic_accounts}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Trailing Stop: </td>
-                              <td>{broker_account?.trailing_stop}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.trailingStop}</td>
+                            <td>{broker_account?.trailing_stop}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Hedging: </td>
-                              <td>{broker_account?.hedging}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.hedging}</td>
+                            <td>{broker_account?.hedging}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Scalping: </td>
-                              <td>{broker_account?.scalping}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.scalping}</td>
+                            <td>{broker_account?.scalping}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>EA: </td>
                               <td>{broker_account?.ea}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Segregated Accounts: </td>
-                              <td>{broker_account?.segregated_accounts}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.segregatedAccounts}</td>
+                            <td>{broker_account?.segregated_accounts}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Number of Instruments: </td>
-                              <td>{broker_account?.number_of_instruments}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.numberOfInstruments}</td>
+                            <td>{broker_account?.number_of_instruments}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Categories of Instruments: </td>
-                              <td>{broker_account?.categories_of_instruments}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.categoriesOfInstruments}</td>
+                            <td>{broker_account?.categories_of_instruments}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -701,23 +697,22 @@ const Mentor = ({ title }) => {
                     <Accordion.Item className="accordion__item" eventKey={3}>
                       <div className="accordion__header">
                         <Accordion.Button className="accordion__button">
-                          <span className="accordion__button-content">
-                            Trading Cost
-                          </span>
+                        <span className="accordion__button-content">{t.tradingCost}</span>
+
                         </Accordion.Button>
                       </div>
                       <Accordion.Body className="accordion__body">
                         <Table striped bordered hover>
                           <thead>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                              <td style={{ textAlign: 'center' }}  >Avg Spread on EURUSD</td>
-                              <td style={{ textAlign: 'center' }} >{trading_cost?.avg_spread_on_EURUSD_val_1} </td>
+                            <td style={{ textAlign: 'center' }}>{t.avgSpreadOnEURUSD}</td>
+                            <td style={{ textAlign: 'center' }} >{trading_cost?.avg_spread_on_EURUSD_val_1} </td>
                               <td style={{ textAlign: 'center' }} >{trading_cost?.avg_spread_on_EURUSD_val_2}  </td>
                               <td style={{ textAlign: 'center' }} >{trading_cost?.avg_spread_on_EURUSD_val_3}  </td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                              <td style={{ textAlign: 'center' }} >Commissions on FX </td>
-                              <td style={{ textAlign: 'center' }} >{trading_cost?.commissions_on_FX_val_1} </td>
+                            <td style={{ textAlign: 'center' }}>{t.commissionsOnFX}</td>
+                            <td style={{ textAlign: 'center' }} >{trading_cost?.commissions_on_FX_val_1} </td>
                               <td style={{ textAlign: 'center' }} >{trading_cost?.commissions_on_FX_val_2}  </td>
                               <td style={{ textAlign: 'center' }} >{trading_cost?.commissions_on_FX_val_3}  </td>
                             </tr>
@@ -735,9 +730,8 @@ const Mentor = ({ title }) => {
                     <Accordion.Item className="accordion__item" eventKey={4}>
                       <div className="accordion__header">
                         <Accordion.Button className="accordion__button">
-                          <span className="accordion__button-content">
-                            Margin & Leverage
-                          </span>
+                        <span className="accordion__button-content">{t.marginLeverage}</span>
+
                         </Accordion.Button>
                       </div>
                       <Accordion.Body className="accordion__body">
@@ -746,20 +740,20 @@ const Mentor = ({ title }) => {
 
                           <tbody>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Leverage levels: </td>
-                              <td>{margin_leverage?.leverage_levels} </td>
+                            <td style={{ fontWeight: 'bold' }}>{t.leverageLevels}</td>
+                            <td>{margin_leverage?.leverage_levels} </td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Margin Call Level: </td>
-                              <td>{margin_leverage?.margin_call_evel}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.marginCallLevel}</td>
+                            <td>{margin_leverage?.margin_call_evel}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Stop Out Level: </td>
-                              <td>{margin_leverage?.stop_out_level}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.stopOutLevel}</td>
+                            <td>{margin_leverage?.stop_out_level}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Closing Method @ Stop Out: </td>
-                              <td>{margin_leverage?.closing_method_stop_out}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.closingMethodAtStopOut}</td>
+                            <td>{margin_leverage?.closing_method_stop_out}</td>
                             </tr>
                           </tbody>
                         </Table>
@@ -772,27 +766,26 @@ const Mentor = ({ title }) => {
                     <Accordion.Item className="accordion__item" eventKey={5}>
                       <div className="accordion__header">
                         <Accordion.Button className="accordion__button">
-                          <span className="accordion__button-content">
-                            Funding
-                          </span>
+                        <span className="accordion__button-content">{t.funding}</span>
+
                         </Accordion.Button>
                       </div>
                       <Accordion.Body className="accordion__body">
                         <Table striped bordered hover>
                           <thead>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                              <td style={{ textAlign: 'center' }}>Account Currency</td>
-                              <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding?.account_currency}</td>
+                            <td style={{ textAlign: 'center' }}>{t.accountCurrency}</td>
+                            <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding?.account_currency}</td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                              <td style={{ textAlign: 'center' }} >Minimum Deposit </td>
-                              <td style={{ textAlign: 'center' }} >{broker_funding?.minimum_deposit_val1} </td>
+                            <td style={{ textAlign: 'center' }}>{t.minimumDeposit}</td>
+                            <td style={{ textAlign: 'center' }} >{broker_funding?.minimum_deposit_val1} </td>
                               <td style={{ textAlign: 'center' }} >{broker_funding?.minimum_deposit_val2} </td>
                               <td style={{ textAlign: 'center' }} >{broker_funding?.minimum_deposit_val3} </td>
                             </tr>
                             <tr style={{ width: '100%', backgroundColor: 'green', alignItems: 'center', justifyContent: 'center' }}>
-                              <td style={{ textAlign: 'center' }}>Payment Methods </td>
-                              <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding?.payment_methods} </td>
+                            <td style={{ textAlign: 'center' }}>{t.paymentMethods}</td>
+                            <td style={{ textAlign: 'center' }} colSpan={3}>{broker_funding?.payment_methods} </td>
                             </tr>
 
                           </thead>
@@ -807,25 +800,24 @@ const Mentor = ({ title }) => {
                     <Accordion.Item className="accordion__item" eventKey={6}>
                       <div className="accordion__header">
                         <Accordion.Button className="accordion__button">
-                          <span className="accordion__button-content">
-                            Platform
-                          </span>
+                        <span className="accordion__button-content">{t.platform}</span>
+
                         </Accordion.Button>
                       </div>
                       <Accordion.Body className="accordion__body">
                         <Table striped>
                           <tbody>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>PC Platforms: </td>
-                              <td>{platform?.pc_platforms}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.pcPlatforms}</td>
+                            <td>{platform?.pc_platforms}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Mobile Platforms: </td>
-                              <td>{platform?.mobile_platforms}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.mobilePlatforms}</td>
+                            <td>{platform?.mobile_platforms}</td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Demo Period: </td>
-                              <td>{platform?.demo_period}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.demoPeriod}</td>
+                            <td>{platform?.demo_period}</td>
                             </tr>
                             <tr>
                               <td style={{ fontWeight: 'bold' }}>MAM/PAMM: </td>
@@ -841,7 +833,7 @@ const Mentor = ({ title }) => {
                       <div className="accordion__header">
                         <Accordion.Button className="accordion__button">
                           <span className="accordion__button-content">
-                            Support
+                            {t.support}
                           </span>
                         </Accordion.Button>
                       </div>
@@ -849,16 +841,16 @@ const Mentor = ({ title }) => {
                         <Table striped>
                           <tbody>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Channels: </td>
-                              <td style={{ backgroundColor: 'white' }}>{support?.channels} </td>
+                            <td style={{ fontWeight: 'bold' }}>{t.channels}</td>
+                            <td style={{ backgroundColor: 'white' }}>{support?.channels} </td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Hours: </td>
-                              <td>{support?.hours} </td>
+                            <td style={{ fontWeight: 'bold' }}>{t.hours}</td>
+                            <td>{support?.hours} </td>
                             </tr>
                             <tr>
-                              <td style={{ fontWeight: 'bold' }}>Languages: </td>
-                              <td>{support?.languages}</td>
+                            <td style={{ fontWeight: 'bold' }}>{t.languages}</td>
+                            <td>{support?.languages}</td>
                             </tr>
                           </tbody>
                         </Table>

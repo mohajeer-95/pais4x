@@ -54,7 +54,7 @@ const Broker = () => {
     <div>
       {info ? <div>
         <Header />
-        <PageHeader brokerId={brokerId} withSocialComponent={1} title={`${info.name} Broker`} page={info.name} info={info} />
+        <PageHeader brokerId={brokerId} withSocialComponent={1} title={`${info.name}`} page={info.name} info={info} />
         <Partner />
         <Featured pageId={3} />
         <Mentor title={'HAJEER'} />
